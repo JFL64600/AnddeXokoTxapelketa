@@ -1,0 +1,38 @@
+﻿<Window x:Class="AnddeXokoTxapelketa.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AnddeXokoTxapelketa"
+        xmlns:localControls="clr-namespace:AnddeXokoTxapelketa.Controls"
+        xmlns:materialDegign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        mc:Ignorable="d" Height="900" Width="1500" 
+        ResizeMode="NoResize" WindowStartupLocation="CenterScreen" 
+        WindowStyle="None" MouseDown="Window_MouseDown"
+        FontFamily="Microsoft YaHei UI Light">
+    <Grid>
+        <materialDegign:Transitioner Name="tMain" SelectedIndex="0" AutoApplyTransitionOrigins="True">
+            <Grid>
+                <localControls:Start x:Name="start"></localControls:Start>
+            </Grid>
+            <materialDegign:TransitionerSlide>
+                <materialDegign:TransitionerSlide.BackwardWipe>
+                    <materialDegign:CircleWipe/>
+                </materialDegign:TransitionerSlide.BackwardWipe>
+                <materialDegign:TransitionerSlide.ForwardWipe>
+                    <materialDegign:SlideWipe Direction="Right"/>
+                </materialDegign:TransitionerSlide.ForwardWipe>
+                <localControls:Create/>
+            </materialDegign:TransitionerSlide>
+            <materialDegign:TransitionerSlide>
+                <materialDegign:TransitionerSlide.BackwardWipe>
+                    <materialDegign:CircleWipe/>
+                </materialDegign:TransitionerSlide.BackwardWipe>
+                <materialDegign:TransitionerSlide.ForwardWipe>
+                    <materialDegign:SlideWipe Direction="Right"/>
+                </materialDegign:TransitionerSlide.ForwardWipe>
+                <localControls:Show x:Name="show"/>
+            </materialDegign:TransitionerSlide>
+        </materialDegign:Transitioner>
+    </Grid>
+</Window>
