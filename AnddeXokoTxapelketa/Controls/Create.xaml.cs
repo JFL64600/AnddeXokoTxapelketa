@@ -1,4 +1,6 @@
-﻿using AnddeXokoTxapelketa.Models;
+﻿using AnddeXokoTxapelketa.Classes;
+using AnddeXokoTxapelketa.Models;
+using System.Configuration;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -10,6 +12,9 @@ namespace AnddeXokoTxapelketa.Controls
     /// </summary>
     public partial class Create : UserControl
     {
+        #region Declarations
+        private readonly string _root = ConfigurationManager.AppSettings["root"];
+        #endregion
         #region Events
         private new void PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
@@ -25,13 +30,7 @@ namespace AnddeXokoTxapelketa.Controls
             _ = int.TryParse(tbGirlsGroups.Text, out int girlsGroups);
             _ = int.TryParse(tbBoys.Text, out int boys);
             _ = int.TryParse(tbBoysGroups.Text, out int boysGroups);
-            Tournament tournament = new()
-            {
-                Name = tbName.Text,
-                Girls = GetGroups(girls, girlsGroups),
-                Boys = GetGroups(boys, boysGroups)
-            };
-            MessageBox.Show("Go !!!");
+            Tools.CreateTournament(_root, tbName.Text, girls, girlsGroups, boys, boysGroups);
         }
         #endregion
         public Create()
@@ -42,32 +41,13 @@ namespace AnddeXokoTxapelketa.Controls
         private bool NumberValidation(string value, TextBox tb)
         {
             System.Text.RegularExpressions.Regex regex = new("[^0-9]+");
-            if (!regex.IsMatch(value))
-            {
-                int maxValue = (tb.Tag.ToString().Equals("groups", StringComparison.InvariantCultureIgnoreCase)) ? 4 : 32;
-                return int.Parse($"{tb.Text}{value}") > maxValue;
-            }
-            return true;
-        }
-        private List<Group> GetGroups(int players, int groups)
-        {
-            List<Group> result = [];
-            int playersGroup = Math.DivRem(players, groups, out int playersPlus);
-            for (int i = 0; i < groups; i++)
-            {
-                result.Add(new Group());
-                int newPlayersGroup = playersGroup;
-                if (playersPlus > 0)
-                {
-                    newPlayersGroup++;
-                    playersPlus--;
-                }
-                for (int j = 0; j < newPlayersGroup; j++)
-                {
-                    result.Last().Players.Add(new Player() { Results = [.. new int[newPlayersGroup - 1]] });
-                }
-            }
-            return result;
+            //if (!regex.IsMatch(value))
+            //{
+            //    //int maxValue = (tb.Tag.ToString().Equals("groups", StringComparison.InvariantCultureIgnoreCase)) ? 4 : 32;
+            //    return int.Parse($"{tb.Text}{value}") > 0;
+            //}
+            //return true;
+            return regex.IsMatch(value);
         }
         private bool CreateIsEnabled()
         {

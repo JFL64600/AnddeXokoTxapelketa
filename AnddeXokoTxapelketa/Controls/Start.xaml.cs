@@ -1,5 +1,7 @@
-﻿using AnddeXokoTxapelketa.EventsArgs;
+﻿using AnddeXokoTxapelketa.Classes;
+using AnddeXokoTxapelketa.EventsArgs;
 using AnddeXokoTxapelketa.Models;
+using System.Configuration;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -10,9 +12,22 @@ namespace AnddeXokoTxapelketa.Controls
     /// </summary>
     public partial class Start : UserControl
     {
+        #region Declarations
+        private readonly string _root = ConfigurationManager.AppSettings["root"];
+        #region Events
         public event EventHandler<TournamentEventArgs>? OpenTournamentEvent;
         public event EventHandler? CloseApplicationtEvent;
-
+        #endregion
+        #endregion
+        #region Events
+        private void UCIsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (IsVisible)
+            {
+                lvTournaments.ItemsSource = Tools.GetTournaments(_root);
+            }
+        }
+        #endregion
         public Start()
         {
             InitializeComponent();
@@ -23,7 +38,6 @@ namespace AnddeXokoTxapelketa.Controls
             };
             lvTournaments.ItemsSource = items;
         }
-
         private void OpenTournamentClick(object sender, RoutedEventArgs e)
         {
             Button button = (Button)sender;
