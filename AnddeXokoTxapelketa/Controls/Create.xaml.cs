@@ -1,5 +1,4 @@
 ﻿using AnddeXokoTxapelketa.Classes;
-using AnddeXokoTxapelketa.Models;
 using System.Configuration;
 using System.Windows;
 using System.Windows.Controls;

@@ -1,42 +1,32 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
 
 namespace AnddeXokoTxapelketa.Controls
 {
     /// <summary>
-    /// Logique d'interaction pour Score.xaml
+    /// Logique d'interaction pour PlayerName.xaml
     /// </summary>
-    public partial class Score : UserControl
+    public partial class PlayerName : UserControl
     {
         #region Declarations
-        private readonly string[] AuthorizedValues = ["0", "1", "2", "3"];
         #region Events
         public event EventHandler? ExitEvent;
         #endregion
         #endregion
         #region Properties
-        public int Value
+        public string Value
         {
-            get
-            {
-                _ = int.TryParse(TBScore.Text, out int score);
-                return score;
-            }
-            set { TBScore.Text = value.ToString(); }
+            get { return Player.Text; }
+            set { Player.Text = value; }
         }
         #endregion
         #region Events
-        private new void PreviewTextInput(object sender, TextCompositionEventArgs e)
-        {
-            e.Handled = TBScore.Text.Length == 1 || !AuthorizedValues.Contains(e.Text);
-        }
         private new void LostFocus(object sender, RoutedEventArgs e)
         {
             ExitEvent?.Invoke(this, new EventArgs());
         }
         #endregion
-        public Score()
+        public PlayerName()
         {
             InitializeComponent();
         }
@@ -44,12 +34,12 @@ namespace AnddeXokoTxapelketa.Controls
         public void Enable()
         {
             CZ.IsEnabled = true;
-            TBScore.Visibility = Visibility.Visible;
+            Player.Visibility = Visibility.Visible;
         }
         public void Disable()
         {
             CZ.IsEnabled = false;
-            TBScore.Visibility = Visibility.Hidden;
+            Player.Visibility = Visibility.Hidden;
         }
         #endregion
     }

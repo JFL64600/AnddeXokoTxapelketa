@@ -6,7 +6,8 @@
              xmlns:local="clr-namespace:AnddeXokoTxapelketa.Controls"
              xmlns:materialDegign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800" IsVisibleChanged="UserControl_IsVisibleChanged">
+             d:DesignHeight="450"
+             d:DesignWidth="800">
     <UserControl.Resources>
         <Style x:Key="ResultBorder" TargetType="Border">
             <Setter Property="BorderThickness" Value="1" />
@@ -75,12 +76,13 @@
             <Grid Grid.Row="0" Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
                 <Border Style="{StaticResource ResultBorder}" />
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
-                    <Button Style="{DynamicResource MaterialDesignOutlinedDarkButton}" Margin="1" IsEnabled="False" Name="BPrevious" Click="BPreviousClick">
+                    <Button Style="{DynamicResource MaterialDesignOutlinedDarkButton}" Margin="1" Name="BPrevious" Click="BPreviousClick">
                         <materialDegign:PackIcon Kind="ArrowLeftBold"/>
                     </Button>
                     <TextBlock Style="{DynamicResource MaterialDesignHeadline1TextBlock}" Foreground="{DynamicResource PrimaryHueMidBrush}"
                                FontSize="25" VerticalAlignment="Center" HorizontalAlignment="Center"
-                               Text="M 1" Margin="2"></TextBlock>
+                               Margin="2" Name="TBGroup">
+                    </TextBlock>
                     <Button Style="{DynamicResource MaterialDesignOutlinedDarkButton}" Margin="1" Name="BNext" Click="BNextClick">
                         <materialDegign:PackIcon Kind="ArrowRightBold"/>
                     </Button>
@@ -94,164 +96,78 @@
             <local:Diagonal Grid.Row="6" Grid.Column="6" x:Name="Diagonal6"></local:Diagonal>
             <local:Diagonal Grid.Row="7" Grid.Column="7" x:Name="Diagonal7"></local:Diagonal>
             <local:Diagonal Grid.Row="8" Grid.Column="8" x:Name="Diagonal8"></local:Diagonal>
-            <Grid Grid.Row="1" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                <Border Style="{StaticResource ResultBorder}" />
-                <TextBox Style="{StaticResource TBResultPlayer}" TextChanged="TextChanged" Name="TBPlayer1" />
-            </Grid>
-            <Grid Grid.Row="2" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                <Border Style="{StaticResource ResultBorder}" />
-                <TextBox Style="{StaticResource TBResultPlayer}" TextChanged="TextChanged" Name="TBPlayer2" />
-            </Grid>
-            <Grid Grid.Row="3" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                <Border Style="{StaticResource ResultBorder}" />
-                <TextBox Style="{StaticResource TBResultPlayer}" TextChanged="TextChanged" Name="TBPlayer3" />
-            </Grid>
-            <Grid Grid.Row="4" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                <Border Style="{StaticResource ResultBorder}" />
-                <TextBox Style="{StaticResource TBResultPlayer}" TextChanged="TextChanged" Name="TBPlayer4" />
-            </Grid>
-            <Grid Grid.Row="5" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                <Border Style="{StaticResource ResultBorder}" />
-                <TextBox Style="{StaticResource TBResultPlayer}" TextChanged="TextChanged" Name="TBPlayer5" />
-            </Grid>
-            <Grid Grid.Row="6" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                <Border Style="{StaticResource ResultBorder}" />
-                <TextBox Style="{StaticResource TBResultPlayer}" TextChanged="TextChanged" Name="TBPlayer6" />
-            </Grid>
-            <Grid Grid.Row="7" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                <Border Style="{StaticResource ResultBorder}" />
-                <TextBox Style="{StaticResource TBResultPlayer}" TextChanged="TextChanged" Name="TBPlayer7" />
-            </Grid>
-            <materialDegign:ColorZone Grid.Row="8" Grid.Column="0" Mode="Standard" HorizontalAlignment="Stretch" 
-                                      VerticalAlignment="Stretch" VerticalContentAlignment="Stretch" Name="mdCZ80">
-                <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                    <Border Style="{StaticResource ResultBorder}" />
-                    <TextBox Style="{StaticResource TBResultPlayer}" TextChanged="TextChanged" Name="TBPlayer8" />
-                </Grid>
-            </materialDegign:ColorZone>
-            <Grid Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-                <Border Style="{StaticResource ResultBorder}" />
-                <TextBlock Style="{StaticResource ResultPlayerLabel}" Name="TBPlayer1Label" />
-            </Grid>
-            <Grid Grid.Row="0" Grid.Column="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-                <Border Style="{StaticResource ResultBorder}" />
-                <TextBlock Style="{StaticResource ResultPlayerLabel}" Name="TBPlayer2Label" />
-            </Grid>
-            <Grid Grid.Row="0" Grid.Column="3" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-                <Border Style="{StaticResource ResultBorder}" />
-                <TextBlock Style="{StaticResource ResultPlayerLabel}" Name="TBPlayer3Label" />
-            </Grid>
-            <Grid Grid.Row="0" Grid.Column="4" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-                <Border Style="{StaticResource ResultBorder}" />
-                <TextBlock Style="{StaticResource ResultPlayerLabel}" Name="TBPlayer4Label" />
-            </Grid>
-            <Grid Grid.Row="0" Grid.Column="5" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-                <Border Style="{StaticResource ResultBorder}" />
-                <TextBlock Style="{StaticResource ResultPlayerLabel}" Name="TBPlayer5Label" />
-            </Grid>
-            <Grid Grid.Row="0" Grid.Column="6" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-                <Border Style="{StaticResource ResultBorder}" />
-                <TextBlock Style="{StaticResource ResultPlayerLabel}" Name="TBPlayer6Label" />
-            </Grid>
-            <Grid Grid.Row="0" Grid.Column="7" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-                <Border Style="{StaticResource ResultBorder}" />
-                <TextBlock Style="{StaticResource ResultPlayerLabel}" Name="TBPlayer7Label" />
-            </Grid>
-            <materialDegign:ColorZone Grid.Row="0" Grid.Column="8" Mode="Standard" HorizontalAlignment="Stretch"
-                                      VerticalAlignment="Stretch" VerticalContentAlignment="Stretch" Name="mdCZ08">
-                <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-                    <Border Style="{StaticResource ResultBorder}" />
-                    <TextBlock Style="{StaticResource ResultPlayerLabel}" Name="TBPlayer8Label" />
-                </Grid>
-            </materialDegign:ColorZone>
-            <local:Score Grid.Row="1" Grid.Column="2" x:Name="ScoreR1C2" ExitEvent="ExitEvent"></local:Score>
-            <local:Score Grid.Row="1" Grid.Column="3" x:Name="ScoreR1C3" ExitEvent="ExitEvent"></local:Score>
-            <local:Score Grid.Row="1" Grid.Column="4" x:Name="ScoreR1C4" ExitEvent="ExitEvent"></local:Score>
-            <local:Score Grid.Row="1" Grid.Column="5" x:Name="ScoreR1C5" ExitEvent="ExitEvent"></local:Score>
-            <local:Score Grid.Row="1" Grid.Column="6" x:Name="ScoreR1C6" ExitEvent="ExitEvent"></local:Score>
-            <local:Score Grid.Row="1" Grid.Column="7" x:Name="ScoreR1C7" ExitEvent="ExitEvent"></local:Score>
-            <local:Score Grid.Row="1" Grid.Column="8" x:Name="ScoreR1C8" ExitEvent="ExitEvent"></local:Score>
-            <local:Score Grid.Row="2" Grid.Column="1" x:Name="ScoreR2C1" ExitEvent="ExitEvent"></local:Score>
-            <local:Score Grid.Row="2" Grid.Column="3" x:Name="ScoreR2C3" ExitEvent="ExitEvent"></local:Score>
-            <local:Score Grid.Row="2" Grid.Column="4" x:Name="ScoreR2C4" ExitEvent="ExitEvent"></local:Score>
-            <local:Score Grid.Row="2" Grid.Column="5" x:Name="ScoreR2C5" ExitEvent="ExitEvent"></local:Score>
-            <local:Score Grid.Row="2" Grid.Column="6" x:Name="ScoreR2C6" ExitEvent="ExitEvent"></local:Score>
-            <local:Score Grid.Row="2" Grid.Column="7" x:Name="ScoreR2C7" ExitEvent="ExitEvent"></local:Score>
-            <local:Score Grid.Row="2" Grid.Column="8" x:Name="ScoreR2C8" ExitEvent="ExitEvent"></local:Score>
-            <local:Score Grid.Row="3" Grid.Column="1" x:Name="ScoreR3C1" ExitEvent="ExitEvent"></local:Score>
-            <local:Score Grid.Row="3" Grid.Column="2" x:Name="ScoreR3C2" ExitEvent="ExitEvent"></local:Score>
-            <local:Score Grid.Row="3" Grid.Column="4" x:Name="ScoreR3C4" ExitEvent="ExitEvent"></local:Score>
-            <local:Score Grid.Row="3" Grid.Column="5" x:Name="ScoreR3C5" ExitEvent="ExitEvent"></local:Score>
-            <local:Score Grid.Row="3" Grid.Column="6" x:Name="ScoreR3C6" ExitEvent="ExitEvent"></local:Score>
-            <local:Score Grid.Row="3" Grid.Column="7" x:Name="ScoreR3C7" ExitEvent="ExitEvent"></local:Score>
-            <local:Score Grid.Row="3" Grid.Column="8" x:Name="ScoreR3C8" ExitEvent="ExitEvent"></local:Score>
-            <local:Score Grid.Row="4" Grid.Column="1" x:Name="ScoreR4C1" ExitEvent="ExitEvent"></local:Score>
-            <local:Score Grid.Row="4" Grid.Column="2" x:Name="ScoreR4C2" ExitEvent="ExitEvent"></local:Score>
-            <local:Score Grid.Row="4" Grid.Column="3" x:Name="ScoreR4C3" ExitEvent="ExitEvent"></local:Score>
-            <local:Score Grid.Row="4" Grid.Column="5" x:Name="ScoreR4C5" ExitEvent="ExitEvent"></local:Score>
-            <local:Score Grid.Row="4" Grid.Column="6" x:Name="ScoreR4C6" ExitEvent="ExitEvent"></local:Score>
-            <local:Score Grid.Row="4" Grid.Column="7" x:Name="ScoreR4C7" ExitEvent="ExitEvent"></local:Score>
-            <local:Score Grid.Row="4" Grid.Column="8" x:Name="ScoreR4C8" ExitEvent="ExitEvent"></local:Score>
-            <local:Score Grid.Row="5" Grid.Column="1" x:Name="ScoreR5C1" ExitEvent="ExitEvent"></local:Score>
-            <local:Score Grid.Row="5" Grid.Column="2" x:Name="ScoreR5C2" ExitEvent="ExitEvent"></local:Score>
-            <local:Score Grid.Row="5" Grid.Column="3" x:Name="ScoreR5C3" ExitEvent="ExitEvent"></local:Score>
-            <local:Score Grid.Row="5" Grid.Column="4" x:Name="ScoreR5C4" ExitEvent="ExitEvent"></local:Score>
-            <local:Score Grid.Row="5" Grid.Column="6" x:Name="ScoreR5C6" ExitEvent="ExitEvent"></local:Score>
-            <local:Score Grid.Row="5" Grid.Column="7" x:Name="ScoreR5C7" ExitEvent="ExitEvent"></local:Score>
-            <local:Score Grid.Row="5" Grid.Column="8" x:Name="ScoreR5C8" ExitEvent="ExitEvent"></local:Score>
-            <local:Score Grid.Row="6" Grid.Column="1" x:Name="ScoreR6C1" ExitEvent="ExitEvent"></local:Score>
-            <local:Score Grid.Row="6" Grid.Column="2" x:Name="ScoreR6C2" ExitEvent="ExitEvent"></local:Score>
-            <local:Score Grid.Row="6" Grid.Column="3" x:Name="ScoreR6C3" ExitEvent="ExitEvent"></local:Score>
-            <local:Score Grid.Row="6" Grid.Column="4" x:Name="ScoreR6C4" ExitEvent="ExitEvent"></local:Score>
-            <local:Score Grid.Row="6" Grid.Column="5" x:Name="ScoreR6C5" ExitEvent="ExitEvent"></local:Score>
-            <local:Score Grid.Row="6" Grid.Column="7" x:Name="ScoreR6C7" ExitEvent="ExitEvent"></local:Score>
-            <local:Score Grid.Row="6" Grid.Column="8" x:Name="ScoreR6C8" ExitEvent="ExitEvent"></local:Score>
-            <local:Score Grid.Row="7" Grid.Column="1" x:Name="ScoreR7C1" ExitEvent="ExitEvent"></local:Score>
-            <local:Score Grid.Row="7" Grid.Column="2" x:Name="ScoreR7C2" ExitEvent="ExitEvent"></local:Score>
-            <local:Score Grid.Row="7" Grid.Column="3" x:Name="ScoreR7C3" ExitEvent="ExitEvent"></local:Score>
-            <local:Score Grid.Row="7" Grid.Column="4" x:Name="ScoreR7C4" ExitEvent="ExitEvent"></local:Score>
-            <local:Score Grid.Row="7" Grid.Column="5" x:Name="ScoreR7C5" ExitEvent="ExitEvent"></local:Score>
-            <local:Score Grid.Row="7" Grid.Column="6" x:Name="ScoreR7C6" ExitEvent="ExitEvent"></local:Score>
-            <local:Score Grid.Row="7" Grid.Column="8" x:Name="ScoreR7C8" ExitEvent="ExitEvent"></local:Score>
-            <local:Score Grid.Row="8" Grid.Column="1" x:Name="ScoreR8C1" ExitEvent="ExitEvent"></local:Score>
-            <local:Score Grid.Row="8" Grid.Column="2" x:Name="ScoreR8C2" ExitEvent="ExitEvent"></local:Score>
-            <local:Score Grid.Row="8" Grid.Column="3" x:Name="ScoreR8C3" ExitEvent="ExitEvent"></local:Score>
-            <local:Score Grid.Row="8" Grid.Column="4" x:Name="ScoreR8C4" ExitEvent="ExitEvent"></local:Score>
-            <local:Score Grid.Row="8" Grid.Column="5" x:Name="ScoreR8C5" ExitEvent="ExitEvent"></local:Score>
-            <local:Score Grid.Row="8" Grid.Column="6" x:Name="ScoreR8C6" ExitEvent="ExitEvent"></local:Score>
-            <local:Score Grid.Row="8" Grid.Column="7" x:Name="ScoreR8C7" ExitEvent="ExitEvent"></local:Score>
-
-
-
-            <!--<Grid Grid.Row="1" Grid.Column="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-                <Border BorderThickness="0,0,1,1" BorderBrush="{DynamicResource PrimaryHueMidBrush}" />
-                <TextBox Style="{StaticResource TBResultScore}" />
-            </Grid>-->
-            <!--<Grid Grid.Row="1" Grid.Column="3" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-                <Border BorderThickness="0,0,1,1" BorderBrush="{DynamicResource PrimaryHueMidBrush}" />
-                <TextBox Style="{StaticResource TBResultScore}" />
-            </Grid>-->
-            <!--<Grid Grid.Row="1" Grid.Column="4" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-                <Border BorderThickness="0,0,1,1" BorderBrush="{DynamicResource PrimaryHueMidBrush}" />
-                <TextBox Style="{StaticResource TBResultScore}" />
-            </Grid>
-
-            <Grid Grid.Row="1" Grid.Column="5" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-                <Border BorderThickness="0,0,1,1" BorderBrush="{DynamicResource PrimaryHueMidBrush}" />
-                <TextBox Style="{StaticResource TBResultScore}" />
-            </Grid>
-            <Grid Grid.Row="1" Grid.Column="6" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-                <Border BorderThickness="0,0,1,1" BorderBrush="{DynamicResource PrimaryHueMidBrush}" />
-                <TextBox Style="{StaticResource TBResultScore}" />
-            </Grid>
-            <Grid Grid.Row="1" Grid.Column="7" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-                <Border BorderThickness="0,0,1,1" BorderBrush="{DynamicResource PrimaryHueMidBrush}" />
-                <TextBox Style="{StaticResource TBResultScore}" />
-            </Grid>
-            <Grid Grid.Row="1" Grid.Column="8" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-                <Border BorderThickness="0,0,1,1" BorderBrush="{DynamicResource PrimaryHueMidBrush}" />
-                <TextBox Style="{StaticResource TBResultScore}" />
-            </Grid>-->
+            <local:PlayerName Grid.Row="1" Grid.Column="0" x:Name="PlayerName1" ExitEvent="PlayerNameExitEvent"></local:PlayerName>
+            <local:PlayerName Grid.Row="2" Grid.Column="0" x:Name="PlayerName2" ExitEvent="PlayerNameExitEvent"></local:PlayerName>
+            <local:PlayerName Grid.Row="3" Grid.Column="0" x:Name="PlayerName3" ExitEvent="PlayerNameExitEvent"></local:PlayerName>
+            <local:PlayerName Grid.Row="4" Grid.Column="0" x:Name="PlayerName4" ExitEvent="PlayerNameExitEvent"></local:PlayerName>
+            <local:PlayerName Grid.Row="5" Grid.Column="0" x:Name="PlayerName5" ExitEvent="PlayerNameExitEvent"></local:PlayerName>
+            <local:PlayerName Grid.Row="6" Grid.Column="0" x:Name="PlayerName6" ExitEvent="PlayerNameExitEvent"></local:PlayerName>
+            <local:PlayerName Grid.Row="7" Grid.Column="0" x:Name="PlayerName7" ExitEvent="PlayerNameExitEvent"></local:PlayerName>
+            <local:PlayerName Grid.Row="8" Grid.Column="0" x:Name="PlayerName8" ExitEvent="PlayerNameExitEvent"></local:PlayerName>
+            <local:PlayerLabel Grid.Row="0" Grid.Column="1" x:Name="PlayerLabel1"></local:PlayerLabel>
+            <local:PlayerLabel Grid.Row="0" Grid.Column="2" x:Name="PlayerLabel2"></local:PlayerLabel>
+            <local:PlayerLabel Grid.Row="0" Grid.Column="3" x:Name="PlayerLabel3"></local:PlayerLabel>
+            <local:PlayerLabel Grid.Row="0" Grid.Column="4" x:Name="PlayerLabel4"></local:PlayerLabel>
+            <local:PlayerLabel Grid.Row="0" Grid.Column="5" x:Name="PlayerLabel5"></local:PlayerLabel>
+            <local:PlayerLabel Grid.Row="0" Grid.Column="6" x:Name="PlayerLabel6"></local:PlayerLabel>
+            <local:PlayerLabel Grid.Row="0" Grid.Column="7" x:Name="PlayerLabel7"></local:PlayerLabel>
+            <local:PlayerLabel Grid.Row="0" Grid.Column="8" x:Name="PlayerLabel8"></local:PlayerLabel>
+            <local:Score Grid.Row="1" Grid.Column="2" x:Name="ScoreR1C2" ExitEvent="ScoreExitEvent"></local:Score>
+            <local:Score Grid.Row="1" Grid.Column="3" x:Name="ScoreR1C3" ExitEvent="ScoreExitEvent"></local:Score>
+            <local:Score Grid.Row="1" Grid.Column="4" x:Name="ScoreR1C4" ExitEvent="ScoreExitEvent"></local:Score>
+            <local:Score Grid.Row="1" Grid.Column="5" x:Name="ScoreR1C5" ExitEvent="ScoreExitEvent"></local:Score>
+            <local:Score Grid.Row="1" Grid.Column="6" x:Name="ScoreR1C6" ExitEvent="ScoreExitEvent"></local:Score>
+            <local:Score Grid.Row="1" Grid.Column="7" x:Name="ScoreR1C7" ExitEvent="ScoreExitEvent"></local:Score>
+            <local:Score Grid.Row="1" Grid.Column="8" x:Name="ScoreR1C8" ExitEvent="ScoreExitEvent"></local:Score>
+            <local:Score Grid.Row="2" Grid.Column="1" x:Name="ScoreR2C1" ExitEvent="ScoreExitEvent"></local:Score>
+            <local:Score Grid.Row="2" Grid.Column="3" x:Name="ScoreR2C3" ExitEvent="ScoreExitEvent"></local:Score>
+            <local:Score Grid.Row="2" Grid.Column="4" x:Name="ScoreR2C4" ExitEvent="ScoreExitEvent"></local:Score>
+            <local:Score Grid.Row="2" Grid.Column="5" x:Name="ScoreR2C5" ExitEvent="ScoreExitEvent"></local:Score>
+            <local:Score Grid.Row="2" Grid.Column="6" x:Name="ScoreR2C6" ExitEvent="ScoreExitEvent"></local:Score>
+            <local:Score Grid.Row="2" Grid.Column="7" x:Name="ScoreR2C7" ExitEvent="ScoreExitEvent"></local:Score>
+            <local:Score Grid.Row="2" Grid.Column="8" x:Name="ScoreR2C8" ExitEvent="ScoreExitEvent"></local:Score>
+            <local:Score Grid.Row="3" Grid.Column="1" x:Name="ScoreR3C1" ExitEvent="ScoreExitEvent"></local:Score>
+            <local:Score Grid.Row="3" Grid.Column="2" x:Name="ScoreR3C2" ExitEvent="ScoreExitEvent"></local:Score>
+            <local:Score Grid.Row="3" Grid.Column="4" x:Name="ScoreR3C4" ExitEvent="ScoreExitEvent"></local:Score>
+            <local:Score Grid.Row="3" Grid.Column="5" x:Name="ScoreR3C5" ExitEvent="ScoreExitEvent"></local:Score>
+            <local:Score Grid.Row="3" Grid.Column="6" x:Name="ScoreR3C6" ExitEvent="ScoreExitEvent"></local:Score>
+            <local:Score Grid.Row="3" Grid.Column="7" x:Name="ScoreR3C7" ExitEvent="ScoreExitEvent"></local:Score>
+            <local:Score Grid.Row="3" Grid.Column="8" x:Name="ScoreR3C8" ExitEvent="ScoreExitEvent"></local:Score>
+            <local:Score Grid.Row="4" Grid.Column="1" x:Name="ScoreR4C1" ExitEvent="ScoreExitEvent"></local:Score>
+            <local:Score Grid.Row="4" Grid.Column="2" x:Name="ScoreR4C2" ExitEvent="ScoreExitEvent"></local:Score>
+            <local:Score Grid.Row="4" Grid.Column="3" x:Name="ScoreR4C3" ExitEvent="ScoreExitEvent"></local:Score>
+            <local:Score Grid.Row="4" Grid.Column="5" x:Name="ScoreR4C5" ExitEvent="ScoreExitEvent"></local:Score>
+            <local:Score Grid.Row="4" Grid.Column="6" x:Name="ScoreR4C6" ExitEvent="ScoreExitEvent"></local:Score>
+            <local:Score Grid.Row="4" Grid.Column="7" x:Name="ScoreR4C7" ExitEvent="ScoreExitEvent"></local:Score>
+            <local:Score Grid.Row="4" Grid.Column="8" x:Name="ScoreR4C8" ExitEvent="ScoreExitEvent"></local:Score>
+            <local:Score Grid.Row="5" Grid.Column="1" x:Name="ScoreR5C1" ExitEvent="ScoreExitEvent"></local:Score>
+            <local:Score Grid.Row="5" Grid.Column="2" x:Name="ScoreR5C2" ExitEvent="ScoreExitEvent"></local:Score>
+            <local:Score Grid.Row="5" Grid.Column="3" x:Name="ScoreR5C3" ExitEvent="ScoreExitEvent"></local:Score>
+            <local:Score Grid.Row="5" Grid.Column="4" x:Name="ScoreR5C4" ExitEvent="ScoreExitEvent"></local:Score>
+            <local:Score Grid.Row="5" Grid.Column="6" x:Name="ScoreR5C6" ExitEvent="ScoreExitEvent"></local:Score>
+            <local:Score Grid.Row="5" Grid.Column="7" x:Name="ScoreR5C7" ExitEvent="ScoreExitEvent"></local:Score>
+            <local:Score Grid.Row="5" Grid.Column="8" x:Name="ScoreR5C8" ExitEvent="ScoreExitEvent"></local:Score>
+            <local:Score Grid.Row="6" Grid.Column="1" x:Name="ScoreR6C1" ExitEvent="ScoreExitEvent"></local:Score>
+            <local:Score Grid.Row="6" Grid.Column="2" x:Name="ScoreR6C2" ExitEvent="ScoreExitEvent"></local:Score>
+            <local:Score Grid.Row="6" Grid.Column="3" x:Name="ScoreR6C3" ExitEvent="ScoreExitEvent"></local:Score>
+            <local:Score Grid.Row="6" Grid.Column="4" x:Name="ScoreR6C4" ExitEvent="ScoreExitEvent"></local:Score>
+            <local:Score Grid.Row="6" Grid.Column="5" x:Name="ScoreR6C5" ExitEvent="ScoreExitEvent"></local:Score>
+            <local:Score Grid.Row="6" Grid.Column="7" x:Name="ScoreR6C7" ExitEvent="ScoreExitEvent"></local:Score>
+            <local:Score Grid.Row="6" Grid.Column="8" x:Name="ScoreR6C8" ExitEvent="ScoreExitEvent"></local:Score>
+            <local:Score Grid.Row="7" Grid.Column="1" x:Name="ScoreR7C1" ExitEvent="ScoreExitEvent"></local:Score>
+            <local:Score Grid.Row="7" Grid.Column="2" x:Name="ScoreR7C2" ExitEvent="ScoreExitEvent"></local:Score>
+            <local:Score Grid.Row="7" Grid.Column="3" x:Name="ScoreR7C3" ExitEvent="ScoreExitEvent"></local:Score>
+            <local:Score Grid.Row="7" Grid.Column="4" x:Name="ScoreR7C4" ExitEvent="ScoreExitEvent"></local:Score>
+            <local:Score Grid.Row="7" Grid.Column="5" x:Name="ScoreR7C5" ExitEvent="ScoreExitEvent"></local:Score>
+            <local:Score Grid.Row="7" Grid.Column="6" x:Name="ScoreR7C6" ExitEvent="ScoreExitEvent"></local:Score>
+            <local:Score Grid.Row="7" Grid.Column="8" x:Name="ScoreR7C8" ExitEvent="ScoreExitEvent"></local:Score>
+            <local:Score Grid.Row="8" Grid.Column="1" x:Name="ScoreR8C1" ExitEvent="ScoreExitEvent"></local:Score>
+            <local:Score Grid.Row="8" Grid.Column="2" x:Name="ScoreR8C2" ExitEvent="ScoreExitEvent"></local:Score>
+            <local:Score Grid.Row="8" Grid.Column="3" x:Name="ScoreR8C3" ExitEvent="ScoreExitEvent"></local:Score>
+            <local:Score Grid.Row="8" Grid.Column="4" x:Name="ScoreR8C4" ExitEvent="ScoreExitEvent"></local:Score>
+            <local:Score Grid.Row="8" Grid.Column="5" x:Name="ScoreR8C5" ExitEvent="ScoreExitEvent"></local:Score>
+            <local:Score Grid.Row="8" Grid.Column="6" x:Name="ScoreR8C6" ExitEvent="ScoreExitEvent"></local:Score>
+            <local:Score Grid.Row="8" Grid.Column="7" x:Name="ScoreR8C7" ExitEvent="ScoreExitEvent"></local:Score>
         </Grid>
         <Grid Grid.Row="2">
             <Button Margin="20" Click="CloseTournamentClick" HorizontalAlignment="Right" VerticalAlignment="Center" Content="Close" />

@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="AnddeXokoTxapelketa.Controls.Score"
+﻿<UserControl x:Class="AnddeXokoTxapelketa.Controls.PlayerLabel"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -6,24 +6,26 @@
              xmlns:local="clr-namespace:AnddeXokoTxapelketa.Controls"
              xmlns:materialDegign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450"
+             d:DesignWidth="800">
     <UserControl.Resources>
-        <Style x:Key="Score" TargetType="TextBox">
+        <Style x:Key="Border" TargetType="Border">
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="BorderBrush" Value="{DynamicResource PrimaryHueMidBrush}" />
+        </Style>
+        <Style x:Key="Player" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="20" />
             <Setter Property="HorizontalAlignment" Value="Stretch" />
-            <Setter Property="TextWrapping" Value="NoWrap" />
             <Setter Property="VerticalAlignment" Value="Center" />
-            <Setter Property="BorderThickness" Value="0" />
-            <!--<Setter Property="BorderBrush" Value="{DynamicResource PrimaryHueMidBrush}" />-->
-            <Setter Property="FontSize" Value="25" />
+            <Setter Property="Margin" Value="10" />
             <Setter Property="Foreground" Value="{DynamicResource SecondaryHueMidBrush}" />
-            <Setter Property="TextAlignment" Value="Center" />
         </Style>
     </UserControl.Resources>
-    <materialDegign:ColorZone Mode="Standard" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-                              VerticalContentAlignment="Stretch" Name="CZ"
-                              BorderThickness="1" BorderBrush="{DynamicResource PrimaryHueMidBrush}">
+    <materialDegign:ColorZone Mode="Standard" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+                              VerticalContentAlignment="Stretch" Name="CZ">
         <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="White">
-            <TextBox Style="{StaticResource Score}" Name="TBScore" LostFocus="LostFocus" PreviewTextInput="PreviewTextInput" />
+            <Border Style="{StaticResource Border}" />
+            <TextBlock Style="{StaticResource Player}" Name="Player" />
         </Grid>
     </materialDegign:ColorZone>
 </UserControl>

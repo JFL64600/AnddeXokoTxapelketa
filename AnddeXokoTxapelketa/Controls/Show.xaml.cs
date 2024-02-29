@@ -1,11 +1,9 @@
 ﻿using AnddeXokoTxapelketa.Classes;
 using AnddeXokoTxapelketa.Models;
-using MaterialDesignThemes.Wpf;
 using System.Configuration;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
 
 namespace AnddeXokoTxapelketa.Controls
 {
@@ -18,6 +16,7 @@ namespace AnddeXokoTxapelketa.Controls
         private readonly string _root = ConfigurationManager.AppSettings["root"];
         private Tournament _tournament;
         private int _currentGroup = 0;
+        private bool _isBoysCurrent = false;
         #region Events
         public event EventHandler? CloseTournamentEvent;
         #endregion
@@ -25,36 +24,71 @@ namespace AnddeXokoTxapelketa.Controls
         #region Events
         private void BPreviousClick(object sender, RoutedEventArgs e)
         {
-            //_currentGroup--;
-            //ShowGroup();
+            BPrevious.IsEnabled = true;
+            BNext.IsEnabled = true;
+            if (_isBoysCurrent)
+            {
+                if (_currentGroup == 0)
+                {
+                    _isBoysCurrent = false;
+                    _currentGroup = _tournament.Girls.Count - 1;
+                }
+                else
+                {
+                    _currentGroup--;
+                }
+            }
+            else
+            {
+                _currentGroup--;
+                BPrevious.IsEnabled = _currentGroup != 0;
+            }
+            SetGroup(_isBoysCurrent ? _tournament.Boys : _tournament.Girls);
         }
         private void BNextClick(object sender, RoutedEventArgs e)
         {
-            //_currentGroup++;
-            //ShowGroup();
+            BPrevious.IsEnabled = true;
+            BNext.IsEnabled = true;
+            if (_isBoysCurrent)
+            {
+                _currentGroup++;
+                BNext.IsEnabled = _currentGroup != _tournament.Boys.Count - 1;
+            }
+            else
+            {
+                if (_currentGroup < _tournament.Girls.Count - 1)
+                {
+                    _currentGroup++;
+                }
+                else
+                {
+                    _isBoysCurrent = true;
+                    _currentGroup = 0;
+                }
+            }
+            SetGroup(_isBoysCurrent ? _tournament.Boys : _tournament.Girls);
         }
-        private void TextChanged(object sender, TextChangedEventArgs e)
+        private void PlayerNameExitEvent(object sender, EventArgs e)
         {
-            TextBox tb = (TextBox)sender;
-            TextBlock tbLabel = (TextBlock)FindName($"{tb.Name}Label");
-            tbLabel.Text = tb.Text;
+            PlayerName playerName = (PlayerName)sender;
+            PlayerLabel playerLabel = (PlayerLabel)FindName(playerName.Name.Replace("Name", "Label"));
+            playerLabel.Value = playerName.Value;
+            _ = int.TryParse(playerName.Name.Last().ToString(), out int index);
+            (_isBoysCurrent ? _tournament.Boys : _tournament.Girls)[_currentGroup].Players[index - 1].Name = playerName.Value;
+            Tools.SaveTournament(_root, _tournament);
         }
-        private void ExitEvent(object sender, EventArgs e)
+        private void ScoreExitEvent(object sender, EventArgs e)
         {
             Score score = (Score)sender;
             Regex rx = new(@"ScoreR([0-9]{1})C([0-9]{1})", RegexOptions.Compiled | RegexOptions.IgnoreCase);
             MatchCollection matches = rx.Matches(score.Name);
             if (matches.Count > 0)
             {
-                //string row = matches[0].Groups[1].Value;
                 _ = int.TryParse(matches[0].Groups[1].Value, out int row);
                 _ = int.TryParse(matches[0].Groups[2].Value, out int column);
-                _tournament.Boys[0].Players[row - 1].Results[column - ((row > column) ? 1 : 2)] = score.Value;
+                (_isBoysCurrent ? _tournament.Boys : _tournament.Girls)[ _currentGroup].Players[row - 1].Results[column - ((row > column) ? 1 : 2)] = score.Value;
                 Tools.SaveTournament(_root, _tournament);
-                //TextBox tb = (TextBox)FindName($"TBPlayer{row}");
-                //MessageBox.Show(tb.Text);
             }
-            MessageBox.Show(((Score)sender).Value.ToString());
         }
         #endregion
         public Show()
@@ -66,20 +100,20 @@ namespace AnddeXokoTxapelketa.Controls
         {
             _tournament = tournament;
             tbTitle.Text = $"{tournament.Name} - Andde Xoko Txapelketa";
-            //foreach (Player player in _tournament.Girls[0].Players) { 
-
-            //}
             _currentGroup = 0;
+            BPrevious.IsEnabled = false;
             SetGroup(_tournament.Girls);
         }
         private void SetGroup(List<Models.Group> groups)
         {
-            //int i;
+            TBGroup.Text = $"{(_isBoysCurrent ? "M" : "N")} {_currentGroup + 1}";
             for (int i = 1; i <= 8; i++)
             {
                 if (i <= groups[_currentGroup].Players.Count)
                 {
-                    ((TextBox)FindName($"TBPlayer{i}")).Text = groups[_currentGroup].Players[i - 1].Name;
+                    EnablePlayer(i);
+                    ((PlayerName)FindName($"PlayerName{i}")).Value = groups[_currentGroup].Players[i - 1].Name;
+                    ((PlayerLabel)FindName($"PlayerLabel{i}")).Value = groups[_currentGroup].Players[i - 1].Name;
                     for (int j = 1; j <= groups[_currentGroup].Players[i - 1].Results.Count; j++)
                     {
                         if (j == i)
@@ -103,63 +137,58 @@ namespace AnddeXokoTxapelketa.Controls
             //EnablePlayer(8);
         }
         #endregion
-
-        private void UserControl_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        private void EnablePlayer(int index)
         {
-            if (IsVisible)
+            ((PlayerName)FindName($"PlayerName{index}")).Enable();
+            ((PlayerLabel)FindName($"PlayerLabel{index}")).Enable();
+            ((Diagonal)FindName($"Diagonal{index}")).Enable();
+            for (int i = 1; i <= 8; i++)
             {
-                //DisablePlayer(8);
+                if (i == index)
+                {
+                    continue;
+                }
+                ((Score)FindName($"ScoreR{index}C{i}")).Enable();
+                ((Score)FindName($"ScoreR{i}C{index}")).Enable();
             }
         }
         private void DisablePlayer(int index)
         {
-            //DisablePlayer($"mdCZ{index}0"); //Player
-            //TextBox tb = (TextBox)FindName($"TBPlayer{index}");
-            //tb.Visibility = Visibility.Hidden;
-            //DisablePlayer($"mdCZ0{index}"); //Player label
-            //TextBlock tbLabel = (TextBlock)FindName($"TBPlayer{index}Label");
-            //tbLabel.Visibility = Visibility.Hidden;
-            DisablePlayerDiagonal(index); //No result
+            ((PlayerName)FindName($"PlayerName{index}")).Disable();
+            ((PlayerLabel)FindName($"PlayerLabel{index}")).Disable();
+            ((Diagonal)FindName($"Diagonal{index}")).Disable();
+            for (int i = 1; i <= 8; i++)
+            {
+                if (i == index)
+                {
+                    continue;
+                }
+                ((Score)FindName($"ScoreR{index}C{i}")).Disable();
+                ((Score)FindName($"ScoreR{i}C{index}")).Disable();
+            }
         }
-        private void DisablePlayer(string name)
-        {
-            ColorZone cz = (ColorZone)FindName(name);
-            cz.IsEnabled = false;
-            cz.Background = Brushes.Beige;
-        }
-        private void DisablePlayerDiagonal(int index)
-        {
-            Diagonal diagonal = (Diagonal)FindName($"Diagonal{index}");
-            diagonal.IsEnabled = false;
-            diagonal.Mode = ColorZoneMode.PrimaryLight;
-        }
-        private void EnablePlayer(int index)
-        {
-            EnablePlayer($"mdCZ{index}0"); //Player
-            TextBox tb = (TextBox)FindName($"TBPlayer{index}");
-            tb.Visibility = Visibility.Visible;
-            EnablePlayer($"mdCZ0{index}"); //Player label
-            TextBlock tbLabel = (TextBlock)FindName($"TBPlayer{index}Label");
-            tbLabel.Visibility = Visibility.Visible;
-            EnablePlayerDiagonal(index); // No result
-        }
-        private void EnablePlayer(string name)
-        {
-            ColorZone cz = (ColorZone)FindName(name);
-            cz.IsEnabled = true;
-            cz.ClearValue(BackgroundProperty);
-            cz.Mode = ColorZoneMode.Standard;
-        }
-        private void EnablePlayerDiagonal(int index)
-        {
-            ColorZone cz = (ColorZone)FindName($"mdCZ{index}{index}");
-            cz.IsEnabled = true;
-            cz.Mode = ColorZoneMode.PrimaryMid;
-        }
-
-        private void ScoreR1C2_ExitEvent(object sender, EventArgs e)
-        {
-
-        }
+        //private void EnablePlayer(int index)
+        //{
+        //    EnablePlayer($"mdCZ{index}0"); //Player
+        //    TextBox tb = (TextBox)FindName($"TBPlayer{index}");
+        //    tb.Visibility = Visibility.Visible;
+        //    EnablePlayer($"mdCZ0{index}"); //Player label
+        //    TextBlock tbLabel = (TextBlock)FindName($"TBPlayer{index}Label");
+        //    tbLabel.Visibility = Visibility.Visible;
+        //    EnablePlayerDiagonal(index); // No result
+        //}
+        //private void EnablePlayer(string name)
+        //{
+        //    ColorZone cz = (ColorZone)FindName(name);
+        //    cz.IsEnabled = true;
+        //    cz.ClearValue(BackgroundProperty);
+        //    cz.Mode = ColorZoneMode.Standard;
+        //}
+        //private void EnablePlayerDiagonal(int index)
+        //{
+        //    ColorZone cz = (ColorZone)FindName($"mdCZ{index}{index}");
+        //    cz.IsEnabled = true;
+        //    cz.Mode = ColorZoneMode.PrimaryMid;
+        //}
     }
 }
