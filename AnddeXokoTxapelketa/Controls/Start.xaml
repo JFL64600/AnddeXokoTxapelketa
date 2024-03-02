@@ -36,9 +36,14 @@
                         <Grid Width="300">
                             <TextBlock FontSize="30" Text="{Binding Name}" VerticalAlignment="Center" />
                             <!--<TextBlock FontSize="30" Opacity="0.8" Text="{Binding Name}" />-->
-                            <Button HorizontalAlignment="Right" VerticalAlignment="Center" Margin="20" Click="OpenTournamentClick" CommandParameter="{Binding Name}">
-                                <materialDegign:PackIcon Kind="FolderOpen"/>
-                            </Button>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="20">
+                                <Button VerticalAlignment="Center" Click="OpenTournamentClick" CommandParameter="{Binding Name}">
+                                    <materialDegign:PackIcon Kind="FolderOpen"/>
+                                </Button>
+                                <Button Margin="20" Click="OpenRankingClick" CommandParameter="{Binding Name}">
+                                    <materialDegign:PackIcon Kind="ArrowUpRight"/>
+                                </Button>
+                            </StackPanel>
                         </Grid>
                     </DataTemplate>
                 </ListView.ItemTemplate>

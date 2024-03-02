@@ -86,7 +86,7 @@ namespace AnddeXokoTxapelketa.Controls
             {
                 _ = int.TryParse(matches[0].Groups[1].Value, out int row);
                 _ = int.TryParse(matches[0].Groups[2].Value, out int column);
-                (_isBoysCurrent ? _tournament.Boys : _tournament.Girls)[ _currentGroup].Players[row - 1].Results[column - ((row > column) ? 1 : 2)] = score.Value;
+                (_isBoysCurrent ? _tournament.Boys : _tournament.Girls)[_currentGroup].Players[row - 1].Results[column - ((row > column) ? 1 : 2)] = score.Value;
                 Tools.SaveTournament(_root, _tournament);
             }
         }
@@ -101,7 +101,9 @@ namespace AnddeXokoTxapelketa.Controls
             _tournament = tournament;
             tbTitle.Text = $"{tournament.Name} - Andde Xoko Txapelketa";
             _currentGroup = 0;
+            _isBoysCurrent = false;
             BPrevious.IsEnabled = false;
+            BNext.IsEnabled = true;
             SetGroup(_tournament.Girls);
         }
         private void SetGroup(List<Models.Group> groups)
@@ -114,13 +116,15 @@ namespace AnddeXokoTxapelketa.Controls
                     EnablePlayer(i);
                     ((PlayerName)FindName($"PlayerName{i}")).Value = groups[_currentGroup].Players[i - 1].Name;
                     ((PlayerLabel)FindName($"PlayerLabel{i}")).Value = groups[_currentGroup].Players[i - 1].Name;
-                    for (int j = 1; j <= groups[_currentGroup].Players[i - 1].Results.Count; j++)
+                    int index = 0;
+                    for (int j = 1; j <= groups[_currentGroup].Players[i - 1].Results.Count + 1; j++)
                     {
                         if (j == i)
                         {
                             continue;
                         }
-                        ((Score)FindName($"ScoreR{i}C{j}")).Value = groups[_currentGroup].Players[i - 1].Results[j - 1];
+                        ((Score)FindName($"ScoreR{i}C{j}")).Value = groups[_currentGroup].Players[i - 1].Results[index];
+                        index++;
                     }
                 }
                 else

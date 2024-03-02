@@ -1,7 +1,10 @@
 ﻿using AnddeXokoTxapelketa.Classes;
 using AnddeXokoTxapelketa.EventsArgs;
 using AnddeXokoTxapelketa.Models;
+using Newtonsoft.Json;
 using System.Configuration;
+using System.IO;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -31,34 +34,109 @@ namespace AnddeXokoTxapelketa.Controls
         public Start()
         {
             InitializeComponent();
-            List<Tournament> items = new()
-            {
-                new Tournament() { Name = "Neskak" },
-                new Tournament() { Name = "Mutikoak" }
-            };
-            lvTournaments.ItemsSource = items;
         }
         private void OpenTournamentClick(object sender, RoutedEventArgs e)
+        {
+            Tournament? tournament = GetTournament(sender);
+            if (tournament != null)
+            {
+                OpenTournamentEvent?.Invoke(
+                    this,
+                    new TournamentEventArgs()
+                    {
+                        Tournament = tournament
+                    });
+            }
+        }
+        private void OpenRankingClick(object sender, RoutedEventArgs e)
+        {
+            Tournament? tournament = Oups(GetTournament(sender));
+            if (tournament != null)
+            {
+                string path = Path.Combine(_root, tournament.Name);
+                using (StreamWriter sw = new(Path.Combine(path, "rankingN.txt"), false, Encoding.UTF8))
+                {
+                    List<PlayerGeneral> general = [];
+                    for (int i = 0; i < tournament.Girls.Count; i++)
+                    {
+                        tournament.Girls[i].Players.Sort();
+                        sw.WriteLine($"N{i + 1}");
+                        int rank = 1;
+                        foreach (Player player in tournament.Girls[i].Players)
+                        {
+                            general.Add(new PlayerGeneral
+                            {
+                                Name = player.Name,
+                                Results = player.Results,
+                                Position = rank,
+                                Group = $"N{i + 1}"
+                            });
+                            sw.WriteLine($"{rank}. {player.Name}");
+                            rank++;
+                        }
+                    }
+                    general.Sort();
+                    sw.WriteLine();
+                    sw.WriteLine("Général");
+                    int rankGeneral = 1;
+                    foreach (PlayerGeneral player in general)
+                    {
+                        sw.WriteLine($"{rankGeneral}. {player.Name} ({player.Group})");
+                        rankGeneral++;
+                    }
+                }
+
+                using (StreamWriter sw = new(Path.Combine(path, "rankingM.txt"), false, Encoding.UTF8))
+                {
+                    List<PlayerGeneral> general = [];
+                    for (int i = 0; i < tournament.Boys.Count; i++)
+                    {
+                        tournament.Boys[i].Players.Sort();
+                        sw.WriteLine($"M{i + 1}");
+                        int rank = 1;
+                        foreach (Player player in tournament.Boys[i].Players)
+                        {
+                            general.Add(new PlayerGeneral
+                            {
+                                Name = player.Name,
+                                Results = player.Results,
+                                Position = rank,
+                                Group = $"M{i + 1}"
+                            });
+                            sw.WriteLine($"{rank}. {player.Name}");
+                            rank++;
+                        }
+                    }
+                    general.Sort();
+                    sw.WriteLine();
+                    sw.WriteLine("Général");
+                    int rankGeneral = 1;
+                    foreach (PlayerGeneral player in general)
+                    {
+                        sw.WriteLine($"{rankGeneral}. {player.Name} ({player.Group})");
+                        rankGeneral++;
+                    }
+                }
+            }
+        }
+        private void CloseClick(object sender, RoutedEventArgs e)
+        {
+            CloseApplicationtEvent?.Invoke(this, new EventArgs());
+        }
+        private static Tournament? GetTournament(object sender)
         {
             Button button = (Button)sender;
             if (button != null)
             {
-                Tournament tournament = (Tournament)button.DataContext;
-                if (tournament != null)
-                {
-                    OpenTournamentEvent?.Invoke(
-                        this,
-                        new TournamentEventArgs()
-                        {
-                            Tournament = tournament
-                        });
-                }
+                return (Tournament?)button.DataContext;
             }
+            return null;
         }
-
-        private void CloseClick(object sender, RoutedEventArgs e)
+        private static Tournament Oups(Tournament tournament)
         {
-            CloseApplicationtEvent?.Invoke(this, new EventArgs());
+            var serialized = JsonConvert.SerializeObject(tournament);
+            return JsonConvert.DeserializeObject<Tournament>(serialized);
+
         }
     }
 }
