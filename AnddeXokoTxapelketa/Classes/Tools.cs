@@ -1,4 +1,5 @@
 ﻿using AnddeXokoTxapelketa.Models;
+using Newtonsoft.Json;
 using System.IO;
 using System.Text;
 using System.Text.Json;
@@ -8,21 +9,6 @@ namespace AnddeXokoTxapelketa.Classes
     public class Tools
     {
         #region Methods
-        //public static List<Tournament> GetTournaments(string root)
-        //{
-        //    List<Tournament> results = [];
-        //    DirectoryInfo diRoot = new(root);
-        //    foreach (DirectoryInfo di in diRoot.GetDirectories())
-        //    {
-        //        string fileName = Path.Combine(root, di.Name, "tournament.json");
-        //        if (File.Exists(fileName))
-        //        {
-        //            using StreamReader sr = new(fileName, Encoding.UTF8);
-        //            results.Add(JsonSerializer.Deserialize<Tournament>(sr.ReadToEnd()));
-        //        }
-        //    }
-        //    return results;
-        //}
         public static List<Tournament> GetTournaments(string root)
         {
             List<Tournament> results = [];
@@ -33,7 +19,7 @@ namespace AnddeXokoTxapelketa.Classes
                 if (File.Exists(fileName))
                 {
                     using StreamReader sr = new(fileName, Encoding.UTF8);
-                    results.Add(JsonSerializer.Deserialize<Tournament>(sr.ReadToEnd()));
+                    results.Add(System.Text.Json.JsonSerializer.Deserialize<Tournament>(sr.ReadToEnd()));
                 }
             }
             return results;
@@ -56,90 +42,41 @@ namespace AnddeXokoTxapelketa.Classes
         }
         public static void SaveTournament(string root, Tournament tournament)
         {
-            string path = Path.Combine(root, tournament.Name);
-            using StreamWriter sw = new(Path.Combine(path, "tournament.json"), false, Encoding.UTF8);
-            sw.Write(JsonSerializer.Serialize(tournament, new JsonSerializerOptions() { WriteIndented = true }));
+            using StreamWriter sw = new(Path.Combine(root, tournament.Name, "tournament.json"), false, Encoding.UTF8);
+            sw.Write(System.Text.Json.JsonSerializer.Serialize(tournament, GetJsonSerializerOptions()));
         }
-        //public static List<Group> CreateGroups(int teams, int groups)
-        //{
-        //    List<Group> result = [];
-        //    int teamsGroup = Math.DivRem(teams, groups, out int teamsPlus);
-        //    for (int i = 0; i < groups; i++)
-        //    {
-        //        result.Add(new Group()
-        //        {
-        //            Code = ((char)(65 + i)).ToString()
-        //        });
-        //        int newTeamsGroup = teamsGroup;
-        //        if (teamsPlus > 0)
-        //        {
-        //            newTeamsGroup++;
-        //            teamsPlus--;
-        //        }
-        //        for (int j = 0; j < newTeamsGroup; j++)
-        //        {
-        //            result.Last().Teams.Add(new Team()
-        //            {
-        //                Code = $"{result.Last().Code}{j + 1}",
-        //                Results = CreateResults(newTeamsGroup - 1)
-        //            });
-        //        }
-        //    }
-        //    return result;
-        //}
-        //public static List<Result> CreateResults(int teams)
-        //{
-        //    List<Result> result = [];
-        //    for (int i = 0; i < teams; i++)
-        //    {
-        //        result.Add(new Result());
-        //    }
-        //    return result;
-        //}
-        //public static bool NumberValidation(string value)
-        //{
-        //    System.Text.RegularExpressions.Regex regex = new("[^0-9]+");
-        //    return regex.IsMatch(value);
-        //}
-        //public static int GetIntegerText(string value)
-        //{
-        //    if (string.IsNullOrWhiteSpace(value))
-        //    {
-        //        return 0;
-        //    }
-        //    return int.Parse(value);
-        //}
-        //public static int GetScoreMaxCount(int scoreMax, params int[] scores)
-        //{
-        //    return (from int s in scores
-        //            where s == scoreMax
-        //            select s).Count();
-        //}
-        //public static string GetScore(int scoreMax, int[] scores, int[] againstScores)
-        //{
-        //    if (scores.Sum() + againstScores.Sum() == 0)
-        //    {
-        //        return string.Empty;
-        //    }
-        //    int scoreMaxCount = GetScoreMaxCount(scoreMax, scores);
-        //    if (scoreMaxCount == 3)
-        //    {
-        //        return "V";
-        //    }
-        //    int points = 0;
-        //    for (int i = 0; i < againstScores.Length; i++)
-        //    {
-        //        if (againstScores[i] == scoreMax)
-        //        {
-        //            points += scores[i];
-        //        }
-        //    }
-        //    return $"{scoreMaxCount} {points}";
-        //}
-        //public static int[] GetResult(Result result)
-        //{
-        //    return [result.M1, result.M2, result.M3, result.M4, result.M5];
-        //}
+        public static Tournament CloneTournament(Tournament tournament)
+        {
+            var serialized = JsonConvert.SerializeObject(tournament);
+            return JsonConvert.DeserializeObject<Tournament>(serialized);
+
+        }
+        public static List<PlayerGeneral> GetGeneralRanking(string root, string tournamentName)
+        {
+            using StreamReader sr = new(Path.Combine(root, tournamentName, "generalRankingM.json"), Encoding.UTF8);
+            return System.Text.Json.JsonSerializer.Deserialize<List<PlayerGeneral>>(sr.ReadToEnd());
+        }
+
+        public static void SaveGeneralRanking(string root, string tournamentName, List<PlayerGeneral> players)
+        {
+            using (StreamWriter sw = new(Path.Combine(root, tournamentName, "generalRankingM.json"), false, Encoding.UTF8))
+            {
+                sw.Write(System.Text.Json.JsonSerializer.Serialize(players, GetJsonSerializerOptions()));
+            }
+            using (StreamWriter sw = new(Path.Combine(root, tournamentName, "generalRankingM.txt"), false, Encoding.UTF8))
+            {
+                int rankGeneral = 1;
+                foreach (PlayerGeneral player in players)
+                {
+                    if (string.IsNullOrWhiteSpace(player.Name))
+                    {
+                        continue;
+                    }
+                    sw.WriteLine($"{rankGeneral}. {player.Name} ({player.Group})");
+                    rankGeneral++;
+                }
+            }
+        }
         #endregion
         #region Privates
         private static List<Group> GetGroups(int players, int groups)
@@ -161,6 +98,10 @@ namespace AnddeXokoTxapelketa.Classes
                 }
             }
             return result;
+        }
+        private static JsonSerializerOptions GetJsonSerializerOptions()
+        {
+            return new JsonSerializerOptions() { WriteIndented = true };
         }
         #endregion
     }

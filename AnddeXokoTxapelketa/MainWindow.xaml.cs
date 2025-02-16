@@ -16,25 +16,49 @@ namespace AnddeXokoTxapelketa
             DragMove();
         }
         #endregion
-        public MainWindow()
-        {
-            InitializeComponent();
-            start.OpenTournamentEvent += new EventHandler<TournamentEventArgs>(OpenTournamentEventHandler);
-            start.CloseApplicationtEvent += new EventHandler(CloseApplicationtEventHandler);
-            show.CloseTournamentEvent += new EventHandler(CloseTournamentEventHandler);
-        }
+        #region Methods
         public void OpenTournamentEventHandler(object sender, TournamentEventArgs e)
         {
             ((Show)((MaterialDesignThemes.Wpf.Transitions.TransitionerSlide)tMain.Items[2]).Content).SetTournament(e.Tournament);
             tMain.SelectedIndex = 2;
         }
+        public void OpenRankingEventHandler(object sender, RankingEventArgs e)
+        {
+            ((Rank)((MaterialDesignThemes.Wpf.Transitions.TransitionerSlide)tMain.Items[3]).Content).SetTournament(e.Tournament);
+            tMain.SelectedIndex = 3;
+        }
+        public void OpenFinalTableEventArgs(object sender, FinalTableEventArgs e)
+        {
+            ((FinalTable)((MaterialDesignThemes.Wpf.Transitions.TransitionerSlide)tMain.Items[4]).Content).SetGeneralRanking(e.TournamentName, e.GeneralRanking);
+            tMain.SelectedIndex = 4;
+        }
         public void CloseTournamentEventHandler(object sender, EventArgs e)
+        {
+            tMain.SelectedIndex = 0;
+        }
+        public void CloseRankEventHandler(object sender, EventArgs e)
+        {
+            tMain.SelectedIndex = 0;
+        }
+        public void CloseFinalTableEventHandler(object sender, EventArgs e)
         {
             tMain.SelectedIndex = 0;
         }
         public void CloseApplicationtEventHandler(object sender, EventArgs e)
         {
             Environment.Exit(0);
+        }
+        #endregion
+        public MainWindow()
+        {
+            InitializeComponent();
+            start.OpenTournamentEvent += new EventHandler<TournamentEventArgs>(OpenTournamentEventHandler);
+            start.OpenRankingEvent += new EventHandler<RankingEventArgs>(OpenRankingEventHandler);
+            start.OpenFinalTableEvent += new EventHandler<FinalTableEventArgs>(OpenFinalTableEventArgs);
+            start.CloseApplicationtEvent += new EventHandler(CloseApplicationtEventHandler);
+            show.CloseTournamentEvent += new EventHandler(CloseTournamentEventHandler);
+            rank.CloseRankEvent += new EventHandler(CloseRankEventHandler);
+            finalTable.CloseFinalTableEvent += new EventHandler(CloseFinalTableEventHandler);
         }
     }
 }

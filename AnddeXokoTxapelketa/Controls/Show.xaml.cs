@@ -91,10 +91,6 @@ namespace AnddeXokoTxapelketa.Controls
             }
         }
         #endregion
-        public Show()
-        {
-            InitializeComponent();
-        }
         #region Methods
         public void SetTournament(Tournament tournament)
         {
@@ -134,13 +130,11 @@ namespace AnddeXokoTxapelketa.Controls
             }
         }
         #endregion
-        #region Privates
-        private void CloseTournamentClick(object sender, RoutedEventArgs e)
+        public Show()
         {
-            CloseTournamentEvent?.Invoke(this, new EventArgs());
-            //EnablePlayer(8);
+            InitializeComponent();
         }
-        #endregion
+        #region Privates
         private void EnablePlayer(int index)
         {
             ((PlayerName)FindName($"PlayerName{index}")).Enable();
@@ -171,28 +165,10 @@ namespace AnddeXokoTxapelketa.Controls
                 ((Score)FindName($"ScoreR{i}C{index}")).Disable();
             }
         }
-        //private void EnablePlayer(int index)
-        //{
-        //    EnablePlayer($"mdCZ{index}0"); //Player
-        //    TextBox tb = (TextBox)FindName($"TBPlayer{index}");
-        //    tb.Visibility = Visibility.Visible;
-        //    EnablePlayer($"mdCZ0{index}"); //Player label
-        //    TextBlock tbLabel = (TextBlock)FindName($"TBPlayer{index}Label");
-        //    tbLabel.Visibility = Visibility.Visible;
-        //    EnablePlayerDiagonal(index); // No result
-        //}
-        //private void EnablePlayer(string name)
-        //{
-        //    ColorZone cz = (ColorZone)FindName(name);
-        //    cz.IsEnabled = true;
-        //    cz.ClearValue(BackgroundProperty);
-        //    cz.Mode = ColorZoneMode.Standard;
-        //}
-        //private void EnablePlayerDiagonal(int index)
-        //{
-        //    ColorZone cz = (ColorZone)FindName($"mdCZ{index}{index}");
-        //    cz.IsEnabled = true;
-        //    cz.Mode = ColorZoneMode.PrimaryMid;
-        //}
+        private void CloseTournamentClick(object sender, RoutedEventArgs e)
+        {
+            CloseTournamentEvent?.Invoke(this, new EventArgs());
+        }
+        #endregion
     }
 }

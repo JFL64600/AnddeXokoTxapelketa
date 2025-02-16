@@ -36,10 +36,6 @@ namespace AnddeXokoTxapelketa.Controls
             ExitEvent?.Invoke(this, new EventArgs());
         }
         #endregion
-        public Score()
-        {
-            InitializeComponent();
-        }
         #region Methods
         public void Enable()
         {
@@ -52,5 +48,9 @@ namespace AnddeXokoTxapelketa.Controls
             TBScore.Visibility = Visibility.Hidden;
         }
         #endregion
+        public Score()
+        {
+            InitializeComponent();
+        }
     }
 }

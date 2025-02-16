@@ -43,6 +43,9 @@
                                 <Button Margin="20" Click="OpenRankingClick" CommandParameter="{Binding Name}">
                                     <materialDegign:PackIcon Kind="ArrowUpRight"/>
                                 </Button>
+                                <Button Margin="0" Click="OpenFinalTableClick" CommandParameter="{Binding Name}">
+                                    <materialDegign:PackIcon Kind="Ballot"/>
+                                </Button>
                             </StackPanel>
                         </Grid>
                     </DataTemplate>

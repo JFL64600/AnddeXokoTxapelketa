@@ -33,6 +33,24 @@
                 </materialDegign:TransitionerSlide.ForwardWipe>
                 <localControls:Show x:Name="show"/>
             </materialDegign:TransitionerSlide>
+            <materialDegign:TransitionerSlide>
+                <materialDegign:TransitionerSlide.BackwardWipe>
+                    <materialDegign:CircleWipe/>
+                </materialDegign:TransitionerSlide.BackwardWipe>
+                <materialDegign:TransitionerSlide.ForwardWipe>
+                    <materialDegign:SlideWipe Direction="Right"/>
+                </materialDegign:TransitionerSlide.ForwardWipe>
+                <localControls:Rank x:Name="rank"/>
+            </materialDegign:TransitionerSlide>
+            <materialDegign:TransitionerSlide>
+                <materialDegign:TransitionerSlide.BackwardWipe>
+                    <materialDegign:CircleWipe/>
+                </materialDegign:TransitionerSlide.BackwardWipe>
+                <materialDegign:TransitionerSlide.ForwardWipe>
+                    <materialDegign:SlideWipe Direction="Right"/>
+                </materialDegign:TransitionerSlide.ForwardWipe>
+                <localControls:FinalTable x:Name="finalTable"/>
+            </materialDegign:TransitionerSlide>
         </materialDegign:Transitioner>
     </Grid>
 </Window>
