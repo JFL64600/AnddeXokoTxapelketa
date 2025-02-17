@@ -21,7 +21,7 @@ namespace AnddeXokoTxapelketa.Controls
         #region Events
         public event EventHandler<TournamentEventArgs>? OpenTournamentEvent;
         public event EventHandler<RankingEventArgs>? OpenRankingEvent;
-        public event EventHandler<FinalTableEventArgs>? OpenFinalTableEvent;
+        public event EventHandler<FinalEventArgs>? OpenFinalTableEvent;
         public event EventHandler? CloseApplicationtEvent;
         #endregion
         #endregion
@@ -75,7 +75,7 @@ namespace AnddeXokoTxapelketa.Controls
                 {
                     OpenFinalTableEvent?.Invoke(
                         this,
-                        new FinalTableEventArgs()
+                        new FinalEventArgs()
                         {
                             TournamentName = tournament.Name,
                             GeneralRanking = generalRanking

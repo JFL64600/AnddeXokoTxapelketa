@@ -49,7 +49,7 @@
                 <materialDegign:TransitionerSlide.ForwardWipe>
                     <materialDegign:SlideWipe Direction="Right"/>
                 </materialDegign:TransitionerSlide.ForwardWipe>
-                <localControls:FinalTable x:Name="finalTable"/>
+                <localControls:Final x:Name="final"/>
             </materialDegign:TransitionerSlide>
         </materialDegign:Transitioner>
     </Grid>

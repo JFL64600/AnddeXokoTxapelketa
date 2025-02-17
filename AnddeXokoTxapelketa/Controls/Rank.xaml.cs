@@ -36,6 +36,9 @@ namespace AnddeXokoTxapelketa.Controls
                 int rank = 1;
                 foreach (Player player in tournament.Boys[i].Players)
                 {
+                    if (string.IsNullOrWhiteSpace(player.Name)) {
+                        continue;
+                    }
                     general.Add(new PlayerGeneral
                     {
                         Name = player.Name,

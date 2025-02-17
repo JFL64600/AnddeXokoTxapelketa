@@ -27,9 +27,9 @@ namespace AnddeXokoTxapelketa
             ((Rank)((MaterialDesignThemes.Wpf.Transitions.TransitionerSlide)tMain.Items[3]).Content).SetTournament(e.Tournament);
             tMain.SelectedIndex = 3;
         }
-        public void OpenFinalTableEventArgs(object sender, FinalTableEventArgs e)
+        public void OpenFinalEventArgs(object sender, FinalEventArgs e)
         {
-            ((FinalTable)((MaterialDesignThemes.Wpf.Transitions.TransitionerSlide)tMain.Items[4]).Content).SetGeneralRanking(e.TournamentName, e.GeneralRanking);
+            ((Final)((MaterialDesignThemes.Wpf.Transitions.TransitionerSlide)tMain.Items[4]).Content).SetGeneralRanking(e.TournamentName, e.GeneralRanking);
             tMain.SelectedIndex = 4;
         }
         public void CloseTournamentEventHandler(object sender, EventArgs e)
@@ -40,7 +40,7 @@ namespace AnddeXokoTxapelketa
         {
             tMain.SelectedIndex = 0;
         }
-        public void CloseFinalTableEventHandler(object sender, EventArgs e)
+        public void CloseFinalEventHandler(object sender, EventArgs e)
         {
             tMain.SelectedIndex = 0;
         }
@@ -54,11 +54,11 @@ namespace AnddeXokoTxapelketa
             InitializeComponent();
             start.OpenTournamentEvent += new EventHandler<TournamentEventArgs>(OpenTournamentEventHandler);
             start.OpenRankingEvent += new EventHandler<RankingEventArgs>(OpenRankingEventHandler);
-            start.OpenFinalTableEvent += new EventHandler<FinalTableEventArgs>(OpenFinalTableEventArgs);
+            start.OpenFinalTableEvent += new EventHandler<FinalEventArgs>(OpenFinalEventArgs);
             start.CloseApplicationtEvent += new EventHandler(CloseApplicationtEventHandler);
             show.CloseTournamentEvent += new EventHandler(CloseTournamentEventHandler);
             rank.CloseRankEvent += new EventHandler(CloseRankEventHandler);
-            finalTable.CloseFinalTableEvent += new EventHandler(CloseFinalTableEventHandler);
+            final.CloseFinalTableEvent += new EventHandler(CloseFinalEventHandler);
         }
     }
 }

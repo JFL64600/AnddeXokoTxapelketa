@@ -23,7 +23,7 @@
                 Command="{x:Static materialDegign:Transitioner.MoveNextCommand}"
                 HorizontalAlignment="Left" VerticalAlignment="Bottom"
                 Margin="20">
-            <materialDegign:PackIcon Kind="AddAlarm"/>
+            <materialDegign:PackIcon Kind="Add"/>
         </Button>
         <Grid Grid.Row="2">
             <Grid.RowDefinitions>
@@ -35,7 +35,6 @@
                     <DataTemplate>
                         <Grid Width="300">
                             <TextBlock FontSize="30" Text="{Binding Name}" VerticalAlignment="Center" />
-                            <!--<TextBlock FontSize="30" Opacity="0.8" Text="{Binding Name}" />-->
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="20">
                                 <Button VerticalAlignment="Center" Click="OpenTournamentClick" CommandParameter="{Binding Name}">
                                     <materialDegign:PackIcon Kind="FolderOpen"/>

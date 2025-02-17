@@ -12,13 +12,15 @@ namespace AnddeXokoTxapelketa.Controls
         public void SetGroup(string name, Group group)
         {
             GroupName.Text = name;
-            for (int i = 0; i < group.Players.Count - 1; i++)
+            int rank = 1;
+            for (int i = 0; i < group.Players.Count; i++)
             {
                 if (string.IsNullOrWhiteSpace(group.Players[i].Name))
                 {
                     continue;
                 }
-                ((RankPlayerLabel)FindName($"Player{i + 1}")).Value = $"{i + 1}. {group.Players[i].Name}";
+                ((RankPlayerLabel)FindName($"Player{rank}")).Value = $"{rank}. {group.Players[i].Name}";
+                rank++;
             }
         }
         #endregion
