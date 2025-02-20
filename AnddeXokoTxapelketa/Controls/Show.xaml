@@ -112,7 +112,7 @@
             <local:PlayerLabel Grid.Row="0" Grid.Column="6" x:Name="PlayerLabel6"></local:PlayerLabel>
             <local:PlayerLabel Grid.Row="0" Grid.Column="7" x:Name="PlayerLabel7"></local:PlayerLabel>
             <local:PlayerLabel Grid.Row="0" Grid.Column="8" x:Name="PlayerLabel8"></local:PlayerLabel>
-            <local:Score Grid.Row="1" Grid.Column="2" x:Name="ScoreR1C2" ExitEvent="ScoreExitEvent"></local:Score>
+            <local:Score Grid.Row="1" Grid.Column="2" x:Name="ScoreR1C2" ExitEvent="ScoreExitEvent" MouseDoubleClick="OpenScore"></local:Score>
             <local:Score Grid.Row="1" Grid.Column="3" x:Name="ScoreR1C3" ExitEvent="ScoreExitEvent"></local:Score>
             <local:Score Grid.Row="1" Grid.Column="4" x:Name="ScoreR1C4" ExitEvent="ScoreExitEvent"></local:Score>
             <local:Score Grid.Row="1" Grid.Column="5" x:Name="ScoreR1C5" ExitEvent="ScoreExitEvent"></local:Score>
@@ -172,5 +172,8 @@
         <Grid Grid.Row="2">
             <Button Margin="20" Click="CloseTournamentClick" HorizontalAlignment="Right" VerticalAlignment="Center" Content="Close" />
         </Grid>
+        <Popup Name="popup" IsOpen="False" StaysOpen="False" Placement="Center">
+            <local:ScoreDialog/>
+        </Popup>
     </Grid>
 </UserControl>

@@ -4,6 +4,7 @@ using System.Configuration;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace AnddeXokoTxapelketa.Controls
 {
@@ -88,6 +89,29 @@ namespace AnddeXokoTxapelketa.Controls
                 _ = int.TryParse(matches[0].Groups[2].Value, out int column);
                 (_isBoysCurrent ? _tournament.Boys : _tournament.Girls)[_currentGroup].Players[row - 1].Results[column - ((row > column) ? 1 : 2)] = score.Value;
                 Tools.SaveTournament(_root, _tournament);
+            }
+        }
+        private void OpenScore(object sender, MouseButtonEventArgs e)
+        {
+            Score score = (Score)sender;
+            Regex rx = new(@"ScoreR([0-9]{1})C([0-9]{1})", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+            MatchCollection matches = rx.Matches(score.Name);
+            if (matches.Count > 0)
+            {
+                _ = int.TryParse(matches[0].Groups[1].Value, out int row);
+                _ = int.TryParse(matches[0].Groups[2].Value, out int column);
+                (_isBoysCurrent ? _tournament.Boys : _tournament.Girls)[_currentGroup].Players[row - 1].Results[column - ((row > column) ? 1 : 2)] = score.Value;
+                //Tools.SaveTournament(_root, _tournament);
+                ScoreDialog scoreDialog = (ScoreDialog)popup.Child;
+                scoreDialog.Init(
+                    score,
+                    (_isBoysCurrent ? _tournament.Boys : _tournament.Girls)[_currentGroup].Players[row - 1],
+                    (_isBoysCurrent ? _tournament.Boys : _tournament.Girls)[_currentGroup].Players[column - 1]);
+                popup.IsOpen = true;
+                if (scoreDialog.Canceled)
+                {
+                    MessageBox.Show("oups !!!");
+                }
             }
         }
         #endregion
