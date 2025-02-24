@@ -5,6 +5,7 @@ namespace AnddeXokoTxapelketa.EventsArgs
     public class FinalEventArgs : EventArgs
     {
         public string TournamentName { get; set; } = string.Empty;
-        public List<PlayerGeneral> GeneralRanking { get; set; } = [];
+        public Leagues Leagues { get; set; } = new();
+        public GeneralRanking GeneralRanking { get; set; } = new();
     }
 }

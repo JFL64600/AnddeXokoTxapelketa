@@ -70,16 +70,21 @@ namespace AnddeXokoTxapelketa.Controls
             Tournament? tournament = GetTournament(sender);
             if (tournament != null)
             {
-                List<PlayerGeneral> generalRanking = Tools.GetGeneralRanking(_root, tournament.Name);
-                if (generalRanking != null)
+                Leagues leagues = Tools.GetLeagues(_root, tournament.Name);
+                if (leagues != null)
                 {
-                    OpenFinalTableEvent?.Invoke(
-                        this,
-                        new FinalEventArgs()
-                        {
-                            TournamentName = tournament.Name,
-                            GeneralRanking = generalRanking
-                        });
+                    GeneralRanking generalRanking = Tools.GetGeneralRanking(_root, tournament.Name);
+                    if (generalRanking != null)
+                    {
+                        OpenFinalTableEvent?.Invoke(
+                            this,
+                            new FinalEventArgs()
+                            {
+                                TournamentName = tournament.Name,
+                                Leagues = leagues,
+                                GeneralRanking = generalRanking
+                            });
+                    }
                 }
             }
         }

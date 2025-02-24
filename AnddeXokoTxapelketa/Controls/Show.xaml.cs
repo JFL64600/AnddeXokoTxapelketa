@@ -116,7 +116,7 @@ namespace AnddeXokoTxapelketa.Controls
         }
         #endregion
         #region Methods
-        public void SetTournament(Tournament tournament)
+        public void Init(Tournament tournament)
         {
             _tournament = tournament;
             tbTitle.Text = $"{tournament.Name} - Andde Xoko Txapelketa";

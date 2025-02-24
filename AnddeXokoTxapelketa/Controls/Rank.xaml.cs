@@ -18,16 +18,32 @@ namespace AnddeXokoTxapelketa.Controls
         #endregion
         #endregion
         #region Methods
-        public void SetTournament(Tournament tournament)
+        public void Init(Tournament tournament)
         {
+            GeneralRanking generalRanking = new();
             tbTitle.Text = $"{tournament.Name} - Andde Xoko Txapelketa";
             for (int i = 0; i < tournament.Girls.Count; i++)
             {
                 tournament.Girls[i].Players.Sort();
                 string groupName = $"N{i + 1}";
                 ((RankGroup)FindName(groupName)).SetGroup(groupName, tournament.Girls[i]);
+                int rank = 1;
+                foreach (Player player in tournament.Girls[i].Players)
+                {
+                    if (string.IsNullOrWhiteSpace(player.Name))
+                    {
+                        continue;
+                    }
+                    generalRanking.Girls.Add(new PlayerGeneral
+                    {
+                        Name = player.Name,
+                        Results = player.Results,
+                        Position = rank,
+                        Group = groupName
+                    });
+                    rank++;
+                }
             }
-            List<PlayerGeneral> general = [];
             for (int i = 0; i < tournament.Boys.Count; i++)
             {
                 tournament.Boys[i].Players.Sort();
@@ -39,7 +55,7 @@ namespace AnddeXokoTxapelketa.Controls
                     if (string.IsNullOrWhiteSpace(player.Name)) {
                         continue;
                     }
-                    general.Add(new PlayerGeneral
+                    generalRanking.Boys.Add(new PlayerGeneral
                     {
                         Name = player.Name,
                         Results = player.Results,
@@ -49,8 +65,7 @@ namespace AnddeXokoTxapelketa.Controls
                     rank++;
                 }
             }
-            general.Sort();
-            Tools.SaveGeneralRanking(_root, tournament.Name, general);
+            Tools.SaveGeneralRanking(_root, tournament.Name, generalRanking);
         }
         #endregion
         public Rank()

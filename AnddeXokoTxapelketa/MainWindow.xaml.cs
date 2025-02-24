@@ -19,17 +19,17 @@ namespace AnddeXokoTxapelketa
         #region Methods
         public void OpenTournamentEventHandler(object sender, TournamentEventArgs e)
         {
-            ((Show)((MaterialDesignThemes.Wpf.Transitions.TransitionerSlide)tMain.Items[2]).Content).SetTournament(e.Tournament);
+            ((Show)((MaterialDesignThemes.Wpf.Transitions.TransitionerSlide)tMain.Items[2]).Content).Init(e.Tournament);
             tMain.SelectedIndex = 2;
         }
         public void OpenRankingEventHandler(object sender, RankingEventArgs e)
         {
-            ((Rank)((MaterialDesignThemes.Wpf.Transitions.TransitionerSlide)tMain.Items[3]).Content).SetTournament(e.Tournament);
+            ((Rank)((MaterialDesignThemes.Wpf.Transitions.TransitionerSlide)tMain.Items[3]).Content).Init(e.Tournament);
             tMain.SelectedIndex = 3;
         }
         public void OpenFinalEventArgs(object sender, FinalEventArgs e)
         {
-            ((Final)((MaterialDesignThemes.Wpf.Transitions.TransitionerSlide)tMain.Items[4]).Content).SetGeneralRanking(e.TournamentName, e.GeneralRanking);
+            ((Final)((MaterialDesignThemes.Wpf.Transitions.TransitionerSlide)tMain.Items[4]).Content).Init(e);
             tMain.SelectedIndex = 4;
         }
         public void CloseTournamentEventHandler(object sender, EventArgs e)

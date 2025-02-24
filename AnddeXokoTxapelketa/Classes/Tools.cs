@@ -51,30 +51,40 @@ namespace AnddeXokoTxapelketa.Classes
             return JsonConvert.DeserializeObject<Tournament>(serialized);
 
         }
-        public static List<PlayerGeneral> GetGeneralRanking(string root, string tournamentName)
+        public static Leagues GetLeagues(string root, string tournamentName)
         {
-            using StreamReader sr = new(Path.Combine(root, tournamentName, "generalRankingM.json"), Encoding.UTF8);
-            return System.Text.Json.JsonSerializer.Deserialize<List<PlayerGeneral>>(sr.ReadToEnd());
+            using StreamReader sr = new(Path.Combine(root, tournamentName, "leagues.json"), Encoding.UTF8);
+            return System.Text.Json.JsonSerializer.Deserialize<Leagues>(sr.ReadToEnd());
         }
-
-        public static void SaveGeneralRanking(string root, string tournamentName, List<PlayerGeneral> players)
+        public static GeneralRanking GetGeneralRanking(string root, string tournamentName)
         {
-            using (StreamWriter sw = new(Path.Combine(root, tournamentName, "generalRankingM.json"), false, Encoding.UTF8))
+            using StreamReader sr = new(Path.Combine(root, tournamentName, "generalRanking.json"), Encoding.UTF8);
+            return System.Text.Json.JsonSerializer.Deserialize<GeneralRanking>(sr.ReadToEnd());
+        }
+        public static void SaveGeneralRanking(string root, string tournamentName, GeneralRanking generalRanking)
+        {
+            generalRanking.Girls.Sort();
+            generalRanking.Boys.Sort();
+            using (StreamWriter sw = new(Path.Combine(root, tournamentName, "generalRanking.json"), false, Encoding.UTF8))
             {
-                sw.Write(System.Text.Json.JsonSerializer.Serialize(players, GetJsonSerializerOptions()));
+                sw.Write(System.Text.Json.JsonSerializer.Serialize(generalRanking, GetJsonSerializerOptions()));
             }
-            using (StreamWriter sw = new(Path.Combine(root, tournamentName, "generalRankingM.txt"), false, Encoding.UTF8))
+            SaveGeneralRanking(root, tournamentName, generalRanking.Girls, false);
+            SaveGeneralRanking(root, tournamentName, generalRanking.Boys, true);
+        }
+        private static void SaveGeneralRanking(string root, string tournamentName, List<PlayerGeneral> playerGenerals, bool forBoys)
+        {
+            string suffix = (forBoys) ? "M" : "N";
+            using StreamWriter sw = new(Path.Combine(root, tournamentName, $"generalRanking{suffix}.txt"), false, Encoding.UTF8);
+            int rankGeneral = 1;
+            foreach (PlayerGeneral player in playerGenerals)
             {
-                int rankGeneral = 1;
-                foreach (PlayerGeneral player in players)
+                if (string.IsNullOrWhiteSpace(player.Name))
                 {
-                    if (string.IsNullOrWhiteSpace(player.Name))
-                    {
-                        continue;
-                    }
-                    sw.WriteLine($"{rankGeneral}. {player.Name} ({player.Group})");
-                    rankGeneral++;
+                    continue;
                 }
+                sw.WriteLine($"{rankGeneral}. {player.Name} ({player.Group})");
+                rankGeneral++;
             }
         }
         #endregion

@@ -1,4 +1,5 @@
-﻿using AnddeXokoTxapelketa.Models;
+﻿using AnddeXokoTxapelketa.EventsArgs;
+using AnddeXokoTxapelketa.Models;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -11,9 +12,9 @@ namespace AnddeXokoTxapelketa.Controls
     public partial class Final : UserControl
     {
         #region Declarations
-        private readonly string[] _leagues = ["Retegi ll", "Titin lll", "Altuna lll"];
-        private readonly int[] _heads = [1, 8, 4, 5, 3, 6, 7, 2];
-        private readonly int[] _chalengers = [16, 9, 13, 12, 14, 11, 10, 15];
+        //private readonly string[] _leagues = ["Retegi ll", "Titin lll", "Altuna lll"];
+        //private readonly int[] _heads = [1, 8, 4, 5, 3, 6, 7, 2];
+        //private readonly int[] _chalengers = [16, 9, 13, 12, 14, 11, 10, 15];
         private readonly List<FinalTable> _finalTables = [];
         private int _currentFinalTable = 0;
         #region Events
@@ -27,7 +28,7 @@ namespace AnddeXokoTxapelketa.Controls
             BNext.IsEnabled = true;
             _currentFinalTable--;
             BPrevious.IsEnabled = _currentFinalTable != 0;
-            SetFinalTable(_finalTables[_currentFinalTable]);
+            ShowFinalTable(_finalTables[_currentFinalTable]);
         }
         private void BNextClick(object sender, RoutedEventArgs e)
         {
@@ -35,38 +36,44 @@ namespace AnddeXokoTxapelketa.Controls
             BNext.IsEnabled = true;
             _currentFinalTable++;
             BNext.IsEnabled = _currentFinalTable != _finalTables.Count - 1;
-            SetFinalTable(_finalTables[_currentFinalTable]);
+            ShowFinalTable(_finalTables[_currentFinalTable]);
         }
         #endregion
         #region Methods
-        public void SetGeneralRanking(string tournamentName, List<PlayerGeneral> generalRanking)
+        public void Init(FinalEventArgs e)
         {
-            tbTitle.Text = $"{tournamentName} - Andde Xoko Txapelketa";
-            foreach (string league in _leagues)
+            tbTitle.Text = $"{e.TournamentName} - Andde Xoko Txapelketa";
+            foreach (League league in e.Leagues.Girls)
             {
-                _finalTables.Add(new FinalTable { Name = league });
-                for (int j = 0; j < _heads.Length; j++)
-                {
-                    PlayerGeneral player1 = (_heads[j] >= generalRanking.Count) ? null : generalRanking[_heads[j] - 1];
-                    PlayerGeneral player2 = (_chalengers[j] >= generalRanking.Count) ? null : generalRanking[_chalengers[j] - 1];
-                    _finalTables.Last().Add(new FinalTableMatch
-                    {
-                        Palyer1Name = player1?.Name,
-                        Palyer2Name = player2?.Name,
-                    });
-                    if (!string.IsNullOrWhiteSpace(player1?.Group) && !string.IsNullOrWhiteSpace(player2?.Group))
-                    {
-                        _finalTables.Last().Last().InError = player1.Group.Equals(player2.Group);
-                    }
-                    _heads[j] += 2 * _heads.Length;
-                    _chalengers[j] += 2 * _chalengers.Length;
-                }
+                SetFinalTable(league, e.GeneralRanking.Girls);
+            }
+            foreach (League league in e.Leagues.Boys)
+            {
+                SetFinalTable(league, e.GeneralRanking.Boys);
             }
             BPrevious.IsEnabled = false;
             BNext.IsEnabled = true;
-            SetFinalTable(_finalTables[_currentFinalTable]);
+            ShowFinalTable(_finalTables[_currentFinalTable]);
         }
-        private void SetFinalTable(FinalTable finalTable)
+        private void SetFinalTable(League league, List<PlayerGeneral> playerGenerals)
+        {
+            _finalTables.Add(new FinalTable { Name = league.Name });
+            for (int j = 0; j < league.Heads.Length; j++)
+            {
+                PlayerGeneral player1 = (league.Heads[j] >= playerGenerals.Count) ? null : playerGenerals[league.Heads[j] - 1];
+                PlayerGeneral player2 = (league.Chalengers[j] >= playerGenerals.Count) ? null : playerGenerals[league.Chalengers[j] - 1];
+                _finalTables.Last().Add(new FinalTableMatch
+                {
+                    Palyer1Name = player1?.Name,
+                    Palyer2Name = player2?.Name,
+                });
+                if (!string.IsNullOrWhiteSpace(player1?.Group) && !string.IsNullOrWhiteSpace(player2?.Group))
+                {
+                    _finalTables.Last().Last().InError = player1.Group.Equals(player2.Group);
+                }
+            }
+        }
+        private void ShowFinalTable(FinalTable finalTable)
         {
             TBGroup.Text = finalTable.Name;
             for (int i = 1; i <= finalTable.Count; i++)
