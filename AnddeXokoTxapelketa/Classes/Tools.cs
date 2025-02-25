@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using System.IO;
 using System.Text;
 using System.Text.Json;
+using System.Windows;
 
 namespace AnddeXokoTxapelketa.Classes
 {
@@ -44,12 +45,35 @@ namespace AnddeXokoTxapelketa.Classes
         {
             using StreamWriter sw = new(Path.Combine(root, tournament.Name, "tournament.json"), false, Encoding.UTF8);
             sw.Write(System.Text.Json.JsonSerializer.Serialize(tournament, GetJsonSerializerOptions()));
+            GenerateRotations(root, tournament);
         }
         public static Tournament CloneTournament(Tournament tournament)
         {
             var serialized = JsonConvert.SerializeObject(tournament);
             return JsonConvert.DeserializeObject<Tournament>(serialized);
-
+        }
+        private static void GenerateRotations(string root, Tournament tournament)
+        {
+            List<Rotation> rotations = GetRotations(root, tournament.Name);
+            StringBuilder sb = new();
+            foreach (Group group in tournament.Girls)
+            {
+                sb.Clear().AppendLine("N1");
+                foreach (Rotation rotation in rotations)
+                {
+                    sb.AppendLine(rotation.Name);
+                    foreach (int[] match in rotation.Matches)
+                    {
+                        sb.AppendLine($"{group.Players[match[0] - 1].Name} / {group.Players[match[1] - 1].Name}");
+                    }
+                }
+                MessageBox.Show(sb.ToString());
+            }
+        }
+        private static List<Rotation> GetRotations(string root, string tournamentName)
+        {
+            using StreamReader sr = new(Path.Combine(root, tournamentName, "rotations.json"), Encoding.UTF8);
+            return System.Text.Json.JsonSerializer.Deserialize<List<Rotation>>(sr.ReadToEnd());
         }
         public static Leagues GetLeagues(string root, string tournamentName)
         {
