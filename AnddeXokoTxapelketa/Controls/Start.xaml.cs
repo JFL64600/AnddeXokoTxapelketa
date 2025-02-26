@@ -52,6 +52,14 @@ namespace AnddeXokoTxapelketa.Controls
                     });
             }
         }
+        private void GenerateRotationsClick(object sender, RoutedEventArgs e)
+        {
+            Tournament? tournament = Tools.CloneTournament(GetTournament(sender));
+            if (tournament != null)
+            {
+                Tools.GenerateRotations(_root, tournament);
+            }
+        }
         private void OpenRankingClick(object sender, RoutedEventArgs e)
         {
             Tournament? tournament = Tools.CloneTournament(GetTournament(sender));

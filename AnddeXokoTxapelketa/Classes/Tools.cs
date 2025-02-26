@@ -1,9 +1,9 @@
 ﻿using AnddeXokoTxapelketa.Models;
+using ClosedXML.Excel;
 using Newtonsoft.Json;
 using System.IO;
 using System.Text;
 using System.Text.Json;
-using System.Windows;
 
 namespace AnddeXokoTxapelketa.Classes
 {
@@ -45,29 +45,64 @@ namespace AnddeXokoTxapelketa.Classes
         {
             using StreamWriter sw = new(Path.Combine(root, tournament.Name, "tournament.json"), false, Encoding.UTF8);
             sw.Write(System.Text.Json.JsonSerializer.Serialize(tournament, GetJsonSerializerOptions()));
-            GenerateRotations(root, tournament);
         }
         public static Tournament CloneTournament(Tournament tournament)
         {
             var serialized = JsonConvert.SerializeObject(tournament);
             return JsonConvert.DeserializeObject<Tournament>(serialized);
         }
-        private static void GenerateRotations(string root, Tournament tournament)
+        public static void GenerateRotations(string root, Tournament tournament)
         {
             List<Rotation> rotations = GetRotations(root, tournament.Name);
-            StringBuilder sb = new();
+            string fileName = Path.Combine(root, tournament.Name, "rotations.xlsx");
+            if (!File.Exists(fileName))
+            {
+                File.Delete(fileName);
+            }
+            using XLWorkbook wb = new();
+            int groupIndex = 1;
             foreach (Group group in tournament.Girls)
             {
-                sb.Clear().AppendLine("N1");
-                foreach (Rotation rotation in rotations)
+                GenerateGroupRotations(wb, group, groupIndex, rotations, false);
+                groupIndex++;
+            }
+            groupIndex = 1;
+            foreach (Group group in tournament.Boys)
+            {
+                GenerateGroupRotations(wb, group, groupIndex, rotations, true);
+                groupIndex++;
+            }
+            wb.SaveAs(fileName);
+        }
+        private static void GenerateGroupRotations(XLWorkbook wb, Group group, int groupIndex, List<Rotation> rotations, bool forBoys)
+        {
+            string prefix = (forBoys) ? "M" : "N";
+            string groupName = $"{prefix}{groupIndex}";
+            IXLWorksheet ws = wb.Worksheets.Add(groupName);
+            ws.Style.Alignment.Vertical = XLAlignmentVerticalValues.Center;
+            ws.Style.Font.FontSize = 18;
+            ws.Style.Font.FontName = "Aptos Narrow";
+            ws.Columns("A").Width = 16;
+            ws.Columns("B").Width = 5;
+            ws.Columns("C").Width = 5;
+            ws.Columns("D").Width = 16;
+            ws.Rows().Height= 24;
+            int rotationIndex = 1;
+            int rowIndex = 1;
+            foreach (Rotation rotation in rotations)
+            {
+                ws.Cell($"A{rowIndex}").Value = $"{groupName} - Rotation {rotationIndex}";
+                ws.Cell($"A{rowIndex}").Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+                ws.Cell($"A{rowIndex}").Style.Font.Bold = true;
+                ws.Range($"A{rowIndex}:D{rowIndex}").Merge();
+                rowIndex++;
+                foreach (int[] match in rotation.Matches)
                 {
-                    sb.AppendLine(rotation.Name);
-                    foreach (int[] match in rotation.Matches)
-                    {
-                        sb.AppendLine($"{group.Players[match[0] - 1].Name} / {group.Players[match[1] - 1].Name}");
-                    }
+                    ws.Cell($"A{rowIndex}").Value = group.Players[match[0] - 1].Name;
+                    ws.Cell($"D{rowIndex}").Value = group.Players[match[1] - 1].Name;
+                    rowIndex++;
                 }
-                MessageBox.Show(sb.ToString());
+                rotationIndex++;
             }
         }
         private static List<Rotation> GetRotations(string root, string tournamentName)
@@ -113,13 +148,13 @@ namespace AnddeXokoTxapelketa.Classes
         }
         #endregion
         #region Privates
-        private static List<Group> GetGroups(int players, int groups)
+        private static List<Models.Group> GetGroups(int players, int groups)
         {
-            List<Group> result = [];
+            List<Models.Group> result = [];
             int playersGroup = Math.DivRem(players, groups, out int playersPlus);
             for (int i = 0; i < groups; i++)
             {
-                result.Add(new Group());
+                result.Add(new Models.Group());
                 int newPlayersGroup = playersGroup;
                 if (playersPlus > 0)
                 {
