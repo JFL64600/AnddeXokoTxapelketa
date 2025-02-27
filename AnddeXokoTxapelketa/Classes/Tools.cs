@@ -53,7 +53,7 @@ namespace AnddeXokoTxapelketa.Classes
         }
         public static void GenerateRotations(string root, Tournament tournament)
         {
-            List<Rotation> rotations = GetRotations(root, tournament.Name);
+            List<Calendar> calendars = GetCalendars(root, tournament.Name);
             string fileName = Path.Combine(root, tournament.Name, "rotations.xlsx");
             if (!File.Exists(fileName))
             {
@@ -63,19 +63,27 @@ namespace AnddeXokoTxapelketa.Classes
             int groupIndex = 1;
             foreach (Group group in tournament.Girls)
             {
-                GenerateGroupRotations(wb, group, groupIndex, rotations, false);
-                groupIndex++;
+                if (GenerateGroupRotations(wb, group, groupIndex, GetRotations(calendars, group), false))
+                {
+                    groupIndex++;
+                }
             }
             groupIndex = 1;
             foreach (Group group in tournament.Boys)
             {
-                GenerateGroupRotations(wb, group, groupIndex, rotations, true);
-                groupIndex++;
+                if (GenerateGroupRotations(wb, group, groupIndex, GetRotations(calendars, group), true))
+                {
+                    groupIndex++;
+                }
             }
             wb.SaveAs(fileName);
         }
-        private static void GenerateGroupRotations(XLWorkbook wb, Group group, int groupIndex, List<Rotation> rotations, bool forBoys)
+        private static bool GenerateGroupRotations(XLWorkbook wb, Group group, int groupIndex, List<Rotation> rotations, bool forBoys)
         {
+            if (rotations is null)
+            {
+                return false;
+            }
             string prefix = (forBoys) ? "M" : "N";
             string groupName = $"{prefix}{groupIndex}";
             IXLWorksheet ws = wb.Worksheets.Add(groupName);
@@ -86,7 +94,7 @@ namespace AnddeXokoTxapelketa.Classes
             ws.Columns("B").Width = 5;
             ws.Columns("C").Width = 5;
             ws.Columns("D").Width = 16;
-            ws.Rows().Height= 24;
+            ws.Rows().Height = 24;
             int rotationIndex = 1;
             int rowIndex = 1;
             foreach (Rotation rotation in rotations)
@@ -104,11 +112,22 @@ namespace AnddeXokoTxapelketa.Classes
                 }
                 rotationIndex++;
             }
+            return true;
         }
-        private static List<Rotation> GetRotations(string root, string tournamentName)
+        private static List<Rotation> GetRotations(List<Calendar> calendars, Group group)
+        {
+            int count = group.Players.Count(c => !string.IsNullOrWhiteSpace(c.Name));
+            if ((count % 2) != 0)
+            {
+                count++;
+            }
+            int index = calendars.FindIndex(c => c.Teams == count);
+            return (index >= 0) ? calendars[index].Rotations : null;
+        }
+        private static List<Calendar> GetCalendars(string root, string tournamentName)
         {
             using StreamReader sr = new(Path.Combine(root, tournamentName, "rotations.json"), Encoding.UTF8);
-            return System.Text.Json.JsonSerializer.Deserialize<List<Rotation>>(sr.ReadToEnd());
+            return System.Text.Json.JsonSerializer.Deserialize<List<Calendar>>(sr.ReadToEnd());
         }
         public static Leagues GetLeagues(string root, string tournamentName)
         {
@@ -148,9 +167,9 @@ namespace AnddeXokoTxapelketa.Classes
         }
         #endregion
         #region Privates
-        private static List<Models.Group> GetGroups(int players, int groups)
+        private static List<Group> GetGroups(int players, int groups)
         {
-            List<Models.Group> result = [];
+            List<Group> result = [];
             int playersGroup = Math.DivRem(players, groups, out int playersPlus);
             for (int i = 0; i < groups; i++)
             {
