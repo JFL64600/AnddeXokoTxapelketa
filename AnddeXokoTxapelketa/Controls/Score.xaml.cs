@@ -16,6 +16,17 @@ namespace AnddeXokoTxapelketa.Controls
         #endregion
         #endregion
         #region Properties
+        public bool IsReadOnly
+        {
+            get
+            {
+                return TBScore.IsReadOnly;
+            }
+            set
+            {
+                TBScore.IsReadOnly = value;
+            }
+        }
         public int Value
         {
             get
@@ -23,7 +34,10 @@ namespace AnddeXokoTxapelketa.Controls
                 _ = int.TryParse(TBScore.Text, out int score);
                 return score;
             }
-            set { TBScore.Text = value.ToString(); }
+            set
+            {
+                TBScore.Text = value.ToString();
+            }
         }
         #endregion
         #region Events
@@ -33,7 +47,9 @@ namespace AnddeXokoTxapelketa.Controls
         }
         private new void LostFocus(object sender, RoutedEventArgs e)
         {
-            ExitEvent?.Invoke(this, new EventArgs());
+            ExitEvent?.Invoke(
+                this,
+                new EventArgs());
         }
         #endregion
         #region Methods

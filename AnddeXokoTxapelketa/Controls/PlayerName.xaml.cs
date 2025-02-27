@@ -23,7 +23,9 @@ namespace AnddeXokoTxapelketa.Controls
         #region Events
         private new void LostFocus(object sender, RoutedEventArgs e)
         {
-            ExitEvent?.Invoke(this, new EventArgs());
+            ExitEvent?.Invoke(
+                this,
+                new EventArgs());
         }
         #endregion
         public PlayerName()

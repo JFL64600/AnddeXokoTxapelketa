@@ -1,5 +1,7 @@
 ﻿using AnddeXokoTxapelketa.Classes;
+using AnddeXokoTxapelketa.EventsArgs;
 using AnddeXokoTxapelketa.Models;
+using DocumentFormat.OpenXml.Spreadsheet;
 using System.Configuration;
 using System.Text.RegularExpressions;
 using System.Windows;
@@ -80,15 +82,26 @@ namespace AnddeXokoTxapelketa.Controls
         }
         private void ScoreExitEvent(object sender, EventArgs e)
         {
-            Score score = (Score)sender;
-            Regex rx = new(@"ScoreR([0-9]{1})C([0-9]{1})", RegexOptions.Compiled | RegexOptions.IgnoreCase);
-            MatchCollection matches = rx.Matches(score.Name);
-            if (matches.Count > 0)
+            //Score score = (Score)sender;
+            //Regex rx = new(@"ScoreR([0-9]{1})C([0-9]{1})", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+            //MatchCollection matches = rx.Matches(score.Name);
+            //if (matches.Count > 0)
+            //{
+            //    _ = int.TryParse(matches[0].Groups[1].Value, out int row);
+            //    _ = int.TryParse(matches[0].Groups[2].Value, out int column);
+            //    (_isBoysCurrent ? _tournament.Boys : _tournament.Girls)[_currentGroup].Players[row - 1].Results[column - ((row > column) ? 1 : 2)] = score.Value;
+            //    Tools.SaveTournament(_root, _tournament);
+            //}
+        }
+        private void ExitScoreDialogEvent(object sender, ScoreDialogEventArgs e)
+        {
+            if (!e.Canceled)
             {
-                _ = int.TryParse(matches[0].Groups[1].Value, out int row);
-                _ = int.TryParse(matches[0].Groups[2].Value, out int column);
-                (_isBoysCurrent ? _tournament.Boys : _tournament.Girls)[_currentGroup].Players[row - 1].Results[column - ((row > column) ? 1 : 2)] = score.Value;
-                Tools.SaveTournament(_root, _tournament);
+                ((Score)FindName($"ScoreR{e.Row}C{e.Column}")).Value = e.ScorePlayer1;
+                ((Score)FindName($"ScoreR{e.Column}C{e.Row}")).Value = e.ScorePlayer2;
+                (_isBoysCurrent ? _tournament.Boys : _tournament.Girls)[_currentGroup].Players[e.Row - 1].Results[e.Column - ((e.Row > e.Column) ? 1 : 2)] = e.ScorePlayer1;
+                (_isBoysCurrent ? _tournament.Boys : _tournament.Girls)[_currentGroup].Players[e.Column - 1].Results[e.Row - ((e.Column > e.Row) ? 1 : 2)] = e.ScorePlayer2;
+                //Tools.SaveTournament(_root, _tournament);
             }
         }
         private void OpenScore(object sender, MouseButtonEventArgs e)
@@ -100,18 +113,17 @@ namespace AnddeXokoTxapelketa.Controls
             {
                 _ = int.TryParse(matches[0].Groups[1].Value, out int row);
                 _ = int.TryParse(matches[0].Groups[2].Value, out int column);
-                (_isBoysCurrent ? _tournament.Boys : _tournament.Girls)[_currentGroup].Players[row - 1].Results[column - ((row > column) ? 1 : 2)] = score.Value;
+                //(_isBoysCurrent ? _tournament.Boys : _tournament.Girls)[_currentGroup].Players[row - 1].Results[column - ((row > column) ? 1 : 2)] = score.Value;
                 //Tools.SaveTournament(_root, _tournament);
                 ScoreDialog scoreDialog = (ScoreDialog)popup.Child;
                 scoreDialog.Init(
-                    score,
-                    (_isBoysCurrent ? _tournament.Boys : _tournament.Girls)[_currentGroup].Players[row - 1],
-                    (_isBoysCurrent ? _tournament.Boys : _tournament.Girls)[_currentGroup].Players[column - 1]);
+                    row,
+                    (_isBoysCurrent ? _tournament.Boys : _tournament.Girls)[_currentGroup].Players[row - 1].Name,
+                    score.Value,
+                    column,
+                    (_isBoysCurrent ? _tournament.Boys : _tournament.Girls)[_currentGroup].Players[column - 1].Name,
+                    ((Score)FindName($"ScoreR{column}C{row}")).Value);
                 popup.IsOpen = true;
-                if (scoreDialog.Canceled)
-                {
-                    MessageBox.Show("oups !!!");
-                }
             }
         }
         #endregion

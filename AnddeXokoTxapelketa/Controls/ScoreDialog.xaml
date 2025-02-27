@@ -6,27 +6,26 @@
              xmlns:local="clr-namespace:AnddeXokoTxapelketa.Controls"
              xmlns:materialDegign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
-             d:DesignHeight="200" d:DesignWidth="300">
-    <UserControl.Resources>
-        <Style x:Key="Player" TargetType="TextBlock">
-            <Setter Property="FontSize" Value="20" />
-            <Setter Property="HorizontalAlignment" Value="Stretch" />
-            <Setter Property="VerticalAlignment" Value="Center" />
-            <Setter Property="Margin" Value="10" />
-            <Setter Property="Foreground" Value="{DynamicResource SecondaryHueMidBrush}" />
-        </Style>
-    </UserControl.Resources>
+             d:DesignHeight="500" d:DesignWidth="600">
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="2*" />
             <RowDefinition Height="*" />
-            <RowDefinition Height="100" />
         </Grid.RowDefinitions>
-        <materialDegign:ColorZone Mode="Standard" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
-                          VerticalContentAlignment="Stretch" Name="CZ">
-            <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="White">
-                <TextBlock Style="{StaticResource Player}" Name="PlayerLabel1" />
-            </Grid>
-        </materialDegign:ColorZone>
+        <Grid Grid.Row="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="4*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <local:PlayerLabel Grid.Row="0" Grid.Column="0" x:Name="Player1"></local:PlayerLabel>
+            <local:Score Grid.Row="0" Grid.Column="1" x:Name="Score1"></local:Score>
+            <local:PlayerLabel Grid.Row="1" Grid.Column="0" x:Name="Player2"></local:PlayerLabel>
+            <local:Score Grid.Row="1" Grid.Column="1" x:Name="Score2"></local:Score>
+        </Grid>
         <Grid Grid.Row="1">
             <Button HorizontalAlignment="Right" VerticalAlignment="Center" Margin="20,20,120,20" 
                     Style="{DynamicResource MaterialDesignFlatButton}" Click="CancelClick" Content="Cancel"/>
