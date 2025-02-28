@@ -60,8 +60,8 @@ namespace AnddeXokoTxapelketa.Controls
             _finalTables.Add(new FinalTable { Name = league.Name });
             for (int j = 0; j < league.Heads.Length; j++)
             {
-                PlayerGeneral player1 = (league.Heads[j] >= playerGenerals.Count) ? null : playerGenerals[league.Heads[j] - 1];
-                PlayerGeneral player2 = (league.Chalengers[j] >= playerGenerals.Count) ? null : playerGenerals[league.Chalengers[j] - 1];
+                PlayerGeneral player1 = (league.Heads[j] > playerGenerals.Count) ? null : playerGenerals[league.Heads[j] - 1];
+                PlayerGeneral player2 = (league.Chalengers[j] > playerGenerals.Count) ? null : playerGenerals[league.Chalengers[j] - 1];
                 _finalTables.Last().Add(new FinalTableMatch
                 {
                     Palyer1Name = player1?.Name,
