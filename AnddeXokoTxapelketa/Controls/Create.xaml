@@ -20,7 +20,7 @@
             </Grid>
         </materialDegign:ColorZone>
         <Grid Grid.Row="2">
-            <Button HorizontalAlignment="Right" VerticalAlignment="Center" Content="Cancel" Margin="20,20,120,20"
+            <Button HorizontalAlignment="Right" VerticalAlignment="Center" Content="Bazter utzi" Margin="20,20,120,20"
                     Style="{DynamicResource MaterialDesignFlatButton}" Command="{x:Static materialDegign:Transitioner.MovePreviousCommand}"/>
             <Button Margin="20" Name="bCreate" IsEnabled="False" HorizontalAlignment="Right" VerticalAlignment="Center" Click="CreateClick" Content="Create"/>
         </Grid>

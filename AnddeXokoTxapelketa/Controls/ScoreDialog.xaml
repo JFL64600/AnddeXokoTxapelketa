@@ -9,8 +9,8 @@
              d:DesignHeight="500" d:DesignWidth="600">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="2*" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="75" />
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
             <Grid.RowDefinitions>
@@ -28,14 +28,8 @@
         </Grid>
         <Grid Grid.Row="1">
             <Button HorizontalAlignment="Right" VerticalAlignment="Center" Margin="20,20,120,20" 
-                    Style="{DynamicResource MaterialDesignFlatButton}" Click="CancelClick" Content="Cancel"/>
-            <Button Margin="20" HorizontalAlignment="Right" VerticalAlignment="Center" Click="ValidClick" Content="Valid"/>
+                    Style="{DynamicResource MaterialDesignFlatButton}" Click="CancelClick" Content="Bazter utzi"/>
+            <Button Margin="20" HorizontalAlignment="Right" VerticalAlignment="Center" Click="ValidClick" Content="Egiazkotu"/>
         </Grid>
-        <!--<StackPanel>
-            <TextBlock Text="Popup Title" FontWeight="Bold" HorizontalAlignment="Center"/>
-            <TextBox Name="TBTemp"/>
-            <Button Content="Confirm" HorizontalAlignment="Center" Click="ValidClick"/>
-            <Button Content="Cancel" HorizontalAlignment="Center" Click="CancelClick"/>
-        </StackPanel>-->
     </Grid>
 </UserControl>

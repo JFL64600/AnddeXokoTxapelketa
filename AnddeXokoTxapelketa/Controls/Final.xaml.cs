@@ -75,6 +75,11 @@ namespace AnddeXokoTxapelketa.Controls
         }
         private void ShowFinalTable(FinalTable finalTable)
         {
+            for (int i = 1; i <= 8; i++)
+            {
+                ((PlayerLabel)FindName($"PlayerName{i}1")).Value = string.Empty;
+                ((PlayerLabel)FindName($"PlayerName{i}2")).Value = string.Empty;
+            }
             TBGroup.Text = finalTable.Name;
             for (int i = 1; i <= finalTable.Count; i++)
             {

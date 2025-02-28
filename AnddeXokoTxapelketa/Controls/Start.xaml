@@ -33,19 +33,19 @@
             <ListView Grid.Row="0" Margin="10" Name="lvTournaments">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <Grid Width="400">
+                        <Grid Width="500">
                             <TextBlock FontSize="30" Text="{Binding Name}" VerticalAlignment="Center" />
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="20">
                                 <Button VerticalAlignment="Center" Click="OpenTournamentClick" CommandParameter="{Binding Name}">
                                     <materialDegign:PackIcon Kind="FolderOpen"/>
                                 </Button>
-                                <Button Margin="0" Click="GenerateRotationsClick" CommandParameter="{Binding Name}">
+                                <Button Margin="20" Click="GenerateRotationsClick" CommandParameter="{Binding Name}">
                                     <materialDegign:PackIcon Kind="Refresh"/>
                                 </Button>
-                                <Button Margin="0" Click="OpenRankingClick" CommandParameter="{Binding Name}">
+                                <Button Margin="0,20,0,20" Click="OpenRankingClick" CommandParameter="{Binding Name}">
                                     <materialDegign:PackIcon Kind="ArrowUpRight"/>
                                 </Button>
-                                <Button Margin="0" Click="OpenFinalTableClick" CommandParameter="{Binding Name}">
+                                <Button Margin="20,0,0,0" Click="OpenFinalTableClick" CommandParameter="{Binding Name}">
                                     <materialDegign:PackIcon Kind="Ballot"/>
                                 </Button>
                             </StackPanel>
@@ -54,7 +54,7 @@
                 </ListView.ItemTemplate>
             </ListView>
             <Grid Grid.Row="1">
-                <Button Margin="20" HorizontalAlignment="Right" VerticalAlignment="Center" Click="CloseClick">Close</Button>
+                <Button Margin="20" HorizontalAlignment="Right" VerticalAlignment="Center" Click="CloseClick">Hetsi</Button>
             </Grid>
         </Grid>
     </Grid>

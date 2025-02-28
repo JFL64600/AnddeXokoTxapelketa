@@ -170,9 +170,9 @@
             <local:Score Grid.Row="8" Grid.Column="7" x:Name="ScoreR8C7" IsReadOnly="True" MouseDoubleClick="OpenScore"></local:Score>
         </Grid>
         <Grid Grid.Row="2">
-            <Button Margin="20" Click="CloseTournamentClick" HorizontalAlignment="Right" VerticalAlignment="Center" Content="Close" />
+            <Button Margin="20" Click="CloseTournamentClick" HorizontalAlignment="Right" VerticalAlignment="Center" Content="Hetsi" />
         </Grid>
-        <Popup Name="popup" IsOpen="False" StaysOpen="False" Placement="Center">
+        <Popup Name="popup" IsOpen="False" StaysOpen="False" Placement="Center" Width="400" Height="200">
             <local:ScoreDialog ExitScoreDialog="ExitScoreDialogEvent"  />
         </Popup>
     </Grid>

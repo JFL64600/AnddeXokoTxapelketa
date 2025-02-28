@@ -84,7 +84,7 @@
             <local:RankGroup Grid.Row="0" Grid.Column="8" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" x:Name="M6"></local:RankGroup>
         </Grid>
         <Grid Grid.Row="2">
-            <Button Margin="20" Click="CloseRankClick" HorizontalAlignment="Right" VerticalAlignment="Center" Content="Close" />
+            <Button Margin="20" Click="CloseRankClick" HorizontalAlignment="Right" VerticalAlignment="Center" Content="Hetsi" />
         </Grid>
     </Grid>
 </UserControl>
