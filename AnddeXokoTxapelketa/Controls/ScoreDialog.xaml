@@ -26,10 +26,14 @@
             <local:PlayerLabel Grid.Row="1" Grid.Column="0" x:Name="Player2"></local:PlayerLabel>
             <local:Score Grid.Row="1" Grid.Column="1" x:Name="Score2"></local:Score>
         </Grid>
-        <Grid Grid.Row="1">
-            <Button HorizontalAlignment="Right" VerticalAlignment="Center" Margin="20,20,120,20" 
-                    Style="{DynamicResource MaterialDesignFlatButton}" Click="CancelClick" Content="Bazter utzi"/>
-            <Button Margin="20" HorizontalAlignment="Right" VerticalAlignment="Center" Click="ValidClick" Content="Egiazkotu"/>
-        </Grid>
+        <materialDegign:ColorZone Grid.Row="1" Mode="PrimaryMid" HorizontalAlignment="Stretch"
+                                  VerticalAlignment="Stretch" VerticalContentAlignment="Stretch" BorderThickness="1" BorderBrush="Black">
+            <Grid>
+                <Button HorizontalAlignment="Right" VerticalAlignment="Center" Margin="20,20,120,20" 
+                        Style="{DynamicResource MaterialDesignRaisedDarkButton}" Click="CancelClick" Content="Bazter utzi"/>
+                <Button Margin="20" HorizontalAlignment="Right" VerticalAlignment="Center" Click="ValidClick" 
+                        Content="Egiazkotu"/>
+            </Grid>
+        </materialDegign:ColorZone>
     </Grid>
 </UserControl>
