@@ -12,9 +12,6 @@ namespace AnddeXokoTxapelketa.Controls
     public partial class Final : UserControl
     {
         #region Declarations
-        //private readonly string[] _leagues = ["Retegi ll", "Titin lll", "Altuna lll"];
-        //private readonly int[] _heads = [1, 8, 4, 5, 3, 6, 7, 2];
-        //private readonly int[] _chalengers = [16, 9, 13, 12, 14, 11, 10, 15];
         private readonly List<FinalTable> _finalTables = [];
         private int _currentFinalTable = 0;
         #region Events
