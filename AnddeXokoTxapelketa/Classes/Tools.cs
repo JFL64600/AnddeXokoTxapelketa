@@ -10,6 +10,11 @@ namespace AnddeXokoTxapelketa.Classes
     public class Tools
     {
         #region Methods
+        public static T GetObjects<T>(string jsonFileName)
+        {
+            using StreamReader sr = new(jsonFileName, Encoding.UTF8);
+            return System.Text.Json.JsonSerializer.Deserialize<T>(sr.ReadToEnd());
+        }
         public static List<Tournament> GetTournaments(string root)
         {
             List<Tournament> results = [];
@@ -21,6 +26,14 @@ namespace AnddeXokoTxapelketa.Classes
                 {
                     using StreamReader sr = new(fileName, Encoding.UTF8);
                     results.Add(System.Text.Json.JsonSerializer.Deserialize<Tournament>(sr.ReadToEnd()));
+                } else if (File.Exists(Path.Combine(root, di.Name, "players.girls.json")) || File.Exists(Path.Combine(root, di.Name, "players.boys.json")))
+                {
+                    Tournament tournament = new() { Name = di.Name };
+                    if (File.Exists(Path.Combine(root, di.Name, "players.girls.json"))) {
+                        using StreamReader sr = new(fileName, Encoding.UTF8);
+                        List<Models.New.Player> girls = System.Text.Json.JsonSerializer.Deserialize<List<Models.New.Player>>(sr.ReadToEnd())
+                    }
+                    //results.Add(new Tournament() { Name = di.Name });
                 }
             }
             return results;
