@@ -1,8 +1,6 @@
 ﻿using AnddeXokoTxapelketa.Classes;
 using AnddeXokoTxapelketa.EventsArgs;
 using AnddeXokoTxapelketa.Interfaces;
-using AnddeXokoTxapelketa.Models;
-using DocumentFormat.OpenXml.Spreadsheet;
 using System.Configuration;
 using System.Text.RegularExpressions;
 using System.Windows;
@@ -11,9 +9,6 @@ using System.Windows.Input;
 
 namespace AnddeXokoTxapelketa.Controls
 {
-    /// <summary>
-    /// Logique d'interaction pour Create.xaml
-    /// </summary>
     public partial class Show : UserControl
     {
         #region Declarations
@@ -30,47 +25,65 @@ namespace AnddeXokoTxapelketa.Controls
         {
             BPrevious.IsEnabled = true;
             BNext.IsEnabled = true;
-            if (_isBoysCurrent)
+            if (_tournament is Models.Tournament)
             {
-                if (_currentGroup == 0)
+                if (_isBoysCurrent)
                 {
-                    _isBoysCurrent = false;
-                    _currentGroup = ((Tournament)_tournament).Girls.Count - 1;
+                    if (_currentGroup == 0)
+                    {
+                        _isBoysCurrent = false;
+                        _currentGroup = ((Models.Tournament)_tournament).Girls.Count - 1;
+                    }
+                    else
+                    {
+                        _currentGroup--;
+                    }
                 }
                 else
                 {
                     _currentGroup--;
+                    BPrevious.IsEnabled = _currentGroup != 0;
                 }
+                SetGroup(_isBoysCurrent ? ((Models.Tournament)_tournament).Boys : ((Models.Tournament)_tournament).Girls);
             }
-            else
+            else if (_tournament is Models.New.Tournament)
             {
                 _currentGroup--;
                 BPrevious.IsEnabled = _currentGroup != 0;
+                SetGroup(((Models.New.Tournament)_tournament).Groups[_currentGroup]);
             }
-            SetGroup(_isBoysCurrent ? ((Tournament)_tournament).Boys : ((Tournament)_tournament).Girls);
         }
         private void BNextClick(object sender, RoutedEventArgs e)
         {
             BPrevious.IsEnabled = true;
             BNext.IsEnabled = true;
-            if (_isBoysCurrent)
+            if (_tournament is Models.Tournament)
             {
-                _currentGroup++;
-                BNext.IsEnabled = _currentGroup != ((Tournament)_tournament).Boys.Count - 1;
-            }
-            else
-            {
-                if (_currentGroup < ((Tournament)_tournament).Girls.Count - 1)
+                if (_isBoysCurrent)
                 {
                     _currentGroup++;
+                    BNext.IsEnabled = _currentGroup != ((Models.Tournament)_tournament).Boys.Count - 1;
                 }
                 else
                 {
-                    _isBoysCurrent = true;
-                    _currentGroup = 0;
+                    if (_currentGroup < ((Models.Tournament)_tournament).Girls.Count - 1)
+                    {
+                        _currentGroup++;
+                    }
+                    else
+                    {
+                        _isBoysCurrent = true;
+                        _currentGroup = 0;
+                    }
                 }
+                SetGroup(_isBoysCurrent ? ((Models.Tournament)_tournament).Boys : ((Models.Tournament)_tournament).Girls);
             }
-            SetGroup(_isBoysCurrent ? ((Tournament)_tournament).Boys : ((Tournament)_tournament).Girls);
+            else if (_tournament is Models.New.Tournament)
+            {
+                _currentGroup++;
+                BNext.IsEnabled = _currentGroup != ((Models.New.Tournament)_tournament).Groups.Count - 1;
+                SetGroup(((Models.New.Tournament)_tournament).Groups[_currentGroup]);
+            }
         }
         private void PlayerNameExitEvent(object sender, EventArgs e)
         {
@@ -78,7 +91,7 @@ namespace AnddeXokoTxapelketa.Controls
             PlayerLabel playerLabel = (PlayerLabel)FindName(playerName.Name.Replace("Name", "Label"));
             playerLabel.Value = playerName.Value;
             _ = int.TryParse(playerName.Name.Last().ToString(), out int index);
-            (_isBoysCurrent ? ((Tournament)_tournament).Boys : ((Tournament)_tournament).Girls)[_currentGroup].Players[index - 1].Name = playerName.Value;
+            (_isBoysCurrent ? ((Models.Tournament)_tournament).Boys : ((Models.Tournament)_tournament).Girls)[_currentGroup].Players[index - 1].Name = playerName.Value;
             //Tools.SaveTournament(_root, ((Tournament)_tournament));
         }
         private void ExitScoreDialogEvent(object sender, ScoreDialogEventArgs e)
@@ -87,9 +100,9 @@ namespace AnddeXokoTxapelketa.Controls
             {
                 ((Score)FindName($"ScoreR{e.Row}C{e.Column}")).Value = e.ScorePlayer1;
                 ((Score)FindName($"ScoreR{e.Column}C{e.Row}")).Value = e.ScorePlayer2;
-                (_isBoysCurrent ? ((Tournament)_tournament).Boys : ((Tournament)_tournament).Girls)[_currentGroup].Players[e.Row - 1].Results[e.Column - ((e.Row > e.Column) ? 1 : 2)] = e.ScorePlayer1;
-                (_isBoysCurrent ? ((Tournament)_tournament).Boys : ((Tournament)_tournament).Girls)[_currentGroup].Players[e.Column - 1].Results[e.Row - ((e.Column > e.Row) ? 1 : 2)] = e.ScorePlayer2;
-                Tools.SaveTournament(_root, ((Tournament)_tournament));
+                (_isBoysCurrent ? ((Models.Tournament)_tournament).Boys : ((Models.Tournament)_tournament).Girls)[_currentGroup].Players[e.Row - 1].Results[e.Column - ((e.Row > e.Column) ? 1 : 2)] = e.ScorePlayer1;
+                (_isBoysCurrent ? ((Models.Tournament)_tournament).Boys : ((Models.Tournament)_tournament).Girls)[_currentGroup].Players[e.Column - 1].Results[e.Row - ((e.Column > e.Row) ? 1 : 2)] = e.ScorePlayer2;
+                Tools.SaveTournament(_root, ((Models.Tournament)_tournament));
             }
         }
         private void OpenScore(object sender, MouseButtonEventArgs e)
@@ -106,10 +119,10 @@ namespace AnddeXokoTxapelketa.Controls
                 ScoreDialog scoreDialog = (ScoreDialog)popup.Child;
                 scoreDialog.Init(
                     row,
-                    (_isBoysCurrent ? ((Tournament)_tournament).Boys : ((Tournament)_tournament).Girls)[_currentGroup].Players[row - 1].Name,
+                    (_isBoysCurrent ? ((Models.Tournament)_tournament).Boys : ((Models.Tournament)_tournament).Girls)[_currentGroup].Players[row - 1].Name,
                     score.Value,
                     column,
-                    (_isBoysCurrent ? ((Tournament)_tournament).Boys : ((Tournament)_tournament).Girls)[_currentGroup].Players[column - 1].Name,
+                    (_isBoysCurrent ? ((Models.Tournament)_tournament).Boys : ((Models.Tournament)_tournament).Girls)[_currentGroup].Players[column - 1].Name,
                     ((Score)FindName($"ScoreR{column}C{row}")).Value);
                 popup.IsOpen = true;
             }
@@ -124,13 +137,13 @@ namespace AnddeXokoTxapelketa.Controls
             _isBoysCurrent = false;
             BPrevious.IsEnabled = false;
             BNext.IsEnabled = true;
-            if (tournament is Tournament)
+            if (tournament is Models.Tournament)
             {
-                SetGroup(((Tournament)_tournament).Girls);
+                SetGroup(((Models.Tournament)_tournament).Girls);
             }
             else if (tournament is Models.New.Tournament)
             {
-                SetGroup(((Models.New.Tournament)_tournament).GirlsGroups[0]);
+                SetGroup(((Models.New.Tournament)_tournament).Groups[0]);
             }
         }
         private void SetGroup(List<Models.Group> groups)
@@ -184,8 +197,19 @@ namespace AnddeXokoTxapelketa.Controls
                 }
                 else
                 {
-                    //DisablePlayer(i);
+                    DisablePlayer(i);
                 }
+            }
+            foreach (Models.New.Rotation rotation in group.Rotations)
+            {
+                foreach (Models.New.Match match in rotation.Matches)
+                {
+                    int id1 = match.Scores[0].ID;
+                    int id2 = match.Scores[1].ID;
+                    ((Score)FindName($"ScoreR{id1}C{id2}")).Value = match.Scores[0].Points;
+                    ((Score)FindName($"ScoreR{id2}C{id1}")).Value = match.Scores[1].Points;
+                }
+
             }
         }
         #endregion

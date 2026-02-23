@@ -1,5 +1,7 @@
 ﻿using AnddeXokoTxapelketa.Controls;
 using AnddeXokoTxapelketa.EventsArgs;
+using System.IO;
+using System.Text;
 using System.Windows;
 using System.Windows.Input;
 
@@ -59,6 +61,14 @@ namespace AnddeXokoTxapelketa
             show.CloseTournamentEvent += new EventHandler(CloseTournamentEventHandler);
             rank.CloseRankEvent += new EventHandler(CloseRankEventHandler);
             final.CloseFinalTableEvent += new EventHandler(CloseFinalEventHandler);
+            //Models.New.Group group = new() { Name = "Group", Type = Classes.Tools.GroupType.Girls };
+            //group.Players.Add(1);
+            //group.Players.Add(2);
+            //Models.New.Rotation r = new() { Name = "Rotation" };
+            //r.Matches.Add(new Models.New.Match());
+            //group.Rotations.Add(r);
+            //using StreamWriter sw = new(Path.Combine("D:\\Documents\\JF\\AnddeXokoTxapelketa\\2026", "test.json"), false, Encoding.UTF8);
+            //sw.Write(System.Text.Json.JsonSerializer.Serialize(group));
         }
     }
 }

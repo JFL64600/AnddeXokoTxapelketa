@@ -48,7 +48,7 @@ namespace AnddeXokoTxapelketa.Classes
                     foreach (FileInfo fi in new DirectoryInfo(Path.Combine(root, di.Name)).GetFiles("girls.*.json"))
                     {
                         using StreamReader sr = new(fi.FullName, Encoding.UTF8);
-                        tournament.GirlsGroups.Add(System.Text.Json.JsonSerializer.Deserialize<Models.New.Group>(sr.ReadToEnd()));
+                        tournament.Groups.Add(System.Text.Json.JsonSerializer.Deserialize<Models.New.Group>(sr.ReadToEnd()));
                     }
                     results.Add(tournament);
                 }
