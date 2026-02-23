@@ -1,23 +1,32 @@
-﻿using AnddeXokoTxapelketa.Models;
+﻿using AnddeXokoTxapelketa.Interfaces;
+using AnddeXokoTxapelketa.Models;
 using ClosedXML.Excel;
 using Newtonsoft.Json;
 using System.IO;
 using System.Text;
 using System.Text.Json;
+using System.Windows;
 
 namespace AnddeXokoTxapelketa.Classes
 {
     public class Tools
     {
+        #region Declarations
+        public enum GroupType
+        {
+            Girls,
+            Boys
+        }
+        #endregion
         #region Methods
         public static T GetObjects<T>(string jsonFileName)
         {
             using StreamReader sr = new(jsonFileName, Encoding.UTF8);
             return System.Text.Json.JsonSerializer.Deserialize<T>(sr.ReadToEnd());
         }
-        public static List<Tournament> GetTournaments(string root)
+        public static List<ITournament> GetTournaments(string root)
         {
-            List<Tournament> results = [];
+            List<ITournament> results = [];
             DirectoryInfo diRoot = new(root);
             foreach (DirectoryInfo di in diRoot.GetDirectories())
             {
@@ -26,14 +35,22 @@ namespace AnddeXokoTxapelketa.Classes
                 {
                     using StreamReader sr = new(fileName, Encoding.UTF8);
                     results.Add(System.Text.Json.JsonSerializer.Deserialize<Tournament>(sr.ReadToEnd()));
-                } else if (File.Exists(Path.Combine(root, di.Name, "players.girls.json")) || File.Exists(Path.Combine(root, di.Name, "players.boys.json")))
+                }
+                else if (File.Exists(Path.Combine(root, di.Name, "players.girls.json")) || File.Exists(Path.Combine(root, di.Name, "players.boys.json")))
                 {
-                    Tournament tournament = new() { Name = di.Name };
-                    if (File.Exists(Path.Combine(root, di.Name, "players.girls.json"))) {
+                    Models.New.Tournament tournament = new() { Name = di.Name };
+                    fileName = Path.Combine(root, di.Name, "players.girls.json");
+                    if (File.Exists(fileName))
+                    {
                         using StreamReader sr = new(fileName, Encoding.UTF8);
-                        List<Models.New.Player> girls = System.Text.Json.JsonSerializer.Deserialize<List<Models.New.Player>>(sr.ReadToEnd())
+                        tournament.Girls = System.Text.Json.JsonSerializer.Deserialize<List<Models.New.Player>>(sr.ReadToEnd());
                     }
-                    //results.Add(new Tournament() { Name = di.Name });
+                    foreach (FileInfo fi in new DirectoryInfo(Path.Combine(root, di.Name)).GetFiles("girls.*.json"))
+                    {
+                        using StreamReader sr = new(fi.FullName, Encoding.UTF8);
+                        tournament.GirlsGroups.Add(System.Text.Json.JsonSerializer.Deserialize<Models.New.Group>(sr.ReadToEnd()));
+                    }
+                    results.Add(tournament);
                 }
             }
             return results;

@@ -1,11 +1,8 @@
 ﻿using AnddeXokoTxapelketa.Classes;
 using AnddeXokoTxapelketa.EventsArgs;
+using AnddeXokoTxapelketa.Interfaces;
 using AnddeXokoTxapelketa.Models;
-using System.Collections.Generic;
 using System.Configuration;
-using System.DirectoryServices.ActiveDirectory;
-using System.IO;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -41,7 +38,7 @@ namespace AnddeXokoTxapelketa.Controls
         #region Privates
         private void OpenTournamentClick(object sender, RoutedEventArgs e)
         {
-            Tournament? tournament = GetTournament(sender);
+            ITournament? tournament = GetTournament(sender);
             if (tournament != null)
             {
                 OpenTournamentEvent?.Invoke(
@@ -54,58 +51,58 @@ namespace AnddeXokoTxapelketa.Controls
         }
         private void GenerateRotationsClick(object sender, RoutedEventArgs e)
         {
-            Tournament? tournament = Tools.CloneTournament(GetTournament(sender));
-            if (tournament != null)
-            {
-                Tools.GenerateRotations(_root, tournament);
-            }
+            //Tournament? tournament = Tools.CloneTournament(GetTournament(sender));
+            //if (tournament != null)
+            //{
+            //    Tools.GenerateRotations(_root, tournament);
+            //}
         }
         private void OpenRankingClick(object sender, RoutedEventArgs e)
         {
-            Tournament? tournament = Tools.CloneTournament(GetTournament(sender));
-            if (tournament != null)
-            {
-                OpenRankingEvent?.Invoke(
-                    this,
-                    new RankingEventArgs()
-                    {
-                        Tournament = tournament
-                    });
-            }
+            //Tournament? tournament = Tools.CloneTournament(GetTournament(sender));
+            //if (tournament != null)
+            //{
+            //    OpenRankingEvent?.Invoke(
+            //        this,
+            //        new RankingEventArgs()
+            //        {
+            //            Tournament = tournament
+            //        });
+            //}
         }
         private void OpenFinalTableClick(object sender, RoutedEventArgs e)
         {
-            Tournament? tournament = GetTournament(sender);
-            if (tournament != null)
-            {
-                Leagues leagues = Tools.GetLeagues(_root, tournament.Name);
-                if (leagues != null)
-                {
-                    GeneralRanking generalRanking = Tools.GetGeneralRanking(_root, tournament.Name);
-                    if (generalRanking != null)
-                    {
-                        OpenFinalTableEvent?.Invoke(
-                            this,
-                            new FinalEventArgs()
-                            {
-                                TournamentName = tournament.Name,
-                                Leagues = leagues,
-                                GeneralRanking = generalRanking
-                            });
-                    }
-                }
-            }
+            //Tournament? tournament = GetTournament(sender);
+            //if (tournament != null)
+            //{
+            //    Leagues leagues = Tools.GetLeagues(_root, tournament.Name);
+            //    if (leagues != null)
+            //    {
+            //        GeneralRanking generalRanking = Tools.GetGeneralRanking(_root, tournament.Name);
+            //        if (generalRanking != null)
+            //        {
+            //            OpenFinalTableEvent?.Invoke(
+            //                this,
+            //                new FinalEventArgs()
+            //                {
+            //                    TournamentName = tournament.Name,
+            //                    Leagues = leagues,
+            //                    GeneralRanking = generalRanking
+            //                });
+            //        }
+            //    }
+            //}
         }
         private void CloseClick(object sender, RoutedEventArgs e)
         {
             CloseApplicationtEvent?.Invoke(this, new EventArgs());
         }
-        private static Tournament? GetTournament(object sender)
+        private static ITournament? GetTournament(object sender)
         {
             Button button = (Button)sender;
             if (button != null)
             {
-                return (Tournament?)button.DataContext;
+                return (ITournament?)button.DataContext;
             }
             return null;
         }

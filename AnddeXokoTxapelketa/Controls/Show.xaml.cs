@@ -1,5 +1,6 @@
 ﻿using AnddeXokoTxapelketa.Classes;
 using AnddeXokoTxapelketa.EventsArgs;
+using AnddeXokoTxapelketa.Interfaces;
 using AnddeXokoTxapelketa.Models;
 using DocumentFormat.OpenXml.Spreadsheet;
 using System.Configuration;
@@ -17,7 +18,7 @@ namespace AnddeXokoTxapelketa.Controls
     {
         #region Declarations
         private readonly string _root = ConfigurationManager.AppSettings["root"];
-        private Tournament _tournament;
+        private ITournament _tournament;
         private int _currentGroup = 0;
         private bool _isBoysCurrent = false;
         #region Events
@@ -34,7 +35,7 @@ namespace AnddeXokoTxapelketa.Controls
                 if (_currentGroup == 0)
                 {
                     _isBoysCurrent = false;
-                    _currentGroup = _tournament.Girls.Count - 1;
+                    _currentGroup = ((Tournament)_tournament).Girls.Count - 1;
                 }
                 else
                 {
@@ -46,7 +47,7 @@ namespace AnddeXokoTxapelketa.Controls
                 _currentGroup--;
                 BPrevious.IsEnabled = _currentGroup != 0;
             }
-            SetGroup(_isBoysCurrent ? _tournament.Boys : _tournament.Girls);
+            SetGroup(_isBoysCurrent ? ((Tournament)_tournament).Boys : ((Tournament)_tournament).Girls);
         }
         private void BNextClick(object sender, RoutedEventArgs e)
         {
@@ -55,11 +56,11 @@ namespace AnddeXokoTxapelketa.Controls
             if (_isBoysCurrent)
             {
                 _currentGroup++;
-                BNext.IsEnabled = _currentGroup != _tournament.Boys.Count - 1;
+                BNext.IsEnabled = _currentGroup != ((Tournament)_tournament).Boys.Count - 1;
             }
             else
             {
-                if (_currentGroup < _tournament.Girls.Count - 1)
+                if (_currentGroup < ((Tournament)_tournament).Girls.Count - 1)
                 {
                     _currentGroup++;
                 }
@@ -69,7 +70,7 @@ namespace AnddeXokoTxapelketa.Controls
                     _currentGroup = 0;
                 }
             }
-            SetGroup(_isBoysCurrent ? _tournament.Boys : _tournament.Girls);
+            SetGroup(_isBoysCurrent ? ((Tournament)_tournament).Boys : ((Tournament)_tournament).Girls);
         }
         private void PlayerNameExitEvent(object sender, EventArgs e)
         {
@@ -77,8 +78,8 @@ namespace AnddeXokoTxapelketa.Controls
             PlayerLabel playerLabel = (PlayerLabel)FindName(playerName.Name.Replace("Name", "Label"));
             playerLabel.Value = playerName.Value;
             _ = int.TryParse(playerName.Name.Last().ToString(), out int index);
-            (_isBoysCurrent ? _tournament.Boys : _tournament.Girls)[_currentGroup].Players[index - 1].Name = playerName.Value;
-            Tools.SaveTournament(_root, _tournament);
+            (_isBoysCurrent ? ((Tournament)_tournament).Boys : ((Tournament)_tournament).Girls)[_currentGroup].Players[index - 1].Name = playerName.Value;
+            //Tools.SaveTournament(_root, ((Tournament)_tournament));
         }
         private void ExitScoreDialogEvent(object sender, ScoreDialogEventArgs e)
         {
@@ -86,9 +87,9 @@ namespace AnddeXokoTxapelketa.Controls
             {
                 ((Score)FindName($"ScoreR{e.Row}C{e.Column}")).Value = e.ScorePlayer1;
                 ((Score)FindName($"ScoreR{e.Column}C{e.Row}")).Value = e.ScorePlayer2;
-                (_isBoysCurrent ? _tournament.Boys : _tournament.Girls)[_currentGroup].Players[e.Row - 1].Results[e.Column - ((e.Row > e.Column) ? 1 : 2)] = e.ScorePlayer1;
-                (_isBoysCurrent ? _tournament.Boys : _tournament.Girls)[_currentGroup].Players[e.Column - 1].Results[e.Row - ((e.Column > e.Row) ? 1 : 2)] = e.ScorePlayer2;
-                Tools.SaveTournament(_root, _tournament);
+                (_isBoysCurrent ? ((Tournament)_tournament).Boys : ((Tournament)_tournament).Girls)[_currentGroup].Players[e.Row - 1].Results[e.Column - ((e.Row > e.Column) ? 1 : 2)] = e.ScorePlayer1;
+                (_isBoysCurrent ? ((Tournament)_tournament).Boys : ((Tournament)_tournament).Girls)[_currentGroup].Players[e.Column - 1].Results[e.Row - ((e.Column > e.Row) ? 1 : 2)] = e.ScorePlayer2;
+                Tools.SaveTournament(_root, ((Tournament)_tournament));
             }
         }
         private void OpenScore(object sender, MouseButtonEventArgs e)
@@ -105,17 +106,17 @@ namespace AnddeXokoTxapelketa.Controls
                 ScoreDialog scoreDialog = (ScoreDialog)popup.Child;
                 scoreDialog.Init(
                     row,
-                    (_isBoysCurrent ? _tournament.Boys : _tournament.Girls)[_currentGroup].Players[row - 1].Name,
+                    (_isBoysCurrent ? ((Tournament)_tournament).Boys : ((Tournament)_tournament).Girls)[_currentGroup].Players[row - 1].Name,
                     score.Value,
                     column,
-                    (_isBoysCurrent ? _tournament.Boys : _tournament.Girls)[_currentGroup].Players[column - 1].Name,
+                    (_isBoysCurrent ? ((Tournament)_tournament).Boys : ((Tournament)_tournament).Girls)[_currentGroup].Players[column - 1].Name,
                     ((Score)FindName($"ScoreR{column}C{row}")).Value);
                 popup.IsOpen = true;
             }
         }
         #endregion
         #region Methods
-        public void Init(Tournament tournament)
+        public void Init(ITournament tournament)
         {
             _tournament = tournament;
             tbTitle.Text = $"{tournament.Name} - Andde Xoko Txapelketa";
@@ -123,7 +124,14 @@ namespace AnddeXokoTxapelketa.Controls
             _isBoysCurrent = false;
             BPrevious.IsEnabled = false;
             BNext.IsEnabled = true;
-            SetGroup(_tournament.Girls);
+            if (tournament is Tournament)
+            {
+                SetGroup(((Tournament)_tournament).Girls);
+            }
+            else if (tournament is Models.New.Tournament)
+            {
+                SetGroup(((Models.New.Tournament)_tournament).GirlsGroups[0]);
+            }
         }
         private void SetGroup(List<Models.Group> groups)
         {
@@ -149,6 +157,34 @@ namespace AnddeXokoTxapelketa.Controls
                 else
                 {
                     DisablePlayer(i);
+                }
+            }
+        }
+        private void SetGroup(Models.New.Group group)
+        {
+            TBGroup.Text = group.Name;
+            for (int i = 1; i <= 8; i++)
+            {
+                if (i <= group.Players.Count)
+                {
+                    EnablePlayer(i);
+                    Models.New.Player player = ((Models.New.Tournament)_tournament).Girls.FirstOrDefault(c => c.ID == group.Players[i - 1]);
+                    ((PlayerName)FindName($"PlayerName{i}")).Value = player.Name;
+                    ((PlayerLabel)FindName($"PlayerLabel{i}")).Value = player.Name;
+                    //int index = 0;
+                    //for (int j = 1; j <= groups[_currentGroup].Players[i - 1].Results.Count + 1; j++)
+                    //{
+                    //    if (j == i)
+                    //    {
+                    //        continue;
+                    //    }
+                    //    ((Score)FindName($"ScoreR{i}C{j}")).Value = groups[_currentGroup].Players[i - 1].Results[index];
+                    //    index++;
+                    //}
+                }
+                else
+                {
+                    //DisablePlayer(i);
                 }
             }
         }
