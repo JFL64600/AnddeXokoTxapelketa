@@ -23,6 +23,20 @@ namespace AnddeXokoTxapelketa.Controls
                 rank++;
             }
         }
+        public void SetGroup(string name, List<Models.New.SortablePlayer> players)
+        {
+            GroupName.Text = name;
+            int rank = 1;
+            foreach (Models.New.SortablePlayer player in players)
+            {
+                if (string.IsNullOrWhiteSpace(player.Name))
+                {
+                    continue;
+                }
+                ((RankPlayerLabel)FindName($"Player{rank}")).Value = $"{rank}. {player.Name}";
+                rank++;
+            }
+        }
         #endregion
         public RankGroup()
         {

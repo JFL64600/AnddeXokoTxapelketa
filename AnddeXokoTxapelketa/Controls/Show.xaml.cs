@@ -155,11 +155,11 @@ namespace AnddeXokoTxapelketa.Controls
                     string filename = string.Empty;
                     switch (((Models.New.Tournament)_tournament).Groups[_currentGroup].Type)
                     {
-                        case Tools.GroupType.Girls:
-                            filename = $"girls.{_currentGroup + 1}.json";
-                            break;
                         case Tools.GroupType.Boys:
-                            filename = $"boys.{_currentGroup - 2}.json";
+                            filename = $"boys.group.{_currentGroup - 2}.json";
+                            break;
+                        case Tools.GroupType.Girls:
+                            filename = $"girls.group.{_currentGroup + 1}.json";
                             break;
                     }
                     if (!string.IsNullOrWhiteSpace(filename))

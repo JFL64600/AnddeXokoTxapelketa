@@ -59,16 +59,16 @@ namespace AnddeXokoTxapelketa.Controls
         }
         private void OpenRankingClick(object sender, RoutedEventArgs e)
         {
-            //Tournament? tournament = Tools.CloneTournament(GetTournament(sender));
-            //if (tournament != null)
-            //{
-            //    OpenRankingEvent?.Invoke(
-            //        this,
-            //        new RankingEventArgs()
-            //        {
-            //            Tournament = tournament
-            //        });
-            //}
+            ITournament? tournament = GetTournament(sender);
+            if (tournament != null)
+            {
+                OpenRankingEvent?.Invoke(
+                    this,
+                    new RankingEventArgs()
+                    {
+                        Tournament = tournament
+                    });
+            }
         }
         private void OpenFinalTableClick(object sender, RoutedEventArgs e)
         {

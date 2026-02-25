@@ -1,9 +1,9 @@
-﻿using AnddeXokoTxapelketa.Models;
+﻿using AnddeXokoTxapelketa.Interfaces;
 
 namespace AnddeXokoTxapelketa.EventsArgs
 {
     public class RankingEventArgs : EventArgs
     {
-        public Tournament Tournament { get; set; } = new();
+        public ITournament Tournament { get; set; }
     }
 }
