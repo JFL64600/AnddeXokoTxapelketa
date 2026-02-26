@@ -1,17 +1,25 @@
-﻿namespace AnddeXokoTxapelketa.Models.New
+﻿using System.Numerics;
+
+namespace AnddeXokoTxapelketa.Models.New
 {
-    public class SortablePlayer: Player, IComparable
+    public class GeneralSortablePlayer : SortablePlayer, IComparable
     {
         #region Properties
-        public int PointsAll { get; set; } = 0;
-        public int Victories { get; set; } = 0;
-        public int PointsInDefeats { get; set; } = 0;
-        public int PointsConceded{ get; set; } = 0;
+        public int Position { get; set; } = 0;
+        public string Group { get; set; } = string.Empty;
         #endregion
         #region Methods
         public int CompareTo(object? obj)
         {
-            SortablePlayer opponent = (SortablePlayer)obj;
+            GeneralSortablePlayer opponent = (GeneralSortablePlayer)obj;
+            if (Position < opponent.Position)
+            {
+                return -1;
+            }
+            if (Position > opponent.Position)
+            {
+                return 1;
+            }
             if (PointsAll > opponent.PointsAll)
             {
                 return -1;

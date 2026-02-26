@@ -72,26 +72,40 @@ namespace AnddeXokoTxapelketa.Controls
         }
         private void OpenFinalTableClick(object sender, RoutedEventArgs e)
         {
-            //Tournament? tournament = GetTournament(sender);
-            //if (tournament != null)
-            //{
-            //    Leagues leagues = Tools.GetLeagues(_root, tournament.Name);
-            //    if (leagues != null)
-            //    {
-            //        GeneralRanking generalRanking = Tools.GetGeneralRanking(_root, tournament.Name);
-            //        if (generalRanking != null)
-            //        {
-            //            OpenFinalTableEvent?.Invoke(
-            //                this,
-            //                new FinalEventArgs()
-            //                {
-            //                    TournamentName = tournament.Name,
-            //                    Leagues = leagues,
-            //                    GeneralRanking = generalRanking
-            //                });
-            //        }
-            //    }
-            //}
+            ITournament? tournament = GetTournament(sender);
+            if (tournament != null)
+            {
+                Leagues leagues = Tools.GetLeagues(_root, tournament.Name);
+                if (leagues != null)
+                {
+                    if (tournament is Tournament)
+                    {
+                        GeneralRanking generalRanking = Tools.GetGeneralRanking(_root, tournament.Name);
+                        if (generalRanking != null)
+                        {
+                            OpenFinalTableEvent?.Invoke(
+                                this,
+                                new FinalEventArgs()
+                                {
+                                    TournamentName = tournament.Name,
+                                    Leagues = leagues,
+                                    GeneralRanking = generalRanking
+                                });
+                        }
+                    }
+                    else if (tournament is Models.New.Tournament)
+                    {
+                        OpenFinalTableEvent?.Invoke(
+                                    this,
+                                    new FinalEventArgs()
+                                    {
+                                        TournamentName = tournament.Name,
+                                        Leagues = leagues,
+                                        GeneralRanking = null
+                                    });
+                    }
+                }
+            }
         }
         private void CloseClick(object sender, RoutedEventArgs e)
         {

@@ -164,8 +164,7 @@ namespace AnddeXokoTxapelketa.Classes
         }
         public static Leagues GetLeagues(string root, string tournamentName)
         {
-            using StreamReader sr = new(Path.Combine(root, tournamentName, "leagues.json"), Encoding.UTF8);
-            return System.Text.Json.JsonSerializer.Deserialize<Leagues>(sr.ReadToEnd());
+            return GetObjects<Leagues>(Path.Combine(root, tournamentName, "leagues.json"));
         }
         public static GeneralRanking GetGeneralRanking(string root, string tournamentName)
         {

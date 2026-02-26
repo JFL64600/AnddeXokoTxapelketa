@@ -72,7 +72,8 @@ namespace AnddeXokoTxapelketa.Controls
             else if (tournament is Models.New.Tournament)
             {
                 int i = 1;
-                foreach (Models.New.Group group in ((Models.New.Tournament)tournament).Groups)
+                List<Models.New.GeneralSortablePlayer> allPlayers = null;
+                foreach (Models.New.Group group in ((Models.New.Tournament)tournament).Groups.OrderBy(c => c.Type).ThenBy(c => c.Name))
                 {
                     List<Models.New.SortablePlayer> players = [];
                     foreach (Models.New.Rotation rotation in group.Rotations)
@@ -96,7 +97,8 @@ namespace AnddeXokoTxapelketa.Controls
                                     players.Add(player);
                                 }
                                 player.Victories += 1;
-                                player.ConcededPoints += match.Scores[1].Points;
+                                player.PointsAll += match.Scores[0].Points;
+                                player.PointsConceded += match.Scores[1].Points;
                                 player = players.FirstOrDefault(c => c.ID == match.Scores[1].ID);
                                 if (player == null)
                                 {
@@ -107,7 +109,8 @@ namespace AnddeXokoTxapelketa.Controls
                                     };
                                     players.Add(player);
                                 }
-                                player.Points += match.Scores[1].Points;
+                                player.PointsAll += match.Scores[1].Points;
+                                player.PointsInDefeats += match.Scores[1].Points;
                             }
                             else if (match.Scores[1].Points == 3)
                             {
@@ -121,8 +124,9 @@ namespace AnddeXokoTxapelketa.Controls
                                     };
                                     players.Add(player);
                                 }
+                                player.PointsAll += match.Scores[1].Points;
                                 player.Victories += 1;
-                                player.ConcededPoints += match.Scores[0].Points;
+                                player.PointsConceded += match.Scores[0].Points;
                                 player = players.FirstOrDefault(c => c.ID == match.Scores[0].ID);
                                 if (player == null)
                                 {
@@ -133,7 +137,8 @@ namespace AnddeXokoTxapelketa.Controls
                                     };
                                     players.Add(player);
                                 }
-                                player.Points += match.Scores[0].Points;
+                                player.PointsAll += match.Scores[0].Points;
+                                player.PointsInDefeats += match.Scores[0].Points;
                             }
                         }
                     }
@@ -142,15 +147,54 @@ namespace AnddeXokoTxapelketa.Controls
                     {
                         case Tools.GroupType.Boys:
                             filename = $"boys.rank.{i}.json";
+                            if (allPlayers == null)
+                            {
+                                allPlayers = [];
+                            }
+                            else
+                            {
+                                //Save
+                                //allPlayers = null;
+                            }
                             break;
                         case Tools.GroupType.Girls:
                             filename = $"girls.rank.{i}.json";
+                            if (allPlayers == null)
+                            {
+                                allPlayers = [];
+                            }
+                            else
+                            {
+                                //Save
+                                //allPlayers = null;
+                            }
                             break;
                     }
                     players.Sort();
                     Tools.SetObjects(players, Path.Combine(_root, tournament.Name, filename));
                     i++;
                     ((RankGroup)FindName(group.Name.Replace(" ", string.Empty))).SetGroup(group.Name, players);
+                    int position = 1;
+                    foreach (Models.New.SortablePlayer player in players)
+                    {
+                        allPlayers.Add(new Models.New.GeneralSortablePlayer()
+                        {
+                            Position = position,
+                            Group = group.Name,
+                            ID = player.ID,
+                            Name = player.Name,
+                            PointsAll = player.PointsAll,
+                            Victories = player.Victories,
+                            PointsInDefeats = player.PointsInDefeats,
+                            PointsConceded = player.PointsConceded
+                        });
+                        position++;
+                    }
+                }
+                if (allPlayers != null)
+                {
+                    allPlayers.Sort();
+                    Tools.SetObjects(allPlayers, Path.Combine(_root, tournament.Name, "girls.rank.json"));
                 }
             }
         }
