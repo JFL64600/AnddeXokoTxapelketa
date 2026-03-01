@@ -45,5 +45,7 @@
         <local:RankPlayerLabel Grid.Row="6" x:Name="Player6"></local:RankPlayerLabel>
         <local:RankPlayerLabel Grid.Row="7" x:Name="Player7"></local:RankPlayerLabel>
         <local:RankPlayerLabel Grid.Row="8" x:Name="Player8"></local:RankPlayerLabel>
+        <local:RankPlayerLabel Grid.Row="9" x:Name="Player9"></local:RankPlayerLabel>
+        <local:RankPlayerLabel Grid.Row="10" x:Name="Player10"></local:RankPlayerLabel>
     </Grid>
 </UserControl>

@@ -61,9 +61,13 @@
                 <RowDefinition Height="*" />
                 <RowDefinition Height="*" />
                 <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1.1*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
@@ -96,6 +100,8 @@
             <local:Diagonal Grid.Row="6" Grid.Column="6" x:Name="Diagonal6"></local:Diagonal>
             <local:Diagonal Grid.Row="7" Grid.Column="7" x:Name="Diagonal7"></local:Diagonal>
             <local:Diagonal Grid.Row="8" Grid.Column="8" x:Name="Diagonal8"></local:Diagonal>
+            <local:Diagonal Grid.Row="9" Grid.Column="9" x:Name="Diagonal9"></local:Diagonal>
+            <local:Diagonal Grid.Row="10" Grid.Column="10" x:Name="Diagonal10"></local:Diagonal>
             <local:PlayerName Grid.Row="1" Grid.Column="0" x:Name="PlayerName1" ExitEvent="PlayerNameExitEvent"></local:PlayerName>
             <local:PlayerName Grid.Row="2" Grid.Column="0" x:Name="PlayerName2" ExitEvent="PlayerNameExitEvent"></local:PlayerName>
             <local:PlayerName Grid.Row="3" Grid.Column="0" x:Name="PlayerName3" ExitEvent="PlayerNameExitEvent"></local:PlayerName>
@@ -104,6 +110,8 @@
             <local:PlayerName Grid.Row="6" Grid.Column="0" x:Name="PlayerName6" ExitEvent="PlayerNameExitEvent"></local:PlayerName>
             <local:PlayerName Grid.Row="7" Grid.Column="0" x:Name="PlayerName7" ExitEvent="PlayerNameExitEvent"></local:PlayerName>
             <local:PlayerName Grid.Row="8" Grid.Column="0" x:Name="PlayerName8" ExitEvent="PlayerNameExitEvent"></local:PlayerName>
+            <local:PlayerName Grid.Row="9" Grid.Column="0" x:Name="PlayerName9" ExitEvent="PlayerNameExitEvent"></local:PlayerName>
+            <local:PlayerName Grid.Row="10" Grid.Column="0" x:Name="PlayerName10" ExitEvent="PlayerNameExitEvent"></local:PlayerName>
             <local:PlayerLabel Grid.Row="0" Grid.Column="1" x:Name="PlayerLabel1"></local:PlayerLabel>
             <local:PlayerLabel Grid.Row="0" Grid.Column="2" x:Name="PlayerLabel2"></local:PlayerLabel>
             <local:PlayerLabel Grid.Row="0" Grid.Column="3" x:Name="PlayerLabel3"></local:PlayerLabel>
@@ -112,6 +120,8 @@
             <local:PlayerLabel Grid.Row="0" Grid.Column="6" x:Name="PlayerLabel6"></local:PlayerLabel>
             <local:PlayerLabel Grid.Row="0" Grid.Column="7" x:Name="PlayerLabel7"></local:PlayerLabel>
             <local:PlayerLabel Grid.Row="0" Grid.Column="8" x:Name="PlayerLabel8"></local:PlayerLabel>
+            <local:PlayerLabel Grid.Row="0" Grid.Column="9" x:Name="PlayerLabel9"></local:PlayerLabel>
+            <local:PlayerLabel Grid.Row="0" Grid.Column="10" x:Name="PlayerLabel10"></local:PlayerLabel>
             <local:Score Grid.Row="1" Grid.Column="2" x:Name="ScoreR1C2" IsReadOnly="True" MouseDoubleClick="OpenScore"></local:Score>
             <local:Score Grid.Row="1" Grid.Column="3" x:Name="ScoreR1C3" IsReadOnly="True" MouseDoubleClick="OpenScore"></local:Score>
             <local:Score Grid.Row="1" Grid.Column="4" x:Name="ScoreR1C4" IsReadOnly="True" MouseDoubleClick="OpenScore"></local:Score>
@@ -119,6 +129,8 @@
             <local:Score Grid.Row="1" Grid.Column="6" x:Name="ScoreR1C6" IsReadOnly="True" MouseDoubleClick="OpenScore"></local:Score>
             <local:Score Grid.Row="1" Grid.Column="7" x:Name="ScoreR1C7" IsReadOnly="True" MouseDoubleClick="OpenScore"></local:Score>
             <local:Score Grid.Row="1" Grid.Column="8" x:Name="ScoreR1C8" IsReadOnly="True" MouseDoubleClick="OpenScore"></local:Score>
+            <local:Score Grid.Row="1" Grid.Column="9" x:Name="ScoreR1C9" IsReadOnly="True" MouseDoubleClick="OpenScore"></local:Score>
+            <local:Score Grid.Row="1" Grid.Column="10" x:Name="ScoreR1C10" IsReadOnly="True" MouseDoubleClick="OpenScore"></local:Score>
             <local:Score Grid.Row="2" Grid.Column="1" x:Name="ScoreR2C1" IsReadOnly="True" MouseDoubleClick="OpenScore"></local:Score>
             <local:Score Grid.Row="2" Grid.Column="3" x:Name="ScoreR2C3" IsReadOnly="True" MouseDoubleClick="OpenScore"></local:Score>
             <local:Score Grid.Row="2" Grid.Column="4" x:Name="ScoreR2C4" IsReadOnly="True" MouseDoubleClick="OpenScore"></local:Score>
@@ -126,6 +138,8 @@
             <local:Score Grid.Row="2" Grid.Column="6" x:Name="ScoreR2C6" IsReadOnly="True" MouseDoubleClick="OpenScore"></local:Score>
             <local:Score Grid.Row="2" Grid.Column="7" x:Name="ScoreR2C7" IsReadOnly="True" MouseDoubleClick="OpenScore"></local:Score>
             <local:Score Grid.Row="2" Grid.Column="8" x:Name="ScoreR2C8" IsReadOnly="True" MouseDoubleClick="OpenScore"></local:Score>
+            <local:Score Grid.Row="2" Grid.Column="9" x:Name="ScoreR2C9" IsReadOnly="True" MouseDoubleClick="OpenScore"></local:Score>
+            <local:Score Grid.Row="2" Grid.Column="10" x:Name="ScoreR2C10" IsReadOnly="True" MouseDoubleClick="OpenScore"></local:Score>
             <local:Score Grid.Row="3" Grid.Column="1" x:Name="ScoreR3C1" IsReadOnly="True" MouseDoubleClick="OpenScore"></local:Score>
             <local:Score Grid.Row="3" Grid.Column="2" x:Name="ScoreR3C2" IsReadOnly="True" MouseDoubleClick="OpenScore"></local:Score>
             <local:Score Grid.Row="3" Grid.Column="4" x:Name="ScoreR3C4" IsReadOnly="True" MouseDoubleClick="OpenScore"></local:Score>
@@ -133,6 +147,8 @@
             <local:Score Grid.Row="3" Grid.Column="6" x:Name="ScoreR3C6" IsReadOnly="True" MouseDoubleClick="OpenScore"></local:Score>
             <local:Score Grid.Row="3" Grid.Column="7" x:Name="ScoreR3C7" IsReadOnly="True" MouseDoubleClick="OpenScore"></local:Score>
             <local:Score Grid.Row="3" Grid.Column="8" x:Name="ScoreR3C8" IsReadOnly="True" MouseDoubleClick="OpenScore"></local:Score>
+            <local:Score Grid.Row="3" Grid.Column="9" x:Name="ScoreR3C9" IsReadOnly="True" MouseDoubleClick="OpenScore"></local:Score>
+            <local:Score Grid.Row="3" Grid.Column="10" x:Name="ScoreR3C10" IsReadOnly="True" MouseDoubleClick="OpenScore"></local:Score>
             <local:Score Grid.Row="4" Grid.Column="1" x:Name="ScoreR4C1" IsReadOnly="True" MouseDoubleClick="OpenScore"></local:Score>
             <local:Score Grid.Row="4" Grid.Column="2" x:Name="ScoreR4C2" IsReadOnly="True" MouseDoubleClick="OpenScore"></local:Score>
             <local:Score Grid.Row="4" Grid.Column="3" x:Name="ScoreR4C3" IsReadOnly="True" MouseDoubleClick="OpenScore"></local:Score>
@@ -140,6 +156,8 @@
             <local:Score Grid.Row="4" Grid.Column="6" x:Name="ScoreR4C6" IsReadOnly="True" MouseDoubleClick="OpenScore"></local:Score>
             <local:Score Grid.Row="4" Grid.Column="7" x:Name="ScoreR4C7" IsReadOnly="True" MouseDoubleClick="OpenScore"></local:Score>
             <local:Score Grid.Row="4" Grid.Column="8" x:Name="ScoreR4C8" IsReadOnly="True" MouseDoubleClick="OpenScore"></local:Score>
+            <local:Score Grid.Row="4" Grid.Column="9" x:Name="ScoreR4C9" IsReadOnly="True" MouseDoubleClick="OpenScore"></local:Score>
+            <local:Score Grid.Row="4" Grid.Column="10" x:Name="ScoreR4C10" IsReadOnly="True" MouseDoubleClick="OpenScore"></local:Score>
             <local:Score Grid.Row="5" Grid.Column="1" x:Name="ScoreR5C1" IsReadOnly="True" MouseDoubleClick="OpenScore"></local:Score>
             <local:Score Grid.Row="5" Grid.Column="2" x:Name="ScoreR5C2" IsReadOnly="True" MouseDoubleClick="OpenScore"></local:Score>
             <local:Score Grid.Row="5" Grid.Column="3" x:Name="ScoreR5C3" IsReadOnly="True" MouseDoubleClick="OpenScore"></local:Score>
@@ -147,6 +165,8 @@
             <local:Score Grid.Row="5" Grid.Column="6" x:Name="ScoreR5C6" IsReadOnly="True" MouseDoubleClick="OpenScore"></local:Score>
             <local:Score Grid.Row="5" Grid.Column="7" x:Name="ScoreR5C7" IsReadOnly="True" MouseDoubleClick="OpenScore"></local:Score>
             <local:Score Grid.Row="5" Grid.Column="8" x:Name="ScoreR5C8" IsReadOnly="True" MouseDoubleClick="OpenScore"></local:Score>
+            <local:Score Grid.Row="5" Grid.Column="9" x:Name="ScoreR5C9" IsReadOnly="True" MouseDoubleClick="OpenScore"></local:Score>
+            <local:Score Grid.Row="5" Grid.Column="10" x:Name="ScoreR5C10" IsReadOnly="True" MouseDoubleClick="OpenScore"></local:Score>
             <local:Score Grid.Row="6" Grid.Column="1" x:Name="ScoreR6C1" IsReadOnly="True" MouseDoubleClick="OpenScore"></local:Score>
             <local:Score Grid.Row="6" Grid.Column="2" x:Name="ScoreR6C2" IsReadOnly="True" MouseDoubleClick="OpenScore"></local:Score>
             <local:Score Grid.Row="6" Grid.Column="3" x:Name="ScoreR6C3" IsReadOnly="True" MouseDoubleClick="OpenScore"></local:Score>
@@ -154,6 +174,8 @@
             <local:Score Grid.Row="6" Grid.Column="5" x:Name="ScoreR6C5" IsReadOnly="True" MouseDoubleClick="OpenScore"></local:Score>
             <local:Score Grid.Row="6" Grid.Column="7" x:Name="ScoreR6C7" IsReadOnly="True" MouseDoubleClick="OpenScore"></local:Score>
             <local:Score Grid.Row="6" Grid.Column="8" x:Name="ScoreR6C8" IsReadOnly="True" MouseDoubleClick="OpenScore"></local:Score>
+            <local:Score Grid.Row="6" Grid.Column="9" x:Name="ScoreR6C9" IsReadOnly="True" MouseDoubleClick="OpenScore"></local:Score>
+            <local:Score Grid.Row="6" Grid.Column="10" x:Name="ScoreR6C10" IsReadOnly="True" MouseDoubleClick="OpenScore"></local:Score>
             <local:Score Grid.Row="7" Grid.Column="1" x:Name="ScoreR7C1" IsReadOnly="True" MouseDoubleClick="OpenScore"></local:Score>
             <local:Score Grid.Row="7" Grid.Column="2" x:Name="ScoreR7C2" IsReadOnly="True" MouseDoubleClick="OpenScore"></local:Score>
             <local:Score Grid.Row="7" Grid.Column="3" x:Name="ScoreR7C3" IsReadOnly="True" MouseDoubleClick="OpenScore"></local:Score>
@@ -161,6 +183,8 @@
             <local:Score Grid.Row="7" Grid.Column="5" x:Name="ScoreR7C5" IsReadOnly="True" MouseDoubleClick="OpenScore"></local:Score>
             <local:Score Grid.Row="7" Grid.Column="6" x:Name="ScoreR7C6" IsReadOnly="True" MouseDoubleClick="OpenScore"></local:Score>
             <local:Score Grid.Row="7" Grid.Column="8" x:Name="ScoreR7C8" IsReadOnly="True" MouseDoubleClick="OpenScore"></local:Score>
+            <local:Score Grid.Row="7" Grid.Column="9" x:Name="ScoreR7C9" IsReadOnly="True" MouseDoubleClick="OpenScore"></local:Score>
+            <local:Score Grid.Row="7" Grid.Column="10" x:Name="ScoreR7C10" IsReadOnly="True" MouseDoubleClick="OpenScore"></local:Score>
             <local:Score Grid.Row="8" Grid.Column="1" x:Name="ScoreR8C1" IsReadOnly="True" MouseDoubleClick="OpenScore"></local:Score>
             <local:Score Grid.Row="8" Grid.Column="2" x:Name="ScoreR8C2" IsReadOnly="True" MouseDoubleClick="OpenScore"></local:Score>
             <local:Score Grid.Row="8" Grid.Column="3" x:Name="ScoreR8C3" IsReadOnly="True" MouseDoubleClick="OpenScore"></local:Score>
@@ -168,6 +192,26 @@
             <local:Score Grid.Row="8" Grid.Column="5" x:Name="ScoreR8C5" IsReadOnly="True" MouseDoubleClick="OpenScore"></local:Score>
             <local:Score Grid.Row="8" Grid.Column="6" x:Name="ScoreR8C6" IsReadOnly="True" MouseDoubleClick="OpenScore"></local:Score>
             <local:Score Grid.Row="8" Grid.Column="7" x:Name="ScoreR8C7" IsReadOnly="True" MouseDoubleClick="OpenScore"></local:Score>
+            <local:Score Grid.Row="8" Grid.Column="9" x:Name="ScoreR8C9" IsReadOnly="True" MouseDoubleClick="OpenScore"></local:Score>
+            <local:Score Grid.Row="8" Grid.Column="10" x:Name="ScoreR8C10" IsReadOnly="True" MouseDoubleClick="OpenScore"></local:Score>
+            <local:Score Grid.Row="9" Grid.Column="1" x:Name="ScoreR9C1" IsReadOnly="True" MouseDoubleClick="OpenScore"></local:Score>
+            <local:Score Grid.Row="9" Grid.Column="2" x:Name="ScoreR9C2" IsReadOnly="True" MouseDoubleClick="OpenScore"></local:Score>
+            <local:Score Grid.Row="9" Grid.Column="3" x:Name="ScoreR9C3" IsReadOnly="True" MouseDoubleClick="OpenScore"></local:Score>
+            <local:Score Grid.Row="9" Grid.Column="4" x:Name="ScoreR9C4" IsReadOnly="True" MouseDoubleClick="OpenScore"></local:Score>
+            <local:Score Grid.Row="9" Grid.Column="5" x:Name="ScoreR9C5" IsReadOnly="True" MouseDoubleClick="OpenScore"></local:Score>
+            <local:Score Grid.Row="9" Grid.Column="6" x:Name="ScoreR9C6" IsReadOnly="True" MouseDoubleClick="OpenScore"></local:Score>
+            <local:Score Grid.Row="9" Grid.Column="7" x:Name="ScoreR9C7" IsReadOnly="True" MouseDoubleClick="OpenScore"></local:Score>
+            <local:Score Grid.Row="9" Grid.Column="8" x:Name="ScoreR9C8" IsReadOnly="True" MouseDoubleClick="OpenScore"></local:Score>
+            <local:Score Grid.Row="9" Grid.Column="10" x:Name="ScoreR9C10" IsReadOnly="True" MouseDoubleClick="OpenScore"></local:Score>
+            <local:Score Grid.Row="10" Grid.Column="1" x:Name="ScoreR10C1" IsReadOnly="True" MouseDoubleClick="OpenScore"></local:Score>
+            <local:Score Grid.Row="10" Grid.Column="2" x:Name="ScoreR10C2" IsReadOnly="True" MouseDoubleClick="OpenScore"></local:Score>
+            <local:Score Grid.Row="10" Grid.Column="3" x:Name="ScoreR10C3" IsReadOnly="True" MouseDoubleClick="OpenScore"></local:Score>
+            <local:Score Grid.Row="10" Grid.Column="4" x:Name="ScoreR10C4" IsReadOnly="True" MouseDoubleClick="OpenScore"></local:Score>
+            <local:Score Grid.Row="10" Grid.Column="5" x:Name="ScoreR10C5" IsReadOnly="True" MouseDoubleClick="OpenScore"></local:Score>
+            <local:Score Grid.Row="10" Grid.Column="6" x:Name="ScoreR10C6" IsReadOnly="True" MouseDoubleClick="OpenScore"></local:Score>
+            <local:Score Grid.Row="10" Grid.Column="7" x:Name="ScoreR10C7" IsReadOnly="True" MouseDoubleClick="OpenScore"></local:Score>
+            <local:Score Grid.Row="10" Grid.Column="8" x:Name="ScoreR10C8" IsReadOnly="True" MouseDoubleClick="OpenScore"></local:Score>
+            <local:Score Grid.Row="10" Grid.Column="9" x:Name="ScoreR10C9" IsReadOnly="True" MouseDoubleClick="OpenScore"></local:Score>
         </Grid>
         <Grid Grid.Row="2">
             <Button Margin="20" Click="CloseTournamentClick" HorizontalAlignment="Right" VerticalAlignment="Center" Content="Hetsi" />

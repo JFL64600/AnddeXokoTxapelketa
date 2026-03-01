@@ -15,6 +15,7 @@ namespace AnddeXokoTxapelketa.Controls
     {
         #region Declarations
         private readonly string _root = ConfigurationManager.AppSettings["root"];
+        private readonly int _maxPlayers = 10;
         private ITournament _tournament;
         private int _currentGroup = 0;
         private bool _isBoysCurrent = false;
@@ -282,7 +283,7 @@ namespace AnddeXokoTxapelketa.Controls
         private void SetGroup(List<Models.Group> groups)
         {
             TBGroup.Text = $"{(_isBoysCurrent ? "M" : "N")} {_currentGroup + 1}";
-            for (int i = 1; i <= 8; i++)
+            for (int i = 1; i <= _maxPlayers; i++)
             {
                 if (i <= groups[_currentGroup].Players.Count)
                 {
@@ -309,8 +310,13 @@ namespace AnddeXokoTxapelketa.Controls
         private void SetGroup(Models.New.Group group)
         {
             TBGroup.Text = group.Name;
-            for (int i = 1; i <= 8; i++)
+            for (int i = 1; i <= _maxPlayers; i++)
             {
+                if (i > group.Players.Count)
+                {
+                    DisablePlayer(i);
+                    continue;
+                }
                 Models.New.Player player = ((Models.New.Tournament)_tournament).Girls.FirstOrDefault(c => c.ID == group.Players[i - 1]);
                 if (player != null && !string.IsNullOrEmpty(player.Name))
                 {
@@ -353,7 +359,7 @@ namespace AnddeXokoTxapelketa.Controls
             ((PlayerName)FindName($"PlayerName{index}")).Enable();
             ((PlayerLabel)FindName($"PlayerLabel{index}")).Enable();
             ((Diagonal)FindName($"Diagonal{index}")).Enable();
-            for (int i = 1; i <= 8; i++)
+            for (int i = 1; i <= _maxPlayers; i++)
             {
                 if (i == index)
                 {
@@ -368,7 +374,7 @@ namespace AnddeXokoTxapelketa.Controls
             ((PlayerName)FindName($"PlayerName{index}")).Disable();
             ((PlayerLabel)FindName($"PlayerLabel{index}")).Disable();
             ((Diagonal)FindName($"Diagonal{index}")).Disable();
-            for (int i = 1; i <= 8; i++)
+            for (int i = 1; i <= _maxPlayers; i++)
             {
                 if (i == index)
                 {
