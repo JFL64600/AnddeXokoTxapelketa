@@ -1,5 +1,6 @@
 ﻿using AnddeXokoTxapelketa.Classes;
 using AnddeXokoTxapelketa.EventsArgs;
+using AnddeXokoTxapelketa.Interfaces;
 using AnddeXokoTxapelketa.Models;
 using System.Configuration;
 using System.IO;
@@ -9,9 +10,6 @@ using System.Windows.Media;
 
 namespace AnddeXokoTxapelketa.Controls
 {
-    /// <summary>
-    /// Logique d'interaction pour Create.xaml
-    /// </summary>
     public partial class Final : UserControl
     {
         #region Declarations
@@ -41,26 +39,39 @@ namespace AnddeXokoTxapelketa.Controls
         }
         #endregion
         #region Methods
-        public void Init(FinalEventArgs e)
+        public void Init(IFinalEventArgs e)
         {
             tbTitle.Text = $"{e.TournamentName} - Andde Xoko Txapelketa";
-            if (e.GeneralRanking == null)
+            if (e is FinalEventArgs fea)
             {
-                List<Models.New.GeneralSortablePlayer> players = Tools.GetObjects<List<Models.New.GeneralSortablePlayer>>(Path.Combine(_root, e.TournamentName, "girls.rank.json"));
-                foreach (League league in e.Leagues.Girls)
+                foreach (League league in fea.Leagues.Girls)
                 {
-                    SetFinalTable(league, players);
+                    SetFinalTable(league, fea.GeneralRanking.Girls);
+                }
+                foreach (League league in fea.Leagues.Boys)
+                {
+                    SetFinalTable(league, fea.GeneralRanking.Boys);
                 }
             }
-            else
+            else if (e is EventsArgs.New.FinalEventArgs nfea)
             {
-                foreach (League league in e.Leagues.Girls)
+                List<List<Models.New.SortablePlayer>> ranks = [];
+                foreach (FileInfo fi in new DirectoryInfo(Path.Combine(_root, e.TournamentName)).GetFiles("girls.rank.*.json"))
                 {
-                    SetFinalTable(league, e.GeneralRanking.Girls);
+                    ranks.Add(Tools.GetObjects<List<Models.New.SortablePlayer>>(fi.FullName));
                 }
-                foreach (League league in e.Leagues.Boys)
+                foreach (Models.New.League league in nfea.Leagues.Girls)
                 {
-                    SetFinalTable(league, e.GeneralRanking.Boys);
+                    SetFinalTable(league, ranks);
+                }
+                ranks = [];
+                foreach (FileInfo fi in new DirectoryInfo(Path.Combine(_root, e.TournamentName)).GetFiles("boys.rank.*.json"))
+                {
+                    ranks.Add(Tools.GetObjects<List<Models.New.SortablePlayer>>(fi.FullName));
+                }
+                foreach (Models.New.League league in nfea.Leagues.Boys)
+                {
+                    SetFinalTable(league, ranks);
                 }
             }
             BPrevious.IsEnabled = false;
@@ -85,22 +96,22 @@ namespace AnddeXokoTxapelketa.Controls
                 }
             }
         }
-        private void SetFinalTable(League league, List<Models.New.GeneralSortablePlayer> players)
+        private void SetFinalTable(Models.New.League league, List<List<Models.New.SortablePlayer>> ranks)
         {
             _finalTables.Add(new FinalTable { Name = league.Name });
             for (int j = 0; j < league.Heads.Length; j++)
             {
-                Models.New.GeneralSortablePlayer player1 = (league.Heads[j] > players.Count) ? null : players[league.Heads[j] - 1];
-                Models.New.GeneralSortablePlayer player2 = (league.Chalengers[j] > players.Count) ? null : players[league.Chalengers[j] - 1];
+                string[] head = league.Heads[j].Split(".");
+                int headGroup = Convert.ToInt32(head[0]);
+                int headPosition = Convert.ToInt32(head[1]);
+                string[] challenger = league.Chalengers[j].Split(".");
+                int challengerGroup = Convert.ToInt32(challenger[0]);
+                int challengerPosition = Convert.ToInt32(challenger[1]);
                 _finalTables.Last().Add(new FinalTableMatch
                 {
-                    Palyer1Name = player1?.Name,
-                    Palyer2Name = player2?.Name,
+                    Palyer1Name = ranks[headGroup - 1][headPosition - 1].Name,
+                    Palyer2Name = ranks[challengerGroup - 1][challengerPosition - 1].Name
                 });
-                if (!string.IsNullOrWhiteSpace(player1?.Group) && !string.IsNullOrWhiteSpace(player2?.Group))
-                {
-                    _finalTables.Last().Last().InError = player1.Group.Equals(player2.Group);
-                }
             }
         }
         private void ShowFinalTable(FinalTable finalTable)

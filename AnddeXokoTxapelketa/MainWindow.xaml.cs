@@ -1,5 +1,6 @@
 ﻿using AnddeXokoTxapelketa.Controls;
 using AnddeXokoTxapelketa.EventsArgs;
+using AnddeXokoTxapelketa.Interfaces;
 using System.IO;
 using System.Text;
 using System.Windows;
@@ -29,7 +30,7 @@ namespace AnddeXokoTxapelketa
             ((Rank)((MaterialDesignThemes.Wpf.Transitions.TransitionerSlide)tMain.Items[3]).Content).Init(e.Tournament);
             tMain.SelectedIndex = 3;
         }
-        public void OpenFinalEventArgs(object sender, FinalEventArgs e)
+        public void OpenFinalEventArgs(object sender, IFinalEventArgs e)
         {
             ((Final)((MaterialDesignThemes.Wpf.Transitions.TransitionerSlide)tMain.Items[4]).Content).Init(e);
             tMain.SelectedIndex = 4;
@@ -56,7 +57,7 @@ namespace AnddeXokoTxapelketa
             InitializeComponent();
             start.OpenTournamentEvent += new EventHandler<TournamentEventArgs>(OpenTournamentEventHandler);
             start.OpenRankingEvent += new EventHandler<RankingEventArgs>(OpenRankingEventHandler);
-            start.OpenFinalTableEvent += new EventHandler<FinalEventArgs>(OpenFinalEventArgs);
+            start.OpenFinalTableEvent += new EventHandler<IFinalEventArgs>(OpenFinalEventArgs);
             start.CloseApplicationtEvent += new EventHandler(CloseApplicationtEventHandler);
             show.CloseTournamentEvent += new EventHandler(CloseTournamentEventHandler);
             rank.CloseRankEvent += new EventHandler(CloseRankEventHandler);

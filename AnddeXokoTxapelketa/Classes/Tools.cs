@@ -53,6 +53,15 @@ namespace AnddeXokoTxapelketa.Classes
                     {
                         tournament.Groups.Add(GetObjects<Models.New.Group>(fi.FullName));
                     }
+                    fileName = Path.Combine(root, di.Name, "boys.players.json");
+                    if (File.Exists(fileName))
+                    {
+                        tournament.Boys = GetObjects<List<Models.New.Player>>(fileName);
+                    }
+                    foreach (FileInfo fi in new DirectoryInfo(Path.Combine(root, di.Name)).GetFiles("boys.group.*.json"))
+                    {
+                        tournament.Groups.Add(GetObjects<Models.New.Group>(fi.FullName));
+                    }
                     results.Add(tournament);
                 }
             }

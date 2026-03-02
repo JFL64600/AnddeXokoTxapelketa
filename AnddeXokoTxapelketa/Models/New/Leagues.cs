@@ -1,4 +1,4 @@
-﻿namespace AnddeXokoTxapelketa.Models
+﻿namespace AnddeXokoTxapelketa.Models.New
 {
     public class Leagues
     {

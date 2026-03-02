@@ -310,6 +310,8 @@ namespace AnddeXokoTxapelketa.Controls
         private void SetGroup(Models.New.Group group)
         {
             TBGroup.Text = group.Name;
+            List<Models.New.Player> players = (group.Type == Tools.GroupType.Boys) ?
+                ((Models.New.Tournament)_tournament).Boys : ((Models.New.Tournament)_tournament).Girls;
             for (int i = 1; i <= _maxPlayers; i++)
             {
                 if (i > group.Players.Count)
@@ -317,7 +319,7 @@ namespace AnddeXokoTxapelketa.Controls
                     DisablePlayer(i);
                     continue;
                 }
-                Models.New.Player player = ((Models.New.Tournament)_tournament).Girls.FirstOrDefault(c => c.ID == group.Players[i - 1]);
+                Models.New.Player player = players.FirstOrDefault(c => c.ID == group.Players[i - 1]);
                 if (player != null && !string.IsNullOrEmpty(player.Name))
                 {
                     EnablePlayer(i);

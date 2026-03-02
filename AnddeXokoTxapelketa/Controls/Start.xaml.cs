@@ -3,14 +3,12 @@ using AnddeXokoTxapelketa.EventsArgs;
 using AnddeXokoTxapelketa.Interfaces;
 using AnddeXokoTxapelketa.Models;
 using System.Configuration;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 
 namespace AnddeXokoTxapelketa.Controls
 {
-    /// <summary>
-    /// Logique d'interaction pour UserControl1.xaml
-    /// </summary>
     public partial class Start : UserControl
     {
         #region Declarations
@@ -18,7 +16,7 @@ namespace AnddeXokoTxapelketa.Controls
         #region Events
         public event EventHandler<TournamentEventArgs>? OpenTournamentEvent;
         public event EventHandler<RankingEventArgs>? OpenRankingEvent;
-        public event EventHandler<FinalEventArgs>? OpenFinalTableEvent;
+        public event EventHandler<IFinalEventArgs>? OpenFinalTableEvent;
         public event EventHandler? CloseApplicationtEvent;
         #endregion
         #endregion
@@ -75,35 +73,30 @@ namespace AnddeXokoTxapelketa.Controls
             ITournament? tournament = GetTournament(sender);
             if (tournament != null)
             {
-                Leagues leagues = Tools.GetLeagues(_root, tournament.Name);
-                if (leagues != null)
+                if (tournament is Tournament)
                 {
-                    if (tournament is Tournament)
-                    {
-                        GeneralRanking generalRanking = Tools.GetGeneralRanking(_root, tournament.Name);
-                        if (generalRanking != null)
-                        {
-                            OpenFinalTableEvent?.Invoke(
-                                this,
-                                new FinalEventArgs()
-                                {
-                                    TournamentName = tournament.Name,
-                                    Leagues = leagues,
-                                    GeneralRanking = generalRanking
-                                });
-                        }
-                    }
-                    else if (tournament is Models.New.Tournament)
+                    GeneralRanking generalRanking = Tools.GetGeneralRanking(_root, tournament.Name);
+                    if (generalRanking != null)
                     {
                         OpenFinalTableEvent?.Invoke(
-                                    this,
-                                    new FinalEventArgs()
-                                    {
-                                        TournamentName = tournament.Name,
-                                        Leagues = leagues,
-                                        GeneralRanking = null
-                                    });
+                            this,
+                            new FinalEventArgs()
+                            {
+                                TournamentName = tournament.Name,
+                                Leagues = Tools.GetObjects<Leagues>(Path.Combine(_root, tournament.Name, "leagues.json")),
+                                GeneralRanking = generalRanking
+                            });
                     }
+                }
+                else if (tournament is Models.New.Tournament)
+                {
+                    OpenFinalTableEvent?.Invoke(
+                                this,
+                                new EventsArgs.New.FinalEventArgs()
+                                {
+                                    TournamentName = tournament.Name,
+                                    Leagues = Tools.GetObjects<Models.New.Leagues>(Path.Combine(_root, tournament.Name, "leagues.json")),
+                                });
                 }
             }
         }
