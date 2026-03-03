@@ -1,0 +1,555 @@
+{
+	"Name": "M 3",
+	"Type": 1,
+	"Players": [
+		21,
+		22,
+		23,
+		24,
+		25,
+		26,
+		27,
+		28,
+		29,
+		30
+	],
+	"Rotations": [
+		{
+			"Name": "Rotation 1",
+			"Matches": [
+				{
+					"Scores": [
+						{
+							"ID": 1,
+							"Points": 0
+						},
+						{
+							"ID": 5,
+							"Points": 0
+						}
+					]
+				},
+				{
+					"Scores": [
+						{
+							"ID": 2,
+							"Points": 0
+						},
+						{
+							"ID": 4,
+							"Points": 0
+						}
+					]
+				},
+				{
+					"Scores": [
+						{
+							"ID": 3,
+							"Points": 0
+						},
+						{
+							"ID": 5,
+							"Points": 0
+						}
+					]
+				},
+				{
+					"Scores": [
+						{
+							"ID": 6,
+							"Points": 0
+						},
+						{
+							"ID": 7,
+							"Points": 0
+						}
+					]
+				},
+				{
+					"Scores": [
+						{
+							"ID": 9,
+							"Points": 0
+						},
+						{
+							"ID": 10,
+							"Points": 0
+						}
+					]
+				}
+			]
+		},
+		{
+			"Name": "Rotation 2",
+			"Matches": [
+				{
+					"Scores": [
+						{
+							"ID": 1,
+							"Points": 0
+						},
+						{
+							"ID": 9,
+							"Points": 0
+						}
+					]
+				},
+				{
+					"Scores": [
+						{
+							"ID": 2,
+							"Points": 0
+						},
+						{
+							"ID": 5,
+							"Points": 0
+						}
+					]
+				},
+				{
+					"Scores": [
+						{
+							"ID": 3,
+							"Points": 0
+						},
+						{
+							"ID": 6,
+							"Points": 0
+						}
+					]
+				},
+				{
+					"Scores": [
+						{
+							"ID": 4,
+							"Points": 0
+						},
+						{
+							"ID": 8,
+							"Points": 0
+						}
+					]
+				},
+				{
+					"Scores": [
+						{
+							"ID": 7,
+							"Points": 0
+						},
+						{
+							"ID": 10,
+							"Points": 0
+						}
+					]
+				}
+			]
+		},
+		{
+			"Name": "Rotation 3",
+			"Matches": [
+				{
+					"Scores": [
+						{
+							"ID": 1,
+							"Points": 0
+						},
+						{
+							"ID": 7,
+							"Points": 0
+						}
+					]
+				},
+				{
+					"Scores": [
+						{
+							"ID": 2,
+							"Points": 0
+						},
+						{
+							"ID": 8,
+							"Points": 0
+						}
+					]
+				},
+				{
+					"Scores": [
+						{
+							"ID": 3,
+							"Points": 0
+						},
+						{
+							"ID": 10,
+							"Points": 0
+						}
+					]
+				},
+				{
+					"Scores": [
+						{
+							"ID": 4,
+							"Points": 0
+						},
+						{
+							"ID": 9,
+							"Points": 0
+						}
+					]
+				},
+				{
+					"Scores": [
+						{
+							"ID": 5,
+							"Points": 0
+						},
+						{
+							"ID": 6,
+							"Points": 0
+						}
+					]
+				}
+			]
+		},
+		{
+			"Name": "Rotation 4",
+			"Matches": [
+				{
+					"Scores": [
+						{
+							"ID": 1,
+							"Points": 0
+						},
+						{
+							"ID": 4,
+							"Points": 0
+						}
+					]
+				},
+				{
+					"Scores": [
+						{
+							"ID": 2,
+							"Points": 0
+						},
+						{
+							"ID": 3,
+							"Points": 0
+						}
+					]
+				},
+				{
+					"Scores": [
+						{
+							"ID": 5,
+							"Points": 0
+						},
+						{
+							"ID": 6,
+							"Points": 0
+						}
+					]
+				}
+			]
+		},
+		{
+			"Name": "Rotation 5",
+			"Matches": [
+				{
+					"Scores": [
+						{
+							"ID": 1,
+							"Points": 0
+						},
+						{
+							"ID": 5,
+							"Points": 0
+						}
+					]
+				},
+				{
+					"Scores": [
+						{
+							"ID": 2,
+							"Points": 0
+						},
+						{
+							"ID": 4,
+							"Points": 0
+						}
+					]
+				},
+				{
+					"Scores": [
+						{
+							"ID": 3,
+							"Points": 0
+						},
+						{
+							"ID": 6,
+							"Points": 0
+						}
+					]
+				}
+			]
+		},
+		{
+			"Name": "Rotation 6",
+			"Matches": [
+				{
+					"Scores": [
+						{
+							"ID": 1,
+							"Points": 0
+						},
+						{
+							"ID": 6,
+							"Points": 0
+						}
+					]
+				},
+				{
+					"Scores": [
+						{
+							"ID": 2,
+							"Points": 0
+						},
+						{
+							"ID": 10,
+							"Points": 0
+						}
+					]
+				},
+				{
+					"Scores": [
+						{
+							"ID": 3,
+							"Points": 0
+						},
+						{
+							"ID": 8,
+							"Points": 0
+						}
+					]
+				},
+				{
+					"Scores": [
+						{
+							"ID": 4,
+							"Points": 0
+						},
+						{
+							"ID": 5,
+							"Points": 0
+						}
+					]
+				},
+				{
+					"Scores": [
+						{
+							"ID": 7,
+							"Points": 0
+						},
+						{
+							"ID": 9,
+							"Points": 0
+						}
+					]
+				}
+			]
+		},
+		{
+			"Name": "Rotation 7",
+			"Matches": [
+				{
+					"Scores": [
+						{
+							"ID": 1,
+							"Points": 0
+						},
+						{
+							"ID": 10,
+							"Points": 0
+						}
+					]
+				},
+				{
+					"Scores": [
+						{
+							"ID": 2,
+							"Points": 0
+						},
+						{
+							"ID": 7,
+							"Points": 0
+						}
+					]
+				},
+				{
+					"Scores": [
+						{
+							"ID": 3,
+							"Points": 0
+						},
+						{
+							"ID": 9,
+							"Points": 0
+						}
+					]
+				},
+				{
+					"Scores": [
+						{
+							"ID": 4,
+							"Points": 0
+						},
+						{
+							"ID": 6,
+							"Points": 0
+						}
+					]
+				},
+				{
+					"Scores": [
+						{
+							"ID": 5,
+							"Points": 0
+						},
+						{
+							"ID": 8,
+							"Points": 0
+						}
+					]
+				}
+			]
+		},
+		{
+			"Name": "Rotation 8",
+			"Matches": [
+				{
+					"Scores": [
+						{
+							"ID": 1,
+							"Points": 0
+						},
+						{
+							"ID": 2,
+							"Points": 0
+						}
+					]
+				},
+				{
+					"Scores": [
+						{
+							"ID": 3,
+							"Points": 0
+						},
+						{
+							"ID": 7,
+							"Points": 0
+						}
+					]
+				},
+				{
+					"Scores": [
+						{
+							"ID": 4,
+							"Points": 0
+						},
+						{
+							"ID": 10,
+							"Points": 0
+						}
+					]
+				},
+				{
+					"Scores": [
+						{
+							"ID": 5,
+							"Points": 0
+						},
+						{
+							"ID": 9,
+							"Points": 0
+						}
+					]
+				},
+				{
+					"Scores": [
+						{
+							"ID": 6,
+							"Points": 0
+						},
+						{
+							"ID": 8,
+							"Points": 0
+						}
+					]
+				}
+			]
+		},
+		{
+			"Name": "Rotation 9",
+			"Matches": [
+				{
+					"Scores": [
+						{
+							"ID": 1,
+							"Points": 0
+						},
+						{
+							"ID": 4,
+							"Points": 0
+						}
+					]
+				},
+				{
+					"Scores": [
+						{
+							"ID": 2,
+							"Points": 0
+						},
+						{
+							"ID": 3,
+							"Points": 0
+						}
+					]
+				},
+				{
+					"Scores": [
+						{
+							"ID": 5,
+							"Points": 0
+						},
+						{
+							"ID": 7,
+							"Points": 0
+						}
+					]
+				},
+				{
+					"Scores": [
+						{
+							"ID": 6,
+							"Points": 0
+						},
+						{
+							"ID": 9,
+							"Points": 0
+						}
+					]
+				},
+				{
+					"Scores": [
+						{
+							"ID": 8,
+							"Points": 0
+						},
+						{
+							"ID": 10,
+							"Points": 0
+						}
+					]
+				}
+			]
+		}
+	]
+}
