@@ -8,7 +8,7 @@ export class Tournament
     Boys: Player[] = [];
     Groups: Group[] = [];
 
-    constructor(name: string) {
+    constructor(name: String) {
       this.Name = name;
     }
 }

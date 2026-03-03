@@ -1,5 +1,30 @@
-<div *ngFor="let group of tournament.Groups; index as i">
-  <button id={{i}}>{{group.Name}}</button>
+<div *ngFor="let group of tournament.Groups">
+  <h1>{{group.Name}}</h1>
+  <div *ngFor="let rotation of group.Rotations">
+    <h2>{{rotation.Name}}</h2>
+    <div *ngFor="let match of rotation.Matches">
+      <table [width]="600">
+        <tr>
+          <td>{{group.Type}} - {{GetPlayerNameFromID(group, match.Scores[0].ID)}}</td>
+          <td>{{match.Scores[0].Points}}</td>
+        </tr>
+        <tr>
+          <td>{{group.Type}} - {{GetPlayerNameFromID(group, match.Scores[1].ID)}}</td>
+          <td>{{match.Scores[1].Points}}</td>
+        </tr>
+        <tr>
+          <td colspan="2" text-align="right">
+            <table>
+              <tr>
+                <td>Abandonner</td>
+                <td>Valider</td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
 </div>
 
 <div ngAccordionGroup>

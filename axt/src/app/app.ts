@@ -10,8 +10,8 @@ import GirlsPlayersJSON from '../assets/2026/girls.players.json';
 import GirlsGroup1JSON from '../assets/2026/girls.group.1.json';
 import GirlsGroup2JSON from '../assets/2026/girls.group.2.json';
 import { CommonModule } from '@angular/common';
-import { Player } from '../libs/player';
 import { Tournament } from '../libs/tournament';
+import { Group } from '../libs/group';
 
 @Component({
   selector: 'app-root',
@@ -51,5 +51,25 @@ export class App {
     console.log("Garcons :");
     console.log(this.tournament.Boys);
     //this.httpClient.put("../assets/2026/boys.players.json", this.tournament.Boys).subscribe((response) => console.log(response));
+  }
+
+   public GetPlayerID(group: Group, playerIDInScore: any): String
+   {
+    console.log(playerIDInScore - 1)
+    return group.Players[playerIDInScore - 1].toString();
+   }
+
+  public GetPlayerNameFromID(group: Group, playerIDInScore: any): String
+  {
+    let playerID = group.Players[playerIDInScore - 1].toString();
+    switch (group.Type)
+    {
+        case 0:
+          return this.tournament.Girls.find((c) => c.ID.toString() == playerID)!?.Name;
+        case 1:
+          return this.tournament.Boys.find((c) => c.ID.toString() == playerID)!?.Name;
+        default:
+          return "";
+    }
   }
 }
