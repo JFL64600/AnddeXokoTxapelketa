@@ -1,42 +1,51 @@
-<mat-accordion>
-  @for (group of tournament.Groups; track $index) {
-    <mat-expansion-panel>
-      <mat-expansion-panel-header>
-        <mat-panel-title> {{ group.Name }} </mat-panel-title>
-      </mat-expansion-panel-header>
-      <mat-accordion>
-        @for (rotation of group.Rotations; track $index) {
-          <mat-expansion-panel>
-            <mat-expansion-panel-header>
-              <mat-panel-title> {{ rotation.Name }} </mat-panel-title>
-            </mat-expansion-panel-header>
-            @for (match of rotation.Matches; track $index) {
-              <div>
-                <table [width]="600">
-                  <tr>
-                    <td>{{ group.Type }} - {{ GetPlayerNameFromID(group, match.Scores[0].ID) }}</td>
-                    <td>{{ match.Scores[0].Points }}</td>
-                  </tr>
-                  <tr>
-                    <td>{{ group.Type }} - {{ GetPlayerNameFromID(group, match.Scores[1].ID) }}</td>
-                    <td>{{ match.Scores[1].Points }}</td>
-                  </tr>
-                  <tr>
-                    <td colspan="2" text-align="right">
-                      <table>
-                        <tr>
-                          <td>Abandonner</td>
-                          <td>Valider</td>
-                        </tr>
-                      </table>
-                    </td>
-                  </tr>
-                </table>
-              </div>
-            }
-          </mat-expansion-panel>
-        }
-      </mat-accordion>
-    </mat-expansion-panel>
-  }
-</mat-accordion>
+<mat-toolbar>
+  <span>Andde Xoko Txapelketa</span>
+</mat-toolbar>
+<main>
+  <mat-accordion>
+    @for (group of tournament.Groups; track $index) {
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title> {{ group.Name }} </mat-panel-title>
+        </mat-expansion-panel-header>
+        <mat-accordion>
+          @for (rotation of group.Rotations; track $index) {
+            <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <mat-panel-title> {{ rotation.Name }} </mat-panel-title>
+              </mat-expansion-panel-header>
+              @for (match of rotation.Matches; track $index) {
+                <div>
+                  <table [width]="600">
+                    <tr>
+                      <td>
+                        {{ group.Type }} - {{ GetPlayerNameFromID(group, match.Scores[0].ID) }}
+                      </td>
+                      <td>{{ match.Scores[0].Points }}</td>
+                    </tr>
+                    <tr>
+                      <td>
+                        {{ group.Type }} - {{ GetPlayerNameFromID(group, match.Scores[1].ID) }}
+                      </td>
+                      <td>{{ match.Scores[1].Points }}</td>
+                    </tr>
+                    <tr>
+                      <td colspan="2" text-align="right">
+                        <table>
+                          <tr>
+                            <td>Abandonner</td>
+                            <td>Valider</td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+              }
+            </mat-expansion-panel>
+          }
+        </mat-accordion>
+      </mat-expansion-panel>
+    }
+  </mat-accordion>
+</main>

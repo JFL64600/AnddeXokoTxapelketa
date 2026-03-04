@@ -15,10 +15,11 @@ import { Tournament } from '../libs/tournament';
 import { Group } from '../libs/group';
 import { Player } from '../libs/player';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 @Component({
   selector: 'app-root',
-  imports: [MatExpansionModule],
+  imports: [MatExpansionModule, MatToolbarModule],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })
