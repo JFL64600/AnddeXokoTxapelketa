@@ -1,8 +1,8 @@
-import { Rotation } from "./rotation";
+import { Rotation } from './rotation';
 
 export class Group {
-    Name: String = "";
-    Type: Number = 0;
-    Players: Number[] = [];
-    Rotations: Rotation[] = [];
+  Name: string = '';
+  Type: number = 0;
+  Players: number[] = [];
+  Rotations: Rotation[] = [];
 }

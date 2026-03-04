@@ -1,13 +1,13 @@
-import { Group } from "./group";
-import { Player } from "./player";
+import { Group } from './group';
+import { Player } from './player';
 
 export class Tournament {
-    Name: String = "";
-    Girls: Player[] = [];
-    Boys: Player[] = [];
-    Groups: Group[] = [];
+  Name: string = '';
+  Girls: Player[] = [];
+  Boys: Player[] = [];
+  Groups: Group[] = [];
 
-    constructor(name: String) {
-      this.Name = name;
-    }
+  constructor(name: string) {
+    this.Name = name;
+  }
 }

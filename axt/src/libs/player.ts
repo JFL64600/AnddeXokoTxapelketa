@@ -1,4 +1,4 @@
 export class Player {
-    public ID: Number = 0;
-    public Name: String = "";
+  public ID: number = 0;
+  public Name: string = '';
 }

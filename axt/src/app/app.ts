@@ -10,7 +10,6 @@ import BoysGroup4JSON from '../assets/2026/boys.group.4.json';
 import GirlsPlayersJSON from '../assets/2026/girls.players.json';
 import GirlsGroup1JSON from '../assets/2026/girls.group.1.json';
 import GirlsGroup2JSON from '../assets/2026/girls.group.2.json';
-import { CommonModule } from '@angular/common';
 import { Tournament } from '../libs/tournament';
 import { Group } from '../libs/group';
 import { Player } from '../libs/player';
@@ -21,6 +20,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatListModule } from '@angular/material/list';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
+import { Match } from '../libs/match';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { ApplyPipe } from 'ngxtension/call-apply';
 
 @Component({
   selector: 'app-root',
@@ -32,17 +34,20 @@ import { FormsModule } from '@angular/forms';
     MatListModule,
     MatInputModule,
     FormsModule,
+    ApplyPipe,
   ],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })
 export class App {
-  protected readonly title = signal('axt');
+  #snackBar = inject(MatSnackBar);
+
   private BoysTableName = 'Boys';
   private GirlsTableName = 'Girls';
   private database = inject(Database);
   public tournament: Tournament = new Tournament('2026');
   private value2: any;
+  groups = signal<Group[]>([]);
 
   constructor() {
     /*
@@ -102,12 +107,12 @@ export class App {
     */
     this.tournament.Girls = GirlsPlayersJSON;
     this.tournament.Boys = BoysPlayersJSON;
-    this.tournament.Groups.push(GirlsGroup1JSON);
-    this.tournament.Groups.push(GirlsGroup2JSON);
-    this.tournament.Groups.push(BoysGroup1JSON);
-    this.tournament.Groups.push(BoysGroup2JSON);
-    this.tournament.Groups.push(BoysGroup3JSON);
-    this.tournament.Groups.push(BoysGroup4JSON);
+    this.tournament.Groups.push(GirlsGroup1JSON as any);
+    this.tournament.Groups.push(GirlsGroup2JSON as any);
+    this.tournament.Groups.push(BoysGroup1JSON as any);
+    this.tournament.Groups.push(BoysGroup2JSON as any);
+    this.tournament.Groups.push(BoysGroup3JSON as any);
+    this.tournament.Groups.push(BoysGroup4JSON as any);
     /*
     //this.tournament.Boys[0].Name = "Toto";
 
@@ -126,14 +131,15 @@ export class App {
     console.log(this.tournament.Boys);
     this.httpClient.put("../assets/2026/boys.players.json", this.tournament.Boys).subscribe((response) => console.log(response));
     */
+    this.generateGroups();
   }
 
-  public GetPlayerID(group: Group, playerIDInScore: any): String {
+  public GetPlayerID(group: Group, playerIDInScore: any): string {
     console.log(playerIDInScore - 1);
     return group.Players[playerIDInScore - 1].toString();
   }
 
-  public GetPlayerNameFromID(group: Group, playerIDInScore: any): String {
+  public GetPlayerNameFromID(group: Group, playerIDInScore: any): string {
     let playerID = group.Players[playerIDInScore - 1].toString();
     switch (group.Type) {
       case 0:
@@ -143,5 +149,57 @@ export class App {
       default:
         return '';
     }
+  }
+
+  isDisabled(match: Match, editedPoints0: number, editedPoints1: number): boolean {
+    if (match.Scores[0].EditedPoints === null || match.Scores[1].EditedPoints === null) {
+      return true;
+    }
+    return match.Scores[0].Points == editedPoints0 && match.Scores[1].Points == editedPoints1;
+  }
+
+  cancel(match: Match) {
+    match.Scores.forEach((score) => {
+      score.EditedPoints = score.Points;
+    });
+  }
+
+  save(match: Match) {
+    match.Scores.forEach((score) => {
+      score.Points = score.EditedPoints;
+    });
+    this.#snackBar.open('Puntuazioa gorde da', '', { duration: 2000 });
+  }
+
+  private generateGroups() {
+    let groups: Group[] = [];
+    for (let i = 0; i < this.tournament.Groups.length; i++) {
+      const group = this.tournament.Groups[i];
+      let players: Player[] = [];
+      switch (group.Type) {
+        case 0:
+          players = this.tournament.Girls.filter((c) => group.Players.includes(c.ID));
+          break;
+        case 1:
+          players = this.tournament.Boys.filter((c) => group.Players.includes(c.ID));
+          break;
+      }
+      const rotations = group.Rotations;
+      rotations.forEach((rotation) => {
+        rotation.Matches.forEach((match) => {
+          match.Scores.forEach((score) => {
+            score.EditedPoints = score.Points;
+            score.PlayerName = this.GetPlayerNameFromID(group, score.ID);
+          });
+        });
+      });
+      groups.push({
+        Name: group.Name,
+        Type: group.Type,
+        Players: players.map((p) => p.ID),
+        Rotations: rotations,
+      } as Group);
+    }
+    this.groups.set(groups);
   }
 }
