@@ -14,20 +14,20 @@ import { CommonModule } from '@angular/common';
 import { Tournament } from '../libs/tournament';
 import { Group } from '../libs/group';
 import { Player } from '../libs/player';
-
+import { MatExpansionModule } from '@angular/material/expansion';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, CommonModule],
+  imports: [MatExpansionModule],
   templateUrl: './app.html',
-  styleUrl: './app.css'
+  styleUrl: './app.css',
 })
 export class App {
   protected readonly title = signal('axt');
   private BoysTableName = 'Boys';
   private GirlsTableName = 'Girls';
   private database = inject(Database);
-  public tournament: Tournament= new Tournament("2026");
+  public tournament: Tournament = new Tournament('2026');
   private value2: any;
 
   constructor() {
@@ -86,14 +86,14 @@ export class App {
     //this.tournament.Girls = GirlsPlayersJSON;
     //this.tournament.Boys = BoysPlayersJSON;
     */
-   this.tournament.Girls = GirlsPlayersJSON;
-   this.tournament.Boys = BoysPlayersJSON;
-   this.tournament.Groups.push(GirlsGroup1JSON);
-   this.tournament.Groups.push(GirlsGroup2JSON);
-   this.tournament.Groups.push(BoysGroup1JSON);
-   this.tournament.Groups.push(BoysGroup2JSON);
-   this.tournament.Groups.push(BoysGroup3JSON);
-   this.tournament.Groups.push(BoysGroup4JSON);
+    this.tournament.Girls = GirlsPlayersJSON;
+    this.tournament.Boys = BoysPlayersJSON;
+    this.tournament.Groups.push(GirlsGroup1JSON);
+    this.tournament.Groups.push(GirlsGroup2JSON);
+    this.tournament.Groups.push(BoysGroup1JSON);
+    this.tournament.Groups.push(BoysGroup2JSON);
+    this.tournament.Groups.push(BoysGroup3JSON);
+    this.tournament.Groups.push(BoysGroup4JSON);
     /*
     //this.tournament.Boys[0].Name = "Toto";
 
@@ -114,21 +114,20 @@ export class App {
     */
   }
 
-   public GetPlayerID(group: Group, playerIDInScore: any): String {
-    console.log(playerIDInScore - 1)
+  public GetPlayerID(group: Group, playerIDInScore: any): String {
+    console.log(playerIDInScore - 1);
     return group.Players[playerIDInScore - 1].toString();
-   }
+  }
 
   public GetPlayerNameFromID(group: Group, playerIDInScore: any): String {
     let playerID = group.Players[playerIDInScore - 1].toString();
-    switch (group.Type)
-    {
-        case 0:
-          return this.tournament.Girls.find((c) => c.ID.toString() == playerID)!?.Name;
-        case 1:
-          return this.tournament.Boys.find((c) => c.ID.toString() == playerID)!?.Name;
-        default:
-          return "";
+    switch (group.Type) {
+      case 0:
+        return this.tournament.Girls.find((c) => c.ID.toString() == playerID)!?.Name;
+      case 1:
+        return this.tournament.Boys.find((c) => c.ID.toString() == playerID)!?.Name;
+      default:
+        return '';
     }
   }
 }
