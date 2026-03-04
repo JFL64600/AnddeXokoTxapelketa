@@ -20,7 +20,14 @@
           "options": {
             "browser": "src/main.ts",
             "tsConfig": "tsconfig.app.json",
-            "assets": ["public", "src/assets"],
+            "assets": [
+              {
+                "glob": "**/*",
+                "input": "public",
+                "output": "/"
+              },
+              "src/assets"
+            ],
             "styles": ["src/material-theme.scss", "src/styles.css"]
           },
           "configurations": {
