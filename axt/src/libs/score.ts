@@ -1,6 +1,6 @@
 export class Score {
-  ID: number = 0;
-  Points: number = 0;
-  EditedPoints: number = 0;
-  PlayerName: string = '';
+  ID = 0;
+  Points = 0;
+  EditedPoints = 0;
+  PlayerName = '';
 }

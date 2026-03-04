@@ -1,6 +1,6 @@
 import { Match } from './match';
 
 export class Rotation {
-  Name: string = '';
+  Name = '';
   Matches: Match[] = [];
 }

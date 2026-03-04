@@ -2,7 +2,7 @@ import { Group } from './group';
 import { Player } from './player';
 
 export class Tournament {
-  Name: string = '';
+  Name = '';
   Girls: Player[] = [];
   Boys: Player[] = [];
   Groups: Group[] = [];
