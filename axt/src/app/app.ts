@@ -16,10 +16,23 @@ import { Group } from '../libs/group';
 import { Player } from '../libs/player';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
+import { MatListModule } from '@angular/material/list';
+import { MatInputModule } from '@angular/material/input';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
-  imports: [MatExpansionModule, MatToolbarModule],
+  imports: [
+    MatExpansionModule,
+    MatToolbarModule,
+    MatCardModule,
+    MatButtonModule,
+    MatListModule,
+    MatInputModule,
+    FormsModule,
+  ],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })

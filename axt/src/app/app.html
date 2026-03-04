@@ -15,32 +15,32 @@
                 <mat-panel-title> {{ rotation.Name }} </mat-panel-title>
               </mat-expansion-panel-header>
               @for (match of rotation.Matches; track $index) {
-                <div>
-                  <table [width]="600">
-                    <tr>
-                      <td>
-                        {{ group.Type }} - {{ GetPlayerNameFromID(group, match.Scores[0].ID) }}
-                      </td>
-                      <td>{{ match.Scores[0].Points }}</td>
-                    </tr>
-                    <tr>
-                      <td>
-                        {{ group.Type }} - {{ GetPlayerNameFromID(group, match.Scores[1].ID) }}
-                      </td>
-                      <td>{{ match.Scores[1].Points }}</td>
-                    </tr>
-                    <tr>
-                      <td colspan="2" text-align="right">
-                        <table>
-                          <tr>
-                            <td>Abandonner</td>
-                            <td>Valider</td>
-                          </tr>
-                        </table>
-                      </td>
-                    </tr>
-                  </table>
-                </div>
+                <mat-card>
+                  <mat-card-content>
+                    <mat-list role="list">
+                      <mat-list-item role="listitem">
+                        <div class="line">
+                          {{ GetPlayerNameFromID(group, match.Scores[0].ID) }}
+                          <mat-form-field>
+                            <input type="number" matInput [(ngModel)]="match.Scores[0].Points" />
+                          </mat-form-field>
+                        </div>
+                      </mat-list-item>
+                      <mat-list-item role="listitem">
+                        <div class="line">
+                          {{ GetPlayerNameFromID(group, match.Scores[1].ID) }}
+                          <mat-form-field>
+                            <input type="number" matInput [(ngModel)]="match.Scores[1].Points" />
+                          </mat-form-field>
+                        </div>
+                      </mat-list-item>
+                    </mat-list>
+                  </mat-card-content>
+                  <mat-card-actions align="end">
+                    <button matButton>Abandonner</button>
+                    <button matButton="filled">Valider</button>
+                  </mat-card-actions>
+                </mat-card>
               }
             </mat-expansion-panel>
           }
