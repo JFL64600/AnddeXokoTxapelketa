@@ -1,6 +1,5 @@
 import { Score } from "./score";
 
- export class Match
- {
+ export class Match {
      Scores: Score[] = [];
  }

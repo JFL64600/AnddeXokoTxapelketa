@@ -1,8 +1,7 @@
 import { Group } from "./group";
 import { Player } from "./player";
 
-export class Tournament
-{
+export class Tournament {
     Name: String = "";
     Girls: Player[] = [];
     Boys: Player[] = [];

@@ -1,0 +1,188 @@
+{
+  "version": "6.0",
+  "nxVersion": "22.5.3",
+  "pathMappings": {},
+  "nxJsonPlugins": [],
+  "fileMap": {
+    "nonProjectFiles": [],
+    "projectFileMap": {
+      "axt": [
+        {
+          "file": ".editorconfig",
+          "hash": "8037249353422744134"
+        },
+        {
+          "file": ".gitignore",
+          "hash": "4320686014843519029"
+        },
+        {
+          "file": ".prettierrc",
+          "hash": "7467919868826279542"
+        },
+        {
+          "file": ".vscode/extensions.json",
+          "hash": "14075834438752640208"
+        },
+        {
+          "file": ".vscode/launch.json",
+          "hash": "17406702432687230417"
+        },
+        {
+          "file": ".vscode/mcp.json",
+          "hash": "11492871017727097845"
+        },
+        {
+          "file": ".vscode/tasks.json",
+          "hash": "11080398893561185157"
+        },
+        {
+          "file": "README.md",
+          "hash": "7817297358042509573"
+        },
+        {
+          "file": "nx.json",
+          "hash": "13324066933110142303"
+        },
+        {
+          "file": "package-lock.json",
+          "hash": "6643841682142359368"
+        },
+        {
+          "file": "package.json",
+          "hash": "6514420432174991021"
+        },
+        {
+          "file": "project.json",
+          "hash": "7148595313063470561"
+        },
+        {
+          "file": "public/favicon.ico",
+          "hash": "3988961587069885523"
+        },
+        {
+          "file": "src/app/app.config.ts",
+          "hash": "7897526985879639611",
+          "deps": [
+            "npm:@angular/core",
+            "npm:@angular/router"
+          ]
+        },
+        {
+          "file": "src/app/app.css",
+          "hash": "3244421341483603138"
+        },
+        {
+          "file": "src/app/app.html",
+          "hash": "625963124986013337"
+        },
+        {
+          "file": "src/app/app.routes.ts",
+          "hash": "809736233805555256",
+          "deps": [
+            "npm:@angular/router"
+          ]
+        },
+        {
+          "file": "src/app/app.spec.ts",
+          "hash": "17947329013930079384",
+          "deps": [
+            "npm:@angular/core"
+          ]
+        },
+        {
+          "file": "src/app/app.ts",
+          "hash": "1653292092429987009",
+          "deps": [
+            "npm:@angular/common",
+            "npm:@angular/core",
+            "npm:@angular/router"
+          ]
+        },
+        {
+          "file": "src/assets/2026/boys.group.1.json",
+          "hash": "5249144404498758150"
+        },
+        {
+          "file": "src/assets/2026/boys.group.2.json",
+          "hash": "9580587794641266744"
+        },
+        {
+          "file": "src/assets/2026/boys.group.3.json",
+          "hash": "4507579285470368703"
+        },
+        {
+          "file": "src/assets/2026/boys.group.4.json",
+          "hash": "17435413517078215735"
+        },
+        {
+          "file": "src/assets/2026/boys.players.json",
+          "hash": "7968994332143530311"
+        },
+        {
+          "file": "src/assets/2026/girls.group.1.json",
+          "hash": "12288568192829303135"
+        },
+        {
+          "file": "src/assets/2026/girls.group.2.json",
+          "hash": "14397195342283006376"
+        },
+        {
+          "file": "src/assets/2026/girls.players.json",
+          "hash": "7806054807266398238"
+        },
+        {
+          "file": "src/index.html",
+          "hash": "14319147547496176497"
+        },
+        {
+          "file": "src/libs/group.ts",
+          "hash": "10689987864980182834"
+        },
+        {
+          "file": "src/libs/match.ts",
+          "hash": "12886735809582568314"
+        },
+        {
+          "file": "src/libs/player.ts",
+          "hash": "6785147580404384567"
+        },
+        {
+          "file": "src/libs/rotation.ts",
+          "hash": "13436788493859960136"
+        },
+        {
+          "file": "src/libs/score.ts",
+          "hash": "3584151344345495885"
+        },
+        {
+          "file": "src/libs/tournament.ts",
+          "hash": "12958534926782594728"
+        },
+        {
+          "file": "src/main.ts",
+          "hash": "10405740721546735325",
+          "deps": [
+            "npm:@angular/platform-browser"
+          ]
+        },
+        {
+          "file": "src/styles.css",
+          "hash": "2917954890128038984"
+        },
+        {
+          "file": "tsconfig.app.json",
+          "hash": "10136459155298117738"
+        },
+        {
+          "file": "tsconfig.json",
+          "hash": "12986063587128948135"
+        },
+        {
+          "file": "tsconfig.spec.json",
+          "hash": "189877243707603707"
+        }
+      ]
+    }
+  },
+  "externalNodesHash": "9362859721383089756"
+}

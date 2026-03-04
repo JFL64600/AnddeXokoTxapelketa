@@ -1,7 +1,6 @@
 import { Match } from "./match";
 
-export class Rotation
-{
+export class Rotation {
     Name: String = "";
     Matches: Match[] = [];
 }

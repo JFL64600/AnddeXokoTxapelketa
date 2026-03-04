@@ -18,13 +18,8 @@
           "options": {
             "browser": "src/main.ts",
             "tsConfig": "tsconfig.app.json",
-            "assets": [
-              "public",
-              "src/assets"
-            ],
-            "styles": [
-              "src/styles.css"
-            ]
+            "assets": ["public", "src/assets"],
+            "styles": ["src/material-theme.scss", "src/styles.css"]
           },
           "configurations": {
             "production": {
