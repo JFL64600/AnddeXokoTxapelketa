@@ -69,11 +69,31 @@ ng test
 
 ## Code Quality
 
-Lint your code:
+### Linting
+
+Run ESLint to check for code quality issues:
 
 ```bash
 npm run lint
 ```
+
+The project uses ESLint with Angular-specific rules via `angular-eslint`.
+
+### Code Formatting
+
+Format your code with Prettier:
+
+```bash
+npx prettier --write .
+```
+
+Check if files are formatted correctly:
+
+```bash
+npx prettier --check .
+```
+
+The project uses Prettier for consistent code formatting across the codebase.
 
 ## Deployment
 
