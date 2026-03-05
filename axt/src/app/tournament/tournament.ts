@@ -47,7 +47,6 @@ export class TournamentPage implements OnInit {
 
     effect(() => {
       if (this.tournament().Groups !== null && this.tournament().Groups.length > 0) {
-        console.log('Ongi!!!');
         this.tournament().Groups.forEach((group) => {
           const size = group.Players.length;
           const matrix = Array.from({ length: size }, () => Array(size).fill(0));
@@ -89,8 +88,6 @@ export class TournamentPage implements OnInit {
       }
     });
     this.groupsObservable.subscribe((value) => {
-      console.log('Groups value:');
-      console.log(value);
       if (value !== null && typeof value === 'object') {
         const mayBeGroups: Group[] = Object.values(value) as Group[];
         this.tournament.update((tournament) => ({

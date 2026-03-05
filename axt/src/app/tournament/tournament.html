@@ -20,10 +20,12 @@
                           <mat-list role="list">
                             <mat-list-item role="listitem">
                               <div class="line">
-                                {{
-                                  getPlayerNameFromID
-                                    | apply: tournament() : group : match.Scores[0].ID
-                                }}
+                                <span>
+                                  {{
+                                    getPlayerNameFromID
+                                      | apply: tournament() : group : match.Scores[0].ID
+                                  }}
+                                </span>
                                 <mat-form-field>
                                   <input
                                     type="number"
@@ -39,10 +41,12 @@
                             </mat-list-item>
                             <mat-list-item role="listitem">
                               <div class="line">
-                                {{
-                                  getPlayerNameFromID
-                                    | apply: tournament() : group : match.Scores[1].ID
-                                }}
+                                <span>
+                                  {{
+                                    getPlayerNameFromID
+                                      | apply: tournament() : group : match.Scores[1].ID
+                                  }}
+                                </span>
                                 <mat-form-field>
                                   <input
                                     type="number"
@@ -82,14 +86,14 @@
             </mat-expansion-panel-header>
             <ng-template matExpansionPanelContent>
               <table>
-                <thead>
+                <tr>
                   <th colspan="2"></th>
                   @for (playerX of group.Players; track $index) {
                     <th>
                       {{ playerX }}
                     </th>
                   }
-                </thead>
+                </tr>
                 @for (playerY of group.Players; track $index; let indexY = $index) {
                   <tr>
                     <td>{{ getPlayerNameFromID | apply: tournament() : group : indexY + 1 }}</td>
