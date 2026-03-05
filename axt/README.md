@@ -1,59 +1,101 @@
-# Axt
+# Andde Xoko Txapelketa
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.0.
+A tournament management web application built with Angular and Firebase.
 
-## Development server
+## Overview
 
-To start a local development server, run:
+This application allows you to manage tournaments, including player registration, group organization, match scheduling, and score tracking. It uses Firebase Realtime Database for data persistence and is hosted on Firebase Hosting.
+
+## Tech Stack
+
+- **Angular** 21.2.0 - Modern web framework
+- **Angular Material** - UI component library
+- **Firebase** - Backend and hosting
+  - Realtime Database for data storage
+  - Hosting (Europe-West1 region)
+- **TypeScript** - Type-safe development
+- **Vitest** - Unit testing framework
+
+## Prerequisites
+
+- Node.js and npm (npm 11.10.0 or higher recommended)
+- Angular CLI (`npm install -g @angular/cli`)
+
+## Getting Started
+
+### Installation
 
 ```bash
+npm ci
+```
+
+### Development Server
+
+To start a local development server:
+
+```bash
+npm start
+# or
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Navigate to `http://localhost:4200/`. The application will automatically reload when you modify source files.
 
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+### Building for Production
 
 ```bash
-ng generate component component-name
+npm run build
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+Build artifacts will be stored in the `dist/` directory, optimized for production.
+
+### Watch Mode
+
+For continuous development with automatic rebuilding:
 
 ```bash
-ng generate --help
+npm run watch
 ```
 
-## Building
+## Testing
 
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+Run unit tests with Vitest:
 
 ```bash
+npm test
+# or
 ng test
 ```
 
-## Running end-to-end tests
+## Code Quality
 
-For end-to-end (e2e) testing, run:
+Lint your code:
 
 ```bash
-ng e2e
+npm run lint
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+## Deployment
+
+The application is automatically deployed to Firebase Hosting via GitHub Actions:
+
+- **Production**: Deploys on push to `master` branch
+- **Preview**: Deploys on pull requests
+
+## Project Structure
+
+- `src/app/` - Main application components
+  - `tournament/` - Tournament management component
+- `src/libs/` - Core models and business logic
+  - `tournament.ts` - Tournament model
+  - `group.ts` - Group model
+  - `player.ts` - Player model
+  - `match.ts` - Match model
+  - `rotation.ts` - Rotation logic
+  - `score.ts` - Score tracking
 
 ## Additional Resources
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+- [Angular CLI Documentation](https://angular.dev/tools/cli)
+- [Angular Material Components](https://material.angular.io/)
+- [Firebase Documentation](https://firebase.google.com/docs)
