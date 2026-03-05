@@ -1,5 +1,5 @@
 <mat-accordion>
-  @for (group of tournament.Groups; track $index) {
+  @for (group of tournament().Groups; track $index; let groupIndex = $index) {
     <mat-expansion-panel>
       <mat-expansion-panel-header>
         <mat-panel-title> {{ group.Name }} </mat-panel-title>
@@ -17,14 +17,15 @@
                     <mat-list role="list">
                       <mat-list-item role="listitem">
                         <div class="line">
-                          {{ match.Scores[0].PlayerName }}
+                          {{ getPlayerNameFromID(group, match.Scores[0].ID) }}
                           <mat-form-field>
                             <input
                               type="number"
                               step="1"
                               min="0"
+                              max="3"
                               matInput
-                              [(ngModel)]="match.Scores[0].EditedPoints"
+                              [(ngModel)]="match.Scores[0].Points"
                               [ngModelOptions]="{ standalone: true }"
                             />
                           </mat-form-field>
@@ -32,14 +33,15 @@
                       </mat-list-item>
                       <mat-list-item role="listitem">
                         <div class="line">
-                          {{ match.Scores[1].PlayerName }}
+                          {{ getPlayerNameFromID(group, match.Scores[1].ID) }}
                           <mat-form-field>
                             <input
                               type="number"
                               step="1"
                               min="0"
+                              max="3"
                               matInput
-                              [(ngModel)]="match.Scores[1].EditedPoints"
+                              [(ngModel)]="match.Scores[1].Points"
                               [ngModelOptions]="{ standalone: true }"
                             />
                           </mat-form-field>
@@ -48,31 +50,8 @@
                     </mat-list>
                   </mat-card-content>
                   <mat-card-actions align="end">
-                    <button
-                      matButton
-                      [disabled]="
-                        isDisabled
-                          | apply
-                            : match
-                            : match.Scores[0].EditedPoints
-                            : match.Scores[1].EditedPoints
-                      "
-                      (click)="cancel(match)"
-                    >
-                      Abandonner
-                    </button>
-                    <button
-                      type="submit"
-                      matButton="filled"
-                      [disabled]="
-                        isDisabled
-                          | apply
-                            : match
-                            : match.Scores[0].EditedPoints
-                            : match.Scores[1].EditedPoints
-                      "
-                      (click)="save(match)"
-                    >
+                    <button matButton (click)="cancel(match)">Abandonner</button>
+                    <button type="submit" matButton="filled" (click)="save(groupIndex, group)">
                       Valider
                     </button>
                   </mat-card-actions>

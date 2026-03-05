@@ -6,16 +6,10 @@
       "data": {
         "root": ".",
         "name": "axt",
-        "tags": [
-          "npm:private"
-        ],
+        "tags": ["npm:private"],
         "metadata": {
           "targetGroups": {
-            "NPM Scripts": [
-              "ng",
-              "start",
-              "watch"
-            ]
+            "NPM Scripts": ["ng", "start", "watch"]
           },
           "js": {
             "packageName": "axt",
@@ -65,13 +59,8 @@
             "options": {
               "browser": "src/main.ts",
               "tsConfig": "tsconfig.app.json",
-              "assets": [
-                "public",
-                "src/assets"
-              ],
-              "styles": [
-                "src/styles.css"
-              ],
+              "assets": ["public"],
+              "styles": ["src/styles.css"],
               "outputPath": "dist/axt"
             },
             "configurations": {
@@ -97,18 +86,11 @@
               }
             },
             "defaultConfiguration": "production",
-            "outputs": [
-              "{options.outputPath}"
-            ],
+            "outputs": ["{options.outputPath}"],
             "parallelism": true,
             "cache": true,
-            "dependsOn": [
-              "^build"
-            ],
-            "inputs": [
-              "production",
-              "^production"
-            ]
+            "dependsOn": ["^build"],
+            "inputs": ["production", "^production"]
           },
           "serve": {
             "executor": "@angular/build:dev-server",
@@ -130,10 +112,7 @@
             "options": {},
             "parallelism": true,
             "cache": true,
-            "inputs": [
-              "default",
-              "^production"
-            ]
+            "inputs": ["default", "^production"]
           }
         },
         "$schema": "node_modules/nx/schemas/project-schema.json",
