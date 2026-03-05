@@ -5,7 +5,6 @@ using Newtonsoft.Json;
 using System.IO;
 using System.Text;
 using System.Text.Json;
-using System.Windows;
 
 namespace AnddeXokoTxapelketa.Classes
 {
@@ -93,32 +92,45 @@ namespace AnddeXokoTxapelketa.Classes
             var serialized = JsonConvert.SerializeObject(tournament);
             return JsonConvert.DeserializeObject<Tournament>(serialized);
         }
-        public static void GenerateRotations(string root, Tournament tournament)
+        public static void GenerateRotations(string root, ITournament tournament)
         {
-            List<Calendar> calendars = GetCalendars(root, tournament.Name);
             string fileName = Path.Combine(root, tournament.Name, "rotations.xlsx");
             if (!File.Exists(fileName))
             {
                 File.Delete(fileName);
             }
-            using XLWorkbook wb = new();
-            int groupIndex = 1;
-            foreach (Group group in tournament.Girls)
+            if (tournament is Tournament)
             {
-                if (GenerateGroupRotations(wb, group, groupIndex, GetRotations(calendars, group), false))
+                List<Calendar> calendars = GetCalendars(root, tournament.Name);
+                using XLWorkbook wb = new();
+                int groupIndex = 1;
+                foreach (Group group in ((Tournament)tournament).Girls)
                 {
-                    groupIndex++;
+                    if (GenerateGroupRotations(wb, group, groupIndex, GetRotations(calendars, group), false))
+                    {
+                        groupIndex++;
+                    }
                 }
+                groupIndex = 1;
+                foreach (Group group in ((Tournament)tournament).Boys)
+                {
+                    if (GenerateGroupRotations(wb, group, groupIndex, GetRotations(calendars, group), true))
+                    {
+                        groupIndex++;
+                    }
+                }
+                wb.SaveAs(fileName);
             }
-            groupIndex = 1;
-            foreach (Group group in tournament.Boys)
+            else if (tournament is Models.New.Tournament)
             {
-                if (GenerateGroupRotations(wb, group, groupIndex, GetRotations(calendars, group), true))
+                using XLWorkbook wb = new();
+                int groupIndex = 1;
+                foreach (Models.New.Group group in ((Models.New.Tournament)tournament).Groups)
                 {
-                    groupIndex++;
+                    GenerateGroupRotations(wb, (Models.New.Tournament)tournament, group);
                 }
+                wb.SaveAs(fileName);
             }
-            wb.SaveAs(fileName);
         }
         private static bool GenerateGroupRotations(XLWorkbook wb, Group group, int groupIndex, List<Rotation> rotations, bool forBoys)
         {
@@ -155,6 +167,46 @@ namespace AnddeXokoTxapelketa.Classes
                 rotationIndex++;
             }
             return true;
+        }
+        private static bool GenerateGroupRotations(XLWorkbook wb, Models.New.Tournament tournament, Models.New.Group group)
+        {
+            IXLWorksheet ws = wb.Worksheets.Add(group.Name);
+            ws.Style.Alignment.Vertical = XLAlignmentVerticalValues.Center;
+            ws.Style.Font.FontSize = 18;
+            ws.Style.Font.FontName = "Aptos Narrow";
+            ws.Columns("A").Width = 16;
+            ws.Columns("B").Width = 5;
+            ws.Columns("C").Width = 5;
+            ws.Columns("D").Width = 16;
+            ws.Rows().Height = 24;
+            int rowIndex = 1;
+            foreach (Models.New.Rotation rotation in group.Rotations)
+            {
+                ws.Cell($"A{rowIndex}").Value = $"{group.Name} - {rotation.Name}";
+                ws.Cell($"A{rowIndex}").Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+                ws.Cell($"A{rowIndex}").Style.Font.Bold = true;
+                ws.Range($"A{rowIndex}:D{rowIndex}").Merge();
+                rowIndex++;
+                foreach (Models.New.Match match in rotation.Matches)
+                {
+                    ws.Cell($"A{rowIndex}").Value = GetPlayerNameFromID(tournament, group, match.Scores[0].ID);
+                    ws.Cell($"D{rowIndex}").Value = GetPlayerNameFromID(tournament, group, match.Scores[1].ID);
+                    rowIndex++;
+                }
+            }
+            return true;
+        }
+        private static string GetPlayerNameFromID(Models.New.Tournament tournament, Models.New.Group group, int playerIDInScore)
+        {
+            switch (group.Type)
+            {
+                case Tools.GroupType.Boys:
+                    return tournament.Boys.FirstOrDefault(c => c.ID == group.Players[playerIDInScore - 1]).Name;
+                case Tools.GroupType.Girls:
+                    return tournament.Girls.FirstOrDefault(c => c.ID == group.Players[playerIDInScore - 1]).Name;
+                default:
+                    return string.Empty;
+            }
         }
         private static List<Rotation> GetRotations(List<Calendar> calendars, Group group)
         {

@@ -49,11 +49,11 @@ namespace AnddeXokoTxapelketa.Controls
         }
         private void GenerateRotationsClick(object sender, RoutedEventArgs e)
         {
-            //Tournament? tournament = Tools.CloneTournament(GetTournament(sender));
-            //if (tournament != null)
-            //{
-            //    Tools.GenerateRotations(_root, tournament);
-            //}
+            ITournament? tournament = GetTournament(sender);
+            if (tournament != null)
+            {
+                Tools.GenerateRotations(_root, tournament);
+            }
         }
         private void OpenRankingClick(object sender, RoutedEventArgs e)
         {
@@ -91,12 +91,12 @@ namespace AnddeXokoTxapelketa.Controls
                 else if (tournament is Models.New.Tournament)
                 {
                     OpenFinalTableEvent?.Invoke(
-                                this,
-                                new EventsArgs.New.FinalEventArgs()
-                                {
-                                    TournamentName = tournament.Name,
-                                    Leagues = Tools.GetObjects<Models.New.Leagues>(Path.Combine(_root, tournament.Name, "leagues.json")),
-                                });
+                        this,
+                        new EventsArgs.New.FinalEventArgs()
+                        {
+                            TournamentName = tournament.Name,
+                            Leagues = Tools.GetObjects<Models.New.Leagues>(Path.Combine(_root, tournament.Name, "leagues.json")),
+                        });
                 }
             }
         }
