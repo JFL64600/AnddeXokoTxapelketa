@@ -5,4 +5,5 @@ export class Group {
   Type = 0;
   Players: number[] = [];
   Rotations: Rotation[] = [];
+  Matrix: number[][] = [];
 }

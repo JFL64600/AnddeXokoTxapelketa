@@ -4,63 +4,114 @@
       <mat-expansion-panel-header>
         <mat-panel-title> {{ group.Name }} </mat-panel-title>
       </mat-expansion-panel-header>
-      <mat-accordion>
-        @for (rotation of group.Rotations; track $index) {
+      <ng-template matExpansionPanelContent>
+        <mat-accordion>
+          <div>
+            @for (rotation of group.Rotations; track $index) {
+              <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                  <mat-panel-title> {{ rotation.Name }} </mat-panel-title>
+                </mat-expansion-panel-header>
+                <ng-template matExpansionPanelContent>
+                  @for (match of rotation.Matches; track $index) {
+                    <mat-card>
+                      <form>
+                        <mat-card-content>
+                          <mat-list role="list">
+                            <mat-list-item role="listitem">
+                              <div class="line">
+                                <span>
+                                  {{
+                                    getPlayerNameFromID
+                                      | apply: tournament() : group : match.Scores[0].ID
+                                  }}
+                                </span>
+                                <mat-form-field>
+                                  <input
+                                    type="number"
+                                    step="1"
+                                    min="0"
+                                    max="3"
+                                    matInput
+                                    [(ngModel)]="match.Scores[0].Points"
+                                    [ngModelOptions]="{ standalone: true }"
+                                  />
+                                </mat-form-field>
+                              </div>
+                            </mat-list-item>
+                            <mat-list-item role="listitem">
+                              <div class="line">
+                                <span>
+                                  {{
+                                    getPlayerNameFromID
+                                      | apply: tournament() : group : match.Scores[1].ID
+                                  }}
+                                </span>
+                                <mat-form-field>
+                                  <input
+                                    type="number"
+                                    step="1"
+                                    min="0"
+                                    max="3"
+                                    matInput
+                                    [(ngModel)]="match.Scores[1].Points"
+                                    [ngModelOptions]="{ standalone: true }"
+                                  />
+                                </mat-form-field>
+                              </div>
+                            </mat-list-item>
+                          </mat-list>
+                        </mat-card-content>
+                        <mat-card-actions align="end">
+                          <button matButton (click)="cancel(match)">Abandonner</button>
+                          <button
+                            type="submit"
+                            matButton="filled"
+                            (click)="save(groupIndex, group)"
+                          >
+                            Valider
+                          </button>
+                        </mat-card-actions>
+                      </form>
+                    </mat-card>
+                  }
+                </ng-template>
+              </mat-expansion-panel>
+            }
+          </div>
+          <br />
           <mat-expansion-panel>
             <mat-expansion-panel-header>
-              <mat-panel-title> {{ rotation.Name }} </mat-panel-title>
+              <mat-panel-title> Tableau</mat-panel-title>
             </mat-expansion-panel-header>
-            @for (match of rotation.Matches; track $index) {
-              <mat-card>
-                <form>
-                  <mat-card-content>
-                    <mat-list role="list">
-                      <mat-list-item role="listitem">
-                        <div class="line">
-                          {{ getPlayerNameFromID(group, match.Scores[0].ID) }}
-                          <mat-form-field>
-                            <input
-                              type="number"
-                              step="1"
-                              min="0"
-                              max="3"
-                              matInput
-                              [(ngModel)]="match.Scores[0].Points"
-                              [ngModelOptions]="{ standalone: true }"
-                            />
-                          </mat-form-field>
-                        </div>
-                      </mat-list-item>
-                      <mat-list-item role="listitem">
-                        <div class="line">
-                          {{ getPlayerNameFromID(group, match.Scores[1].ID) }}
-                          <mat-form-field>
-                            <input
-                              type="number"
-                              step="1"
-                              min="0"
-                              max="3"
-                              matInput
-                              [(ngModel)]="match.Scores[1].Points"
-                              [ngModelOptions]="{ standalone: true }"
-                            />
-                          </mat-form-field>
-                        </div>
-                      </mat-list-item>
-                    </mat-list>
-                  </mat-card-content>
-                  <mat-card-actions align="end">
-                    <button matButton (click)="cancel(match)">Abandonner</button>
-                    <button type="submit" matButton="filled" (click)="save(groupIndex, group)">
-                      Valider
-                    </button>
-                  </mat-card-actions>
-                </form>
-              </mat-card>
-            }
+            <ng-template matExpansionPanelContent>
+              <table>
+                <tr>
+                  <th colspan="2"></th>
+                  @for (playerX of group.Players; track $index) {
+                    <th>
+                      {{ playerX }}
+                    </th>
+                  }
+                </tr>
+                @for (playerY of group.Players; track $index; let indexY = $index) {
+                  <tr>
+                    <td>{{ getPlayerNameFromID | apply: tournament() : group : indexY + 1 }}</td>
+                    <td class="th">{{ playerY }}</td>
+                    @for (playerX of group.Players; track $index; let indexX = $index) {
+                      @if (playerX === playerY) {
+                        <td class="empty"></td>
+                      } @else {
+                        <td>{{ group.Matrix[indexY][indexX] }}</td>
+                      }
+                    }
+                  </tr>
+                }
+              </table>
+            </ng-template>
           </mat-expansion-panel>
-        }
-      </mat-accordion>
+        </mat-accordion>
+      </ng-template>
     </mat-expansion-panel>
   }
 </mat-accordion>
